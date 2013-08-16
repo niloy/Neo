@@ -1,0 +1,62 @@
+{
+  "common": {
+    "files": "core/viewManager.js"
+  },
+  "UIComponent": {
+    "files": [
+      "core/utils.js",
+      "core/uiComponent.js",
+      "core/normalize.css",
+      "core/uiComponent.css"
+    ]
+  },
+  "app": {
+    "files": "core/app.js"
+  },
+  "testFramework": {
+    "files": [
+      "core/mocha.css",
+      "core/mocha.js",
+      "core/expect.js",
+      "core/testView.js",
+      "core/testView.css"
+    ],
+    "requires": ["app"]
+  },
+  "compLabel": {
+    "files": "core/label.js",
+    "requires": "UIComponent"
+  },
+  "compButton": {
+    "files": ["core/button.js", "core/button.css"],
+    "requires": "UIComponent"
+  },
+  "compTextfield": {
+    "files": ["core/textfield.js", "core/textfield.css"],
+    "requires": "UIComponent"
+  },
+  "helloWorld": {
+    "files": ["user/helloWorld.js", "user/helloWorld.css"],
+    "requires": ["compLabel", "app"]
+  },
+  "buttonTest": {
+    "files": "test/buttonTest.js",
+    "requires": ["compButton", "testFramework"]
+  },
+  "labelTest": {
+    "files": "test/labelTest.js",
+    "requires": ["compLabel", "testFramework"]
+  },
+  "textfieldTest": {
+    "files": "test/textfieldTest.js",
+    "requires": ["compTextfield", "app"]
+  },
+  "compImage": {
+    "files": ["core/image.js", "core/image.css"],
+    "requires": "UIComponent"
+  },
+  "imageTest": {
+    "files": "test/imageTest.js",
+    "requires": ["compImage", "testFramework"]
+  }
+}
