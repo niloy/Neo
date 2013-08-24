@@ -5,6 +5,7 @@
     init: function(config) {
       this.src = Neo.ifNull(config.src, "../assets/emptyImage.png");
       this.alt = Neo.ifNull(config.alt, null);
+      Neo.Classes.UIComponent.call(this, config);
     },
 
     buildDOM: function() {

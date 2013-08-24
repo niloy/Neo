@@ -4,6 +4,7 @@
   Neo.Classes.Button = Neo.Classes.UIComponent.extend({
     init: function(config) {
       this.text = Neo.ifNull(config.text, "No text");
+      Neo.Classes.UIComponent.call(this, config);
     },
 
     buildDOM: function() {

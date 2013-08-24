@@ -9,9 +9,6 @@
       "core/uiComponent.css"
     ]
   },
-  "app": {
-    "files": "core/app.js"
-  },
   "testFramework": {
     "files": [
       "core/mocha.css",
@@ -19,8 +16,7 @@
       "core/expect.js",
       "core/testView.js",
       "core/testView.css"
-    ],
-    "requires": ["app"]
+    ]
   },
   "compLabel": {
     "files": "core/label.js",
@@ -32,11 +28,11 @@
   },
   "compTextfield": {
     "files": ["core/textfield.js", "core/textfield.css"],
-    "requires": "UIComponent"
+    "requires": ["UIComponent", "testFramework"]
   },
   "helloWorld": {
     "files": ["user/helloWorld.js", "user/helloWorld.css"],
-    "requires": ["compLabel", "app"]
+    "requires": ["compLabel"]
   },
   "buttonTest": {
     "files": "test/buttonTest.js",
@@ -48,7 +44,7 @@
   },
   "textfieldTest": {
     "files": "test/textfieldTest.js",
-    "requires": ["compTextfield", "app"]
+    "requires": ["compTextfield"]
   },
   "compImage": {
     "files": ["core/image.js", "core/image.css"],

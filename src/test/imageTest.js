@@ -4,7 +4,11 @@
   var ALT = "calvin and hobbes";
 
   Neo.Classes.ImageTest = Neo.Classes.TestView.extend({
-    buildDOM: function() {
+    init: function(config) {
+      Neo.Classes.TestView.call(this, config);
+    },
+
+    buildComponent: function() {
       return {
         name: "Image",
         src: "../assets/calvinhobbes.jpg",

@@ -4,7 +4,11 @@
   var BUTTON_TEXT = "Sample Button";
 
   Neo.Classes.ButtonTest = Neo.Classes.TestView.extend({
-    buildDOM: function() {
+    init: function(config) {
+      Neo.Classes.TestView.call(this, config);
+    },
+
+    buildComponent: function() {
       return {
         name: "Button",
         text: BUTTON_TEXT,
