@@ -8,19 +8,19 @@
 
     this.dom = null;
     this.listenTo = Neo.ifNull(config.listenTo, {}, "object");
-    this.canRender = Neo.ifNull(config.canRender, true, "boolean");
+    this._canRender = Neo.ifNull(config.canRender, true, "boolean");
     this.listeners = Neo.ifNull(config.listeners, {}, "object");
     this.cname = Neo.ifNull(config.name, function() {
       throw new Error("component 'name' is required");
     }, "string");
     this.parent = Neo.ifNull(config.parent, null, "UIComponent");
     this.parentDom = Neo.ifNull(config.parentDom, null);
-    this.width = Neo.ifNull(config.width, null, "string,number");
-    this.height = Neo.ifNull(config.height, null, "string,number");
+    this._width = Neo.ifNull(config.width, null, "string,number");
+    this._height = Neo.ifNull(config.height, null, "string,number");
     this.cls = Neo.ifNull(config.cls, null, "string");
     this.data = Neo.ifNull(config.data, null);
-    this.visible = Neo.ifNull(config.visible, true, "boolean");
-    this.notification = null;
+    this._visible = Neo.ifNull(config.visible, true, "boolean");
+    this._notification = null;
     this.children = [];
     this.isHighlighting = false;
 
@@ -58,16 +58,16 @@
       returnValueFromBuildDOM.classList.add("comp" + this.cname + "Inner");
     }
 
-    if (this.width !== null) {
-      this.setWidth(this.width);
+    if (this._width !== null) {
+      this.width = this._width;
     }
 
-    if (this.height !== null) {
-      this.setHeight(this.height);
+    if (this._height !== null) {
+      this.height = this._height;
     }
 
-    if (this.visible === false) {
-      this.hide();
+    if (this._visible === false) {
+      this.visible = false;
     }
 
     for (var eventName in this.listeners) {
@@ -82,76 +82,84 @@
       throw new Error("'_buildDOM' must be overridden in the sub class");
     },
 
-    show: function() {
-      this.dom.style.display = null;
-      this.visible = true;
+    get visible() {
+      return this._visible;
     },
 
-    hide: function() {
-      this.dom.style.display = "none";
-      this.visible = false;
+    set visible(flag) {
+      Neo.typeCheck(flag, "boolean");
+
+      if (flag === true) {
+        this.dom.style.display = null;
+        this._visible = true;  
+      } else {
+        this.dom.style.display = "none";
+        this._visible = false;  
+      }
     },
 
-    isVisible: function() {
-      return this.visible;
+    get width() {
+      return window.getComputedStyle(this.dom).width;
     },
 
-    isHidden: function() {
-      return !this.visible;
+    set width(value) {
+      Neo.typeCheck(value, "string");
+      this.dom.childNodes[0].style.width = value;
     },
 
-    setWidth: function(width) {
-      Neo.typeCheck(width, "string,number");
-      this.dom.childNodes[0].style.width = width;
+    get height() {
+      return window.getComputedStyle(this.dom).height;
     },
 
-    getWidth: function() {
-      return parseInt(window.getComputedStyle(this.dom).width, 10);
-    },
-
-    setHeight: function(height) {
-      Neo.typeCheck(height, "string,number");
-      this.dom.childNodes[0].style.height = height;
-    },
-
-    getHeight: function() {
-      return parseInt(window.getComputedStyle(this.dom).height, 10);
+    set height(value) {
+      Neo.typeCheck(value, "string");
+      this.dom.childNodes[0].style.height = value;
     },
 
     scrollIntoView: function() {
       this.dom.scrollIntoView();
     },
 
-    setNotification: function(text) {
-      Neo.typeCheck(text, "string");
+    set notification(value) {
+      Neo.typeCheck(value, "string");
 
-      if (this.notification === null) {
+      if (this._notification === null) {
         var span = document.createElement("span");
-        span.innerText = text;
+        span.textContent = value;
         span.className = "neoNotification";
-        this.notification = span;
+        this._notification = span;
         this.dom.appendChild(span);
       } else {
-        this.notification.innerText = text;
+        this._notification.textContent = value;
+      }
+    },
+
+    get notification() {
+      if (this._notification !== null) {
+        return this._notification.textContent;
+      } else {
+        return null;
       }
     },
 
     removeNotification: function() {
-      if (this.notification !== null) {
-        this.dom.removeChild(this.notification);
-        this.notification = null;
+      if (this._notification !== null) {
+        this.dom.removeChild(this._notification);
+        this._notification = null;
       }
     },
 
-    startHighlight: function() {
-      if (!this.isHighlighting) {
+    get highlight() {
+      return this.isHighlighting;
+    },
+
+    set highlight(value) {
+      Neo.typeCheck(value, "boolean");
+
+      if (value === true && this.isHighlighting === false) {
         this.addClass(this.HIGHLIGHT_CLASS);
-        this.isHightlighting = true;
-      }
-    },
-
-    stopHighlight: function() {
-      if (this.isHighlighting) {
+        this.isHighlighting = true;
+      } else if (value === false && this.isHighlighting === true) {
         this.removeClass(this.HIGHLIGHT_CLASS);
         this.isHighlighting = false;
       }
@@ -175,6 +183,22 @@
     remove: function() {}
   };
 
+// http://ejohn.org/blog/javascript-getters-and-setters/
+function copy(a,b) {
+  for ( var i in b ) {
+      var g = b.__lookupGetter__(i), s = b.__lookupSetter__(i);
+     
+      if ( g || s ) {
+          if ( g )
+              a.__defineGetter__(i, g);
+          if ( s )
+              a.__defineSetter__(i, s);
+       } else
+           a[i] = b[i];
+  }
+  return a;
+}
+
   function extend(parentClass, properties) {
     if ("extend" in properties) {
       throw new Error("do not use 'extend' as a property, already in use by framework");
@@ -188,9 +212,7 @@
 
     childClass.prototype = Object.create(parentClass.prototype);
 
-    for (var property in properties) {
-      childClass.prototype[property] = properties[property];
-    }
+    copy(childClass.prototype, properties);
 
     childClass.extend = extend.bind(null, childClass);
 

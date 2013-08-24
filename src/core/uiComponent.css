@@ -16,15 +16,26 @@
 }
 
 .neoHighlight {
-  -webkit-animation: glowing 1s;
+  -webkit-animation: glowing 1s infinite alternate;
+  animation: glowing 1s infinite alternate;
 }
 
-@-webkit-keyframe glowing {
+@-webkit-keyframes glowing {
   from {
-    box-shadow: 0 0 10px 1px red;   
+    box-shadow: 0 0 10px 1px blue;
   }
 
   to {
-    box-shadow: 0 0 20px 1px red;   
+    box-shadow: 0 0 20px 1px blue;
+  }
+}
+
+@keyframes glowing {
+  from {
+    box-shadow: 0 0 10px 1px blue;
+  }
+
+  to {
+    box-shadow: 0 0 20px 1px blue;
   }
 }
