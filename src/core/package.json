@@ -1,12 +1,11 @@
 {
   "common": {
-    "files": "core/viewManager.js"
+    "files": ["core/viewManager.js", "core/neo.css"]
   },
   "UIComponent": {
     "files": [
       "core/utils.js",
       "core/uiComponent.js",
-      "core/normalize.css",
       "core/uiComponent.css"
     ]
   },

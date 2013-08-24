@@ -1,0 +1,34 @@
+@import url(normalize.css);
+
+html, body, #viewContainer {
+  height: 100%;
+}
+
+#viewContainer {
+  -webkit-perspective: 800px;
+}
+
+#card {
+  -webkit-transform-style: preserve-3d;
+  position: relative;
+  height: 100%;
+  transition: -webkit-transform 1s;
+}
+
+#front, #back {
+  height: 100%;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+}
+
+#front {
+}
+
+#back {
+  -webkit-transform: rotateY(180deg);
+}
+
+#card.flipped {
+  -webkit-transform: rotateY(180deg);
+}

@@ -6,15 +6,6 @@
     url(../assets/craftygirls.woff) format('woff');
 }
 
-html, body {
-  height: 100%;
-}
-
-#viewContainer {
-  display: -webkit-flex;
-  height: 100%;
-}
-
 .compHelloWorld {
   font-family: 'Crafty Girls';
   font-size: 128px;
