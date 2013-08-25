@@ -9,5 +9,11 @@
 .compHelloWorld {
   font-family: 'Crafty Girls';
   font-size: 128px;
+  display: -webkit-flex;
+  height: 100%;
+  background-image: radial-gradient(white, gold);
+}
+
+.compHelloWorld .compLabel {
   margin: auto;
 }
