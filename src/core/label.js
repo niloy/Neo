@@ -10,14 +10,14 @@
     buildDOM: function() {
       var dom = document.createElement("label");
 
-      dom.innerText = this.text;
+      dom.textContent = this.text;
 
       return dom;
     },
     
     setText: function(text) {
       this.text = text;
-      this.dom.childNodes[0].innerText = this.text;
+      this.dom.childNodes[0].textContent = this.text;
     },
 
     getText: function() {

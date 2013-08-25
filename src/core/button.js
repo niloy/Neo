@@ -10,7 +10,7 @@
     buildDOM: function() {
       var dom = document.createElement("button");
 
-      dom.innerText = this.text;
+      dom.textContent = this.text;
 
       return dom;
     },
@@ -23,7 +23,7 @@
       Neo.typeCheck(text, "string");
 
       this.text = text;
-      this.dom.childNodes[0].innerText = this.text;
+      this.dom.childNodes[0].textContent = this.text;
     }
   });
 }());

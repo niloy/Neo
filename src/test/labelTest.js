@@ -26,12 +26,12 @@
 
       describe("Label", function() {
         it("should have text -> " + TEXT, function() {
-          expect(lbldom.innerText).to.be(TEXT);
+          expect(lbldom.textContent).to.be(TEXT);
         });
 
         it("setText() should work", function() {
           label.setText(NEW_TEXT);
-          expect(lbldom.innerText).to.be(NEW_TEXT);
+          expect(lbldom.textContent).to.be(NEW_TEXT);
         });
 
         it("getText() should work", function() {

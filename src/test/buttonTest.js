@@ -25,7 +25,7 @@
         var dom = document.querySelector(".compButtonInner");
 
         it("should have text -> " + BUTTON_TEXT, function() {
-          expect(dom.innerText).to.be(BUTTON_TEXT);
+          expect(dom.textContent).to.be(BUTTON_TEXT);
         });
 
         it("getText() should work", function() {
