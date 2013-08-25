@@ -2,26 +2,31 @@
   "use strict";
 
   Neo.Classes.Label = Neo.Classes.UIComponent.extend({
+    NO_TEXT: "NO TEXT",
+
     init: function(config) {
-      this.text = Neo.ifNull(config.text, "NO TEXT", "string");
+      this._text = Neo.ifNull(config.text, this.NO_TEXT, "string");
+
       Neo.Classes.UIComponent.call(this, config);
     },
 
     buildDOM: function() {
       var dom = document.createElement("label");
 
-      dom.textContent = this.text;
+      dom.textContent = this._text;
 
       return dom;
     },
-    
-    setText: function(text) {
-      this.text = text;
-      this.dom.childNodes[0].textContent = this.text;
+
+    get text() {
+      return this._text;
     },
 
-    getText: function() {
-      return this.text;
+    set text(value) {
+      Neo.typeCheck(value, "string,number");
+
+      this._text = value;
+      this.dom.childNodes[0].textContent = this._text;
     }
   });
 }());

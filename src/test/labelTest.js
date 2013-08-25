@@ -29,13 +29,13 @@
           expect(lbldom.textContent).to.be(TEXT);
         });
 
-        it("setText() should work", function() {
-          label.setText(NEW_TEXT);
-          expect(lbldom.textContent).to.be(NEW_TEXT);
+        it("text getter should work", function() {
+          expect(label.text).to.be(TEXT);
         });
 
-        it("getText() should work", function() {
-          expect(label.getText()).to.be(NEW_TEXT);
+        it("text setter should work", function() {
+          label.text = NEW_TEXT;
+          expect(label.text).to.be(NEW_TEXT);
         });
       });
     }
