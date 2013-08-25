@@ -2,44 +2,44 @@
   "use strict";
 
   Neo.Classes.Image = Neo.Classes.UIComponent.extend({
+    EMPTY_IMAGE: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC\
+1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=",
+
     init: function(config) {
-      this.src = Neo.ifNull(config.src, "../assets/emptyImage.png");
-      this.alt = Neo.ifNull(config.alt, null);
+      this.img = null;
+      this._src = Neo.ifNull(config.src, this.EMPTY_IMAGE);
+      this._alt = Neo.ifNull(config.alt, null, "string,number");
+
       Neo.Classes.UIComponent.call(this, config);
     },
 
     buildDOM: function() {
-      var dom = document.createElement("image");
+      this.img = document.createElement("image");
 
-      dom.src = this.src;
+      this.img.src = this._src;
 
-      if (this.alt !== null) {
-        dom.alt = this.alt;
+      if (this._alt !== null) {
+        this.alt = this._alt;
       }
 
-      return dom;
+      return this.img;
     },
 
-    setSrc: function(src) {
-      Neo.typeCheck(src, "string");
-
-      this.src = src;
-      this.dom.src = src;
+    get src() {
+      return this.img.src;
     },
 
-    getSrc: function(src) {
-      return this.src;
+    set src(value) {
+      this.img.src = value;
     },
 
-    setAlt: function(alt) {
-      Neo.typeCheck(alt, "string");
-
-      this.alt = alt;
-      this.dom.alt = alt;
+    get alt() {
+      return this.img.alt;
     },
 
-    getAlt: function() {
-      return this.alt;
+    set alt(value) {
+      Neo.typeCheck(value, "string,number");
+      this.img.alt = value;
     }
   });
 }());

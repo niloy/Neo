@@ -26,6 +26,15 @@
         it("should have alt text", function() {
           expect(document.querySelector(".compImageInner").alt).to.be(ALT);
         });
+
+        it("alt getter must work", function() {
+          expect(img.alt).to.be(ALT);
+        });
+
+        it("alt setter must work", function() {
+          img.alt = "hello";
+          expect(img.alt).to.be("hello");
+        });
       });
     }
   });
