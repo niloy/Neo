@@ -2,28 +2,29 @@
   "use strict";
 
   Neo.Classes.Button = Neo.Classes.UIComponent.extend({
+    NO_TEXT: "No text",
+
     init: function(config) {
-      this.text = Neo.ifNull(config.text, "No text");
+      this._text = Neo.ifNull(config.text, this.NO_TEXT);
       Neo.Classes.UIComponent.call(this, config);
     },
 
     buildDOM: function() {
       var dom = document.createElement("button");
 
-      dom.textContent = this.text;
+      dom.textContent = this._text;
 
       return dom;
     },
 
-    getText: function() {
-      return this.text;
+    get text() {
+      return this._text;
     },
 
-    setText: function(text) {
-      Neo.typeCheck(text, "string");
-
-      this.text = text;
-      this.dom.childNodes[0].textContent = this.text;
+    set text(value) {
+      Neo.typeCheck(value, "string,number");
+      this._text = value;
+      this.dom.childNodes[0].textContent = value;
     }
   });
 }());

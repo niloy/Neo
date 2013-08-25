@@ -28,13 +28,13 @@
           expect(dom.textContent).to.be(BUTTON_TEXT);
         });
 
-        it("getText() should work", function() {
-          expect(button.getText()).to.be(BUTTON_TEXT);
+        it("text getter should work", function() {
+          expect(button.text).to.be(BUTTON_TEXT);
         });
 
-        it("setText() should work", function() {
-          button.setText("WASSUP");
-          expect(button.getText()).to.be("WASSUP");
+        it("text setter should work", function() {
+          button.text = "WASSUP";
+          expect(button.text).to.be("WASSUP");
         });
       });
     }
