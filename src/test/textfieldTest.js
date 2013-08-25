@@ -11,8 +11,13 @@
     buildComponent: function() {
       return {
         name: "Textfield",
-        type: "search",
-        text: TEXT
+        value: TEXT,
+        validation: /[a-zA-Z]/,
+        required: true,
+        autofocus: true,
+        multiline: true,
+        fieldname: "abc",
+        placeholder: "enter some text here"
       };
     },
 
@@ -22,19 +27,28 @@
           expect(true).to.be(true);
         });
 
-        // it("value getter must work", function() {
-        //   expect(txt.value.to.be(TEXT);
-        // });
+        it("value getter must work", function() {
+          expect(txt.value).to.be(TEXT);
+        });
 
-        // it("value setter must work", function() {
-        //   txt.value = "WORLD";
-        //   expect(txt.value).to.be("WORLD");
-        // });
+        it("value setter must work", function() {
+          txt.value = "WORLD";
+          expect(txt.value).to.be("WORLD");
+        });
 
-        // it("clear() must work", function() {
-        //   txt.clear();
-        //   expect(txt.value).to.be("");
-        // });
+        it("clear() must work", function() {
+          txt.clear();
+          expect(txt.value).to.be("");
+        });
+
+        it("fieldname getter must work", function() {
+          expect(txt.fieldname).to.be("abc");
+        });
+
+        it("fieldname setter must work", function() {
+          txt.fieldname = "xyz";
+          expect(txt.fieldname).to.be("xyz");
+        });
       });
     }
   });

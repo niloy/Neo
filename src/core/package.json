@@ -28,7 +28,7 @@
   },
   "compTextfield": {
     "files": ["core/textfield.js", "core/textfield.css"],
-    "requires": ["UIComponent", "testFramework"]
+    "requires": ["compInput"]
   },
   "helloWorld": {
     "files": ["user/helloWorld.js", "user/helloWorld.css"],
@@ -44,7 +44,7 @@
   },
   "textfieldTest": {
     "files": "test/textfieldTest.js",
-    "requires": ["compTextfield"]
+    "requires": ["compTextfield", "testFramework"]
   },
   "compImage": {
     "files": ["core/image.js", "core/image.css"],
@@ -53,5 +53,9 @@
   "imageTest": {
     "files": "test/imageTest.js",
     "requires": ["compImage", "testFramework"]
+  },
+  "compInput": {
+    "files": "core/input.js",
+    "requires": "UIComponent"
   }
 }

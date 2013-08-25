@@ -91,7 +91,7 @@
 
       if (flag === true) {
         this.dom.style.display = null;
-        this._visible = true;  
+        this._visible = true;
       } else {
         this.dom.style.display = "none";
         this._visible = false;  
