@@ -23,6 +23,9 @@
     this._notification = null;
     this.children = [];
     this.isHighlighting = false;
+    this.subscribe = Neo.ifNull(config.subscribe, {}, "object");
+    this.subscribeRegistry = {};
+    this.root = Neo.ifNull(config.root, null);
 
     if (this.canRender === false) {
       return;
@@ -39,11 +42,15 @@
     this.addClass("comp" + this.cname);
 
     if (this.parent == null) {
+      this.root = this;
+
       if (this.parentDom == null) {
         throw new Error("both 'parent' and 'parentDom' are missing");
       } else {
         this.parentDom.appendChild(this.dom);
       }
+    } else if (this.root === null) {
+      throw new Error("'root' is missing");
     }
 
     var returnValueFromBuildDOM = this.buildDOM();
@@ -51,6 +58,7 @@
     if (returnValueFromBuildDOM != null) {
       if (returnValueFromBuildDOM.toString() === "[object Object]") {
         returnValueFromBuildDOM.parent = this;
+        returnValueFromBuildDOM.root = this.root;
         var child = Neo.createComponent(returnValueFromBuildDOM);
         this.dom.appendChild(child.dom);
         this.children.push(child);
@@ -74,6 +82,14 @@
 
     for (var eventName in this.listeners) {
       this.dom.addEventListener(eventName, this.listeners[eventName].bind(this));
+    }
+
+    for (var s in this.subscribe) {
+      if (!(s in this.root.subscribeRegistry)) {
+        this.root.subscribeRegistry[s] = [];
+      }
+
+      this.root.subscribeRegistry[s].push(this.subscribe[s]);
     }
   };
 
@@ -182,7 +198,17 @@
       this.dom.classList.toggle(str);
     },
 
-    remove: function() {}
+    remove: function() {},
+
+    publish: function(eventName) {
+      var args = [].slice.call(arguments, 1);
+
+      if (eventName in this.root.subscribeRegistry) {
+        this.root.subscribeRegistry[eventName].forEach(function(fn) {
+          fn.apply(this, args);
+        }.bind(this));
+      }
+    }
   };
 
 // http://ejohn.org/blog/javascript-getters-and-setters/

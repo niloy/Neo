@@ -3,6 +3,10 @@
 
   Neo.viewContainer = document.getElementById("viewContainer");
 
+  Neo.KeyCodes = {
+    ENTER: 13
+  };
+
   Neo.getUniqueNumber = (function() {
     var i = 0;
 

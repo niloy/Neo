@@ -57,5 +57,9 @@
   "compInput": {
     "files": "core/input.js",
     "requires": "UIComponent"
+  },
+  "eventsTest": {
+    "files": "test/eventsTest.js",
+    "requires": "compTextfield"
   }
 }
