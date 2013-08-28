@@ -11,7 +11,6 @@
       this.readonly = Neo.ifNull(config.readonly, false, "boolean");
       this._disabled = Neo.ifNull(config.disabled, false, "boolean");
       this._errorText = Neo.ifNull(config.errorText, this.ERROR_TEXT, "string");
-      this.label = Neo.ifNull(config.label, null, "string,number");
       this._fieldname = Neo.ifNull(config.fieldname, null, "string");
       this._errorTextToDisplay = null;
 
@@ -33,7 +32,7 @@
     get fieldname() {
       throw new Error("please implement 'fieldname' getter");
     },
-    
+
     set fieldname(value) {
       throw new Error("please implement 'fieldname' setter");
     },

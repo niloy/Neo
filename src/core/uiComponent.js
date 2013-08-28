@@ -48,14 +48,16 @@
 
     var returnValueFromBuildDOM = this.buildDOM();
 
-    if (returnValueFromBuildDOM.toString() === "[object Object]") {
-      returnValueFromBuildDOM.parent = this;
-      var child = Neo.createComponent(returnValueFromBuildDOM);
-      this.dom.appendChild(child.dom);
-      this.children.push(child);
-    } else if (returnValueFromBuildDOM != null) {
-      this.dom.appendChild(returnValueFromBuildDOM);
-      returnValueFromBuildDOM.classList.add("comp" + this.cname + "Inner");
+    if (returnValueFromBuildDOM != null) {
+      if (returnValueFromBuildDOM.toString() === "[object Object]") {
+        returnValueFromBuildDOM.parent = this;
+        var child = Neo.createComponent(returnValueFromBuildDOM);
+        this.dom.appendChild(child.dom);
+        this.children.push(child);
+      } else {
+        this.dom.appendChild(returnValueFromBuildDOM);
+        returnValueFromBuildDOM.classList.add("comp" + this.cname + "Inner");
+      }
     }
 
     if (this._width !== null) {
@@ -94,7 +96,7 @@
         this._visible = true;
       } else {
         this.dom.style.display = "none";
-        this._visible = false;  
+        this._visible = false;
       }
     },
 
@@ -187,7 +189,7 @@
 function copy(a,b) {
   for ( var i in b ) {
       var g = b.__lookupGetter__(i), s = b.__lookupSetter__(i);
-     
+
       if ( g || s ) {
           if ( g )
               a.__defineGetter__(i, g);

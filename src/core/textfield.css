@@ -1,3 +1,8 @@
 .compTextfield {
   display: inline-block;
 }
+
+.compTextfield label {
+  width: 150px;
+  display: inline-block;
+}

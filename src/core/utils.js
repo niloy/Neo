@@ -3,6 +3,14 @@
 
   Neo.viewContainer = document.getElementById("viewContainer");
 
+  Neo.getUniqueNumber = (function() {
+    var i = 0;
+
+    return function() {
+      return i++;
+    };
+  }());
+
   Neo.createComponent = function(config) {
     var componentName = config.name;
 
@@ -29,7 +37,7 @@
     var types = typeString.split(",");
     var checkConditions = {
       "string": function(value) {
-        return typeof value === "string"; 
+        return typeof value === "string";
       },
       "number": function(value) {
         return typeof value === "number";
@@ -71,7 +79,7 @@
       } else {
         if (!(type in checkConditions)) {
           throw new Error("invalid type -> " + type);
-        } 
+        }
 
         if (checkConditions[type](value) === true) {
           return true;

@@ -17,7 +17,8 @@
         autofocus: true,
         multiline: true,
         fieldname: "abc",
-        placeholder: "enter some text here"
+        placeholder: "enter some text here",
+        label: "A Textfield"
       };
     },
 
@@ -48,6 +49,15 @@
         it("fieldname setter must work", function() {
           txt.fieldname = "xyz";
           expect(txt.fieldname).to.be("xyz");
+        });
+
+        it("label getter must work", function() {
+          expect(txt.label).to.be("A Textfield");
+        });
+
+        it("label setter must work", function() {
+          txt.label = "Name";
+          expect(txt.label).to.be("Name");
         });
       });
     }
