@@ -68,8 +68,10 @@
       } else {
         if (this.value.length === 0) {
           return true;
-        } else {
+        } else if (this.validation !== null) {
           return checkValue();
+        } else {
+          return true;
         }
       }
     },
