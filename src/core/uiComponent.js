@@ -84,13 +84,7 @@
       this.dom.addEventListener(eventName, this.listeners[eventName].bind(this));
     }
 
-    for (var s in this.subscribe) {
-      if (!(s in this.root.subscribeRegistry)) {
-        this.root.subscribeRegistry[s] = [];
-      }
-
-      this.root.subscribeRegistry[s].push(this.subscribe[s]);
-    }
+    this._setupSubscribers();
   };
 
   Neo.Classes.UIComponent.prototype = {
@@ -204,28 +198,53 @@
       var args = [].slice.call(arguments, 1);
 
       if (eventName in this.root.subscribeRegistry) {
-        this.root.subscribeRegistry[eventName].forEach(function(fn) {
-          fn.apply(this, args);
+        this.root.subscribeRegistry[eventName].forEach(function(eObj) {
+          eObj.raise(eventName, this, args);
         }.bind(this));
+      }
+    },
+
+    _setupSubscribers: function() {
+      var self = this;
+
+      for (var s in this.subscribe) {
+        var eventPro = new Neo.Classes.EventProcessor({
+          eventString: s,
+          eventHandler: this.subscribe[s],
+          deleteCallback: function() {
+            eventPro.eventNames.forEach(function(event) {
+              var index = self.root.subscribeRegistry[event].indexOf(eventPro);
+              delete self.root.subscribeRegistry[event][index];
+            });
+          }
+        });
+
+        eventPro.eventNames.forEach(function(event) {
+          if (!(event in self.root.subscribeRegistry)) {
+            self.root.subscribeRegistry[event] = [];
+          }
+
+          self.root.subscribeRegistry[event].push(eventPro);
+        });
       }
     }
   };
 
-// http://ejohn.org/blog/javascript-getters-and-setters/
-function copy(a,b) {
-  for ( var i in b ) {
-      var g = b.__lookupGetter__(i), s = b.__lookupSetter__(i);
+  // http://ejohn.org/blog/javascript-getters-and-setters/
+  function copy(a,b) {
+    for ( var i in b ) {
+        var g = b.__lookupGetter__(i), s = b.__lookupSetter__(i);
 
-      if ( g || s ) {
-          if ( g )
-              a.__defineGetter__(i, g);
-          if ( s )
-              a.__defineSetter__(i, s);
-       } else
-           a[i] = b[i];
+        if ( g || s ) {
+            if ( g )
+                a.__defineGetter__(i, g);
+            if ( s )
+                a.__defineSetter__(i, s);
+         } else
+             a[i] = b[i];
+    }
+    return a;
   }
-  return a;
-}
 
   function extend(parentClass, properties) {
     if ("extend" in properties) {

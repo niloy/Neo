@@ -4,7 +4,12 @@
   Neo.viewContainer = document.getElementById("viewContainer");
 
   Neo.KeyCodes = {
-    ENTER: 13
+    ENTER: 13,
+    BACKSPACE: 8,
+    UP: 38,
+    DOWN: 40,
+    LEFT: 37,
+    RIGHT: 39
   };
 
   Neo.getUniqueNumber = (function() {

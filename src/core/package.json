@@ -6,7 +6,8 @@
     "files": [
       "core/utils.js",
       "core/uiComponent.js",
-      "core/uiComponent.css"
+      "core/uiComponent.css",
+      "core/eventProcessor.js"
     ]
   },
   "testFramework": {
