@@ -1,8 +1,6 @@
 (function() {
   "use strict";
 
-  Neo.viewContainer = document.getElementById("viewContainer");
-
   Neo.KeyCodes = {
     ENTER: 13,
     BACKSPACE: 8,

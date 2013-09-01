@@ -4,31 +4,21 @@ html, body, #viewContainer {
   height: 100%;
 }
 
+body {
+  overflow: hidden;
+}
+
 #viewContainer {
-  -webkit-perspective: 800px;
-}
-
-#card {
-  -webkit-transform-style: preserve-3d;
   position: relative;
-  height: 100%;
-  transition: -webkit-transform 1s;
+  width: calc(100% * 2);
 }
 
-#front, #back {
-  height: 100%;
-  width: 100%;
-  -webkit-backface-visibility: hidden;
+.viewHolder {
+  overflow: auto;
   position: absolute;
+  width: calc(100% / 2);
+  height: 100%;
+  transition: left 0.5s;
+  background-color: white;
 }
 
-#front {
-}
-
-#back {
-  -webkit-transform: rotateY(180deg);
-}
-
-#card.flipped {
-  -webkit-transform: rotateY(180deg);
-}
