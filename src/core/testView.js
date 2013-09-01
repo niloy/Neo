@@ -9,7 +9,7 @@
       this.tests(this.children[0]);
       window.testComponent = this.children[0];
       var results = mocha.run(function() {
-        console.log("Failed: " + results.failures);
+        results && console.log("Failed: " + results.failures);
       });
     },
 
