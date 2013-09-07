@@ -9,7 +9,7 @@
     this.holder1 = null;
     this.holder2 = null;
 
-    var viewMatch = window.location.search.match(/view=([a-z0-9]+)/i);
+    var viewMatch = window.location.search.match(/v=([a-z0-9]+)/i);
     var viewName = "index";   // Default view = index
 
     if (viewMatch && viewMatch.length) {
@@ -42,7 +42,7 @@
           }.bind(this, this.holder1));
           this.holder1 = this.holder2;
           this.holdre2 = null;
-          history.pushState({viewName: viewName}, null, "?view=" + viewName);
+          history.pushState({viewName: viewName}, null, "?v=" + viewName);
           successCb();
         }.bind(this), 0);
       }.bind(this);
