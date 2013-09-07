@@ -2,17 +2,13 @@
   "use strict";
 
   Neo.Classes.UIComponent = function(config) {
-    Neo.ifNull(config, function() {
-      throw new Error("'config' parameter missing");
-    }, "object");
+    Neo.ifNull(config, new Error("'config' parameter missing"), "object");
 
     this.dom = null;
     this.listenTo = Neo.ifNull(config.listenTo, {}, "object");
     this._canRender = Neo.ifNull(config.canRender, true, "boolean");
     this.listeners = Neo.ifNull(config.listeners, {}, "object");
-    this.cname = Neo.ifNull(config.name, function() {
-      throw new Error("component 'name' is required");
-    }, "string");
+    this.cname = Neo.ifNull(config.name, new Error("'name' is required"), "string");
     this.parent = Neo.ifNull(config.parent, null);
     this.parentDom = Neo.ifNull(config.parentDom, null);
     this._width = Neo.ifNull(config.width, null, "string,number");
