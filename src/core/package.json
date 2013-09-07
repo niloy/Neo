@@ -62,5 +62,13 @@
   "eventsTest": {
     "files": "test/eventsTest.js",
     "requires": "compTextfield"
+  },
+  "compLayout": {
+    "files": ["core/layout.js", "core/layout.css"],
+    "requires": "UIComponent"
+  },
+  "layoutTest": {
+    "files": "test/layoutTest.js",
+    "requires": ["compLayout", "testFramework", "compButton"]
   }
 }

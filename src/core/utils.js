@@ -30,7 +30,11 @@
 
   Neo.ifNull = function(value, defaultValue, typeCheck) {
     if (value == null) {
-      return typeof defaultValue === "function" ? defaultValue() : defaultValue;
+      if (defaultValue instanceof Error) {
+        throw defaultValue;
+      } else {
+        return defaultValue;
+      }
     } else {
       if (typeCheck != null) {
         Neo.typeCheck(value, typeCheck);
@@ -77,8 +81,8 @@
       var type = types[i];
 
       if (isLiteral(type)) {
-        // remove the '{' at start and '}' at end, then split on ':'
-        var literalParts = type.substr(1, type.length - 2).split(":");
+        // remove the '{' at start and '}' at end, then split on '|'
+        var literalParts = type.substr(1, type.length - 2).split("|");
 
         if (literalParts.indexOf(value) !== -1) {
           return true;

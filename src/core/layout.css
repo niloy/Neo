@@ -1,0 +1,7 @@
+.compUIComponent .compLayout {
+  display: block;
+}
+
+.compLayout.horizontal > .layoutItem {
+  display: inline-block;
+}

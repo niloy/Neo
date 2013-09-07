@@ -13,7 +13,7 @@
     this.cname = Neo.ifNull(config.name, function() {
       throw new Error("component 'name' is required");
     }, "string");
-    this.parent = Neo.ifNull(config.parent, null, "UIComponent");
+    this.parent = Neo.ifNull(config.parent, null);
     this.parentDom = Neo.ifNull(config.parentDom, null);
     this._width = Neo.ifNull(config.width, null, "string,number");
     this._height = Neo.ifNull(config.height, null, "string,number");
@@ -41,16 +41,16 @@
     this.addClass("compUIComponent");
     this.addClass("comp" + this.cname);
 
+    if (this.parent == null && this.parentDom == null) {
+      throw new Error("both 'parent' and 'parentDom' are missing");
+    }
+
     if (this.parent == null) {
       this.root = this;
+    }
 
-      if (this.parentDom == null) {
-        throw new Error("both 'parent' and 'parentDom' are missing");
-      } else {
-        this.parentDom.appendChild(this.dom);
-      }
-    } else if (this.root === null) {
-      throw new Error("'root' is missing");
+    if (this.parentDom !== null) {
+      this.parentDom.appendChild(this.dom);
     }
 
     var returnValueFromBuildDOM = this.buildDOM();
@@ -192,7 +192,12 @@
       this.dom.classList.toggle(str);
     },
 
-    remove: function() {},
+    remove: function() {
+      this.children.forEach(function(child) {
+        child.remove();
+      });
+      this.dom.parentNode.removeChild(this.dom);
+    },
 
     publish: function(eventName) {
       var args = [].slice.call(arguments, 1);
@@ -251,7 +256,7 @@
       throw new Error("do not use 'extend' as a property, already in use by framework");
     }
 
-    var childClass = function() {
+    function childClass() {
       if ("init" in properties) {
         properties.init.apply(this, arguments);
       }
