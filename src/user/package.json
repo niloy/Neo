@@ -1,0 +1,6 @@
+{
+  "calculator": {
+    "files": ["user/calculator.js", "user/calculator.css"],
+    "requires": ["compLayout", "compButton", "compLabel"]
+  }
+}

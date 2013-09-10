@@ -14,7 +14,7 @@
     this._width = Neo.ifNull(config.width, null, "string,number");
     this._height = Neo.ifNull(config.height, null, "string,number");
     this.cls = Neo.ifNull(config.cls, null, "string");
-    this.data = Neo.ifNull(config.data, null);
+    this.data = Neo.ifNull(config.data, {});
     this._visible = Neo.ifNull(config.visible, true, "boolean");
     this._notification = null;
     this.children = [];
@@ -22,6 +22,7 @@
     this.subscribe = Neo.ifNull(config.subscribe, {}, "object");
     this.subscribeRegistry = {};
     this.root = Neo.ifNull(config.root, null);
+    this.models = [];
 
     if (this.canRender === false) {
       return;
@@ -200,7 +201,7 @@
 
       if (eventName in this.root.subscribeRegistry) {
         this.root.subscribeRegistry[eventName].forEach(function(eObj) {
-          eObj.raise(eventName, this, args);
+          eObj.raise(eventName, args);
         }.bind(this));
       }
     },
@@ -212,6 +213,7 @@
         var eventPro = new Neo.Classes.EventProcessor({
           eventString: s,
           eventHandler: this.subscribe[s],
+          context: this,
           deleteCallback: function() {
             eventPro.eventNames.forEach(function(event) {
               var index = self.root.subscribeRegistry[event].indexOf(eventPro);
@@ -228,6 +230,12 @@
           self.root.subscribeRegistry[event].push(eventPro);
         });
       }
+    },
+
+    registerModel: function(config) {
+      config.root = this;
+      var model = new Neo.Classes.Model(config);
+      this.models.push(model);
     }
   };
 

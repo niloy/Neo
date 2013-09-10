@@ -9,11 +9,11 @@
     this.holder1 = null;
     this.holder2 = null;
 
-    var viewMatch = window.location.search.match(/v=([a-z0-9]+)/i);
+    var qs = Neo.parseQueryString();
     var viewName = "index";   // Default view = index
 
-    if (viewMatch && viewMatch.length) {
-      viewName = viewMatch[1];
+    if ("v" in qs) {
+      viewName = qs.v;
     }
 
     this.holder1 = this._createHolder(0, 0);

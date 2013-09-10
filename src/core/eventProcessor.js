@@ -6,6 +6,7 @@
     Neo.typeCheck(config.eventHandler, "function");
     Neo.typeCheck(config.deleteCallback, "function");
 
+    this.context = config.context;
     this.eventString = config.eventString;
     this.eventHandler = config.eventHandler;
     this.deleteCallback = config.deleteCallback;
@@ -24,19 +25,15 @@
     AND: "AND",
     OR: "OR",
 
-    raise: function(eventName, context, data) {
-      function callHandler(handler) {
-        handler.apply(context, data);
-      }
-
+    raise: function(eventName, data) {
       switch (this.type) {
         case this.SIMPLE:
         case this.OR:
-          callHandler(this.eventHandler);
+          this.eventHandler.apply(this.context, data);
           break;
         case this.ONCE:
           this.deleteCallback();
-          callHandler(this.eventHandler);
+          this.eventHandler.apply(this.context, data);
           break;
         case this.AND:
           this.eventMap[eventName] = true;
@@ -54,7 +51,7 @@
               this.eventMap[j] = false;
             }
 
-            callHandler(this.eventHandler);
+            this.eventHandler.apply(this.context, data);
           }
           break;
       }

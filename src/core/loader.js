@@ -2,18 +2,51 @@
   "use strict";
 
   function Loader(readyCallback) {
+    var corePackage = null;
+    var userPackage = null;
+
     this.packages = null;
     this.loadedFiles = {};
 
-    this.ajax("core/package.json", function(packageText) {
+    function parseJSON(text) {
       try {
-        this.packages = JSON.parse(packageText);
+        return JSON.parse(text);
       } catch (ex) {
         throw("package.json is not a valid JSON");
       }
+    }
 
-      readyCallback.call(this);
-    }.bind(this));
+    function mergePackages(pack1, pack2) {
+      var finalPack = pack1;
+
+      for (var i in pack2) {
+        if (i in pack1) {
+          for (var j in pack2[i]) {
+            finalPack[i][j] = pack2[i][j];
+          }
+        } else {
+          finalPack[i] = pack2[i];
+        }
+      }
+
+      return finalPack;
+    }
+
+    var packageLoaded = function(packageText) {
+      if (corePackage !== null && userPackage !== null) {
+        this.packages = mergePackages(corePackage, userPackage);
+        readyCallback.call(this);
+      }
+    }.bind(this)
+
+    this.ajax("core/package.json", function(text) {
+      corePackage = parseJSON(text);
+      packageLoaded();
+    });
+    this.ajax("user/package.json", function(text) {
+      userPackage = parseJSON(text);
+      packageLoaded();
+    });
 
     return null;
   };
@@ -71,7 +104,7 @@
         });
 
         return category;
-      } 
+      }
 
       var fileTypes = categorizeFiles(files);
 
@@ -154,7 +187,7 @@
 
   new Loader(function() {
     Neo.Loader = this;
-    
+
     this.loadPackage("common", function() {
       Neo.ViewManager = new Neo.Classes.ViewManager();
     });

@@ -79,12 +79,12 @@
           continue;
         }
 
-        component.parent = this;
-        component.root = this.root;
-        component.parentDom = div;
         documentFragment.appendChild(div);
 
         if (component !== null) {
+          component.parent = this;
+          component.root = this.root;
+          component.parentDom = div;
           children.push(Neo.createComponent(component));
         }
       }

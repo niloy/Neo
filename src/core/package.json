@@ -1,13 +1,13 @@
 {
   "common": {
-    "files": ["core/viewManager.js", "core/neo.css"]
+    "files": ["core/viewManager.js", "core/neo.css", "core/utils.js"]
   },
   "UIComponent": {
     "files": [
-      "core/utils.js",
       "core/uiComponent.js",
       "core/uiComponent.css",
-      "core/eventProcessor.js"
+      "core/eventProcessor.js",
+      "core/model.js"
     ]
   },
   "testFramework": {

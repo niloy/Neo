@@ -27,6 +27,10 @@
 
       this._text = value;
       this.dom.childNodes[0].textContent = this._text;
+    },
+
+    clear: function() {
+      this.text = "";
     }
   });
 }());
