@@ -17,7 +17,11 @@
     }
 
     this.holder1 = this._createHolder(0, 0);
-    this.loadView(viewName);
+    this.loadView(viewName, function() {
+      if (typeof window.callPhantom === 'function') {
+        callPhantom({msg: "PAGE_READY"});
+      }
+    });
 
     window.addEventListener("popstate", function(e) {
       this.loadView(e.state.viewName);
