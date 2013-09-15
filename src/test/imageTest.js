@@ -11,7 +11,7 @@
     buildComponent: function() {
       return {
         name: "Image",
-        src: "../assets/calvinhobbes.jpg",
+        src: "core/assets/calvinhobbes.jpg",
         alt: ALT,
         width: "400px"
       };
