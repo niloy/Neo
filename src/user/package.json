@@ -2,5 +2,9 @@
   "calculator": {
     "files": ["user/calculator.js", "user/calculator.css"],
     "requires": ["compLayout", "compButton", "compLabel"]
+  },
+  "helloWorld": {
+    "files": ["user/helloWorld.js", "user/helloWorld.css"],
+    "requires": ["compLabel"]
   }
 }

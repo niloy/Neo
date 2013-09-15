@@ -1,6 +1,11 @@
 {
   "common": {
-    "files": ["core/viewManager.js", "core/neo.css", "core/utils.js"]
+    "files": [
+      "core/viewManager.js",
+      "core/utils.js",
+      "core/neo.css",
+      "core/normalize.css"
+    ]
   },
   "UIComponent": {
     "files": [
@@ -30,10 +35,6 @@
   "compTextfield": {
     "files": ["core/textfield.js", "core/textfield.css"],
     "requires": ["compInput"]
-  },
-  "helloWorld": {
-    "files": ["user/helloWorld.js", "user/helloWorld.css"],
-    "requires": ["compLabel"]
   },
   "buttonTest": {
     "files": "test/buttonTest.js",

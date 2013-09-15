@@ -28,10 +28,15 @@
   }
   // PhantomJS polyfill ends here
 
-  function Loader(readyCallback) {
-    var corePackage = null;
-    var userPackage = null;
+  var isNode = false;
 
+  if (typeof module !== "undefined" && module.exports) {
+    isNode = true;
+  }
+
+  function Loader(readyCallback) {
+    this.corePackage = null;
+    this.userPackage = null;
     this.packages = null;
     this.loadedFiles = {};
 
@@ -60,20 +65,26 @@
     }
 
     var packageLoaded = function(packageText) {
-      if (corePackage !== null && userPackage !== null) {
-        this.packages = mergePackages(corePackage, userPackage);
+      if (this.corePackage !== null && this.userPackage !== null) {
+        this.packages = mergePackages(this.corePackage, this.userPackage);
         readyCallback.call(this);
       }
-    }.bind(this)
+    }.bind(this);
 
-    this.ajax("core/package.json", function(text) {
-      corePackage = parseJSON(text);
+    if (isNode) {
+      this.corePackage = require("./package.json");
+      this.userPackage = require("../user/package.json");
       packageLoaded();
-    });
-    this.ajax("user/package.json", function(text) {
-      userPackage = parseJSON(text);
-      packageLoaded();
-    });
+    } else {
+      this.ajax("core/package.json", function(text) {
+        this.corePackage = parseJSON(text);
+        packageLoaded();
+      }.bind(this));
+      this.ajax("user/package.json", function(text) {
+        this.userPackage = parseJSON(text);
+        packageLoaded();
+      }.bind(this));
+    }
 
     return null;
   };
@@ -98,49 +109,12 @@
 
       var files = this.getFilesForPackage(packageName);
 
-      function categorizeFiles(files) {
-        var category = {
-          js: [],
-          css: [],
-          image: [],
-          font: [],
-          unknown: []
-        };
-        var extensionsMap = {
-          js: ["js"],
-          css: ["css"],
-          image: ["png", "jpg", "jpeg", "gif"]
-        };
-
-        files.forEach(function(file) {
-          var ext = file.substr(file.lastIndexOf(".") + 1);
-          var typeFound = false;
-
-          for (var fileType in extensionsMap) {
-            if (extensionsMap[fileType].indexOf(ext) !== -1) {
-              // match found, 'file' belongs to type 'fileType'
-              category[fileType].push(file);
-              typeFound = true;
-              break;
-            }
-          }
-
-          if (!typeFound) {
-            category.unknown.push(file);
-          }
-        });
-
-        return category;
-      }
-
-      var fileTypes = categorizeFiles(files);
-
       function removeLoadedFiles(file) {
         return !(file in this.loadedFiles);
       }
 
-      this.loadCSSFiles(fileTypes.css.filter(removeLoadedFiles.bind(this)));
-      this.loadJSFiles(fileTypes.js.filter(removeLoadedFiles.bind(this)), success);
+      this.loadCSSFiles(files.css.filter(removeLoadedFiles.bind(this)));
+      this.loadJSFiles(files.js.filter(removeLoadedFiles.bind(this)), success);
     },
 
     loadCSSFiles: function(files) {
@@ -208,15 +182,54 @@
         return files;
       }
 
-      return resolveNode(packageName);
+      return this._categorizeFiles(resolveNode(packageName));
+    },
+
+    _categorizeFiles: function(files) {
+      var category = {
+        js: [],
+        css: [],
+        image: [],
+        font: [],
+        unknown: []
+      };
+      var extensionsMap = {
+        js: ["js"],
+        css: ["css"],
+        image: ["png", "jpg", "jpeg", "gif"]
+      };
+
+      files.forEach(function(file) {
+        var ext = file.substr(file.lastIndexOf(".") + 1);
+        var typeFound = false;
+
+        for (var fileType in extensionsMap) {
+          if (extensionsMap[fileType].indexOf(ext) !== -1) {
+            // match found, 'file' belongs to type 'fileType'
+            category[fileType].push(file);
+            typeFound = true;
+            break;
+          }
+        }
+
+        if (!typeFound) {
+          category.unknown.push(file);
+        }
+      });
+
+      return category;
     }
   };
 
   new Loader(function() {
-    Neo.Loader = this;
+    if (isNode) {
+      module.exports = this;
+    } else {
+      Neo.Loader = this;
 
-    this.loadPackage("common", function() {
-      Neo.ViewManager = new Neo.Classes.ViewManager();
-    });
+      this.loadPackage("common", function() {
+        Neo.ViewManager = new Neo.Classes.ViewManager();
+      });
+    }
   });
 }());

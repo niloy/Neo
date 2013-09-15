@@ -8,12 +8,18 @@
     this.viewContainer = document.getElementById("viewContainer");
     this.holder1 = null;
     this.holder2 = null;
+    this.firstViewLoad = true;
 
-    var qs = Neo.parseQueryString();
     var viewName = "index";   // Default view = index
 
-    if ("v" in qs) {
-      viewName = qs.v;
+    if (Neo.ENV === "web") {
+      viewName = Neo.CURRENT_VIEW_NAME;
+    } else {
+      var qs = Neo.parseQueryString();
+
+      if ("v" in qs) {
+        viewName = qs.v;
+      }
     }
 
     this.holder1 = this._createHolder(0, 0);
@@ -24,7 +30,9 @@
     });
 
     window.addEventListener("popstate", function(e) {
-      this.loadView(e.state.viewName);
+      if (e.state !== null) {
+        this.loadView(e.state.viewName);
+      }
     }.bind(this));
   };
 
@@ -45,10 +53,23 @@
             this.viewContainer.removeChild(holderToRemove);
           }.bind(this, this.holder1));
           this.holder1 = this.holder2;
-          this.holdre2 = null;
-          history.pushState({viewName: viewName}, null, "?v=" + viewName);
+          this.holder2 = null;
+
+          if (this.firstViewLoad) {
+            this.firstViewLoad = false;
+          } else {
+            history.pushState({viewName: viewName}, null, "?v=" + viewName);
+          }
+
           successCb();
         }.bind(this), 0);
+      }.bind(this);
+
+      var packageLoaded = function() {
+        this.holder2 = this._createHolder(0, innerWidth);
+        var view = this._createInstanceAndAttachViewToDOM(viewName, this.holder2);
+        this.views[viewName] = view;
+        slideIn();
       }.bind(this);
 
       if (viewName in this.views) { // is view already loaded?
@@ -56,12 +77,11 @@
         this.holder2.appendChild(this.views[viewName].dom);
         slideIn();
       } else {
-        Neo.Loader.loadPackage(viewName, function() {
-          this.holder2 = this._createHolder(0, innerWidth);
-          var view = this._createInstanceAndAttachViewToDOM(viewName, this.holder2);
-          this.views[viewName] = view;
-          slideIn();
-        }.bind(this));
+        if (Neo.ENV === "web") {
+          packageLoaded();
+        } else {
+          Neo.Loader.loadPackage(viewName, packageLoaded);
+        }
       }
     },
 

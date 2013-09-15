@@ -3,7 +3,7 @@
 var http = require('http');
 // https://github.com/cloudhead/node-static
 var Static = require('node-static');
-var PORT = 80;
+var PORT = 8888;
 
 // Setting up the static web server
 var staticServer = new Static.Server("src/", {cache: 0});
@@ -12,7 +12,7 @@ http.createServer(function(request, response) {
     staticServer.serve(request, response);
   }).resume();
 }).listen(PORT, function() {
-  console.log("Static server started on http://localhost");
+  console.log("Static server started on http://localhost:" + PORT);
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ var wsConnection;
 
 wsServer.on('request', function(request) {
   var connection = request.accept('echo-protocol', request.origin);
-  
+
   wsConnection = connection;
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
@@ -62,5 +62,5 @@ wsServer.on('request', function(request) {
 var watcher = chokidar.watch("src/");
 
 watcher.on("change", function(path) {
-   wsConnection.sendUTF("refresh browser"); 
+   wsConnection.sendUTF("refresh browser");
 });
