@@ -34,3 +34,7 @@ page.onError = function(msg) {
   console.log("ERROR: Javascript error -> " + msg);
   phantom.exit();
 };
+
+page.onResourceError = function(resourceError) {
+  console.log('Unable to load resource URL:' + resourceError.url);
+};
