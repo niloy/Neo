@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   src: local('Crafty Girls'), local('CraftyGirls'),
-    url(assets/craftygirls.woff) format('woff');
+    url(../assets/craftygirls.woff) format('woff');
 }
 
 .compHelloWorld {

@@ -31,7 +31,7 @@ function createCombinedFile(files, outFileName) {
     concatContents += "\n" + f;
   });
 
-  fs.writeFileSync(OUTFOLDER + outFileName, markTimestamp(concatContents));
+  fs.writeFileSync(OUTFOLDER + "files/" + outFileName, markTimestamp(concatContents));
 }
 
 function markTimestamp(text, type) {
@@ -50,10 +50,10 @@ function filterOutFiles(filesToExclude, file) {
 
 function createHTMLPage(viewName) {
   let r = '\n\
-  <link rel="stylesheet" href="common.min.css" />\n\
-  <link rel="stylesheet" href="' + viewName + MINCSS + '" />\n\
-  <script src="common.min.js"></script>\n\
-  <script src="' + viewName + MINJS + '"></script>\n\
+  <link rel="stylesheet" href="files/common.min.css" />\n\
+  <link rel="stylesheet" href="files/' + viewName + MINCSS + '" />\n\
+  <script src="files/common.min.js"></script>\n\
+  <script src="files/' + viewName + MINJS + '"></script>\n\
   <script>\n\
     Neo.CURRENT_VIEW_NAME = "' + viewName + '";\n\
     window.onload = function() {\n\
