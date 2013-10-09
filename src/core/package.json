@@ -22,7 +22,8 @@
       "core/expect.js",
       "core/testView.js",
       "core/testView.css"
-    ]
+    ],
+    "requires": "UIComponent"
   },
   "compLabel": {
     "files": "core/label.js",
@@ -71,5 +72,13 @@
   "layoutTest": {
     "files": "test/layoutTest.js",
     "requires": ["compLayout", "testFramework", "compButton"]
+  },
+  "compCheckbox": {
+    "files": "core/checkbox.js",
+    "requires": ["compInput"]
+  },
+  "checkboxTest": {
+    "files": "test/checkboxTest.js",
+    "requires": ["testFramework", "compCheckbox"]
   }
 }
