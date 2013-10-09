@@ -12,14 +12,14 @@
 
     var viewName = "index";   // Default view = index
 
-    if (Neo.ENV === "web") {
-      viewName = Neo.CURRENT_VIEW_NAME;
-    } else {
+    if (Neo.ENV === "dev") {
       var qs = Neo.parseQueryString();
 
       if ("v" in qs) {
         viewName = qs.v;
       }
+    } else {
+      viewName = Neo.CURRENT_VIEW_NAME;
     }
 
     this.holder1 = this._createHolder(0, 0);
@@ -77,10 +77,10 @@
         this.holder2.appendChild(this.views[viewName].dom);
         slideIn();
       } else {
-        if (Neo.ENV === "web") {
-          packageLoaded();
-        } else {
+        if (Neo.ENV === "dev") {
           Neo.Loader.loadPackage(viewName, packageLoaded);
+        } else {
+          packageLoaded();
         }
       }
     },
