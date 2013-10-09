@@ -6,7 +6,7 @@ const MINCSS = "everything.min.css";
 const OUTFOLDER = "build/webApp/";
 const START_PAGE = 'helloWorld';
 
-let index = fs.readFileSync("src/indexDev.html", "utf-8");
+let index = fs.readFileSync("src/index.html", "utf-8");
 
 // Create a meta package called '_all_' that requires all other packages
 loader.packages._all_ = {

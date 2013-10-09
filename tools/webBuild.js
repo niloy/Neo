@@ -5,7 +5,7 @@ const MINJS = ".min.js";
 const MINCSS = ".min.css";
 const OUTFOLDER = "build/web/";
 
-let index = fs.readFileSync("src/indexDev.html", "utf-8");
+let index = fs.readFileSync("src/index.html", "utf-8");
 let commonPackageFiles = loader.getFilesForPackage("common");
 createCombinedFile(commonPackageFiles.js, "common" + MINJS);
 createCombinedFile(commonPackageFiles.css, "common" + MINCSS);
