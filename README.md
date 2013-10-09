@@ -28,11 +28,11 @@ Run `tools/runTesh.sh` to run the tests. Snapshots can be viewed in the
 `build/test` folder.
 
 ### Finding your way
-`src/assets/` contains image, audio, video, font etc
-`src/core/` contains core css and js files that are important for the framework
-`src/test/` contains all the test views for various components
-`src/user/` contains all user created views
-`tools/` contains all supporting executables
+* `src/assets/` contains image, audio, video, font etc
+* `src/core/` contains core css and js files that are important for the framework
+* `src/test/` contains all the test views for various components
+* `src/user/` contains all user created views
+* `tools/` contains all supporting executables
 
 ### Creating a new page(view)
 
