@@ -48,8 +48,10 @@
       var slideIn = function() {
         setTimeout(function() {
           this.holder2.style.left = 0; // slide in the next view
-          this.holder2.addEventListener("transitionend", function(holderToRemove) {
-            this.viewContainer.removeChild(holderToRemove);
+          this.holder2.addEventListener("transitionend", function(holderToRemove, e) {
+            if (e.target === holderToRemove) {
+              this.viewContainer.removeChild(holderToRemove);
+            }
           }.bind(this, this.holder1));
           this.holder1 = this.holder2;
           this.holder2 = null;
