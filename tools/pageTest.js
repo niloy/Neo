@@ -13,7 +13,7 @@ if (viewName == null) {
 
 page.viewportSize = {width: 1024, height: 768};
 
-page.open("http://localhost:8888/indexDev.html?v=" + viewName, function(status) {
+page.open("http://localhost:8888/index.html?v=" + viewName, function(status) {
   if (status !== 'success') {
     console.log("ERROR: unable to open page");
     phantom.exit(1);
