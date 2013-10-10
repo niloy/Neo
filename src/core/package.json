@@ -80,5 +80,13 @@
   "checkboxTest": {
     "files": "test/checkboxTest.js",
     "requires": ["testFramework", "compCheckbox"]
+  },
+  "componentList": {
+    "files": ["core/componentList.js", "core/componentList.css"],
+    "requires": [
+      "compButton",
+      "compLayout",
+      "compLabel"
+    ]
   }
 }

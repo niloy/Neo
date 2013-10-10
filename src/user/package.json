@@ -6,5 +6,9 @@
   "helloWorld": {
     "files": ["user/helloWorld.js", "user/helloWorld.css"],
     "requires": ["compLabel"]
+  },
+  "index": {
+    "files": "user/index.js",
+    "requires": ["componentList"]
   }
 }
