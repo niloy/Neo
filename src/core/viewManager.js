@@ -8,7 +8,6 @@
     this.viewContainer = document.getElementById("viewContainer");
     this.holder1 = null;
     this.holder2 = null;
-    this.firstViewLoad = true;
 
     var viewName = "index";   // Default view = index
 
@@ -55,12 +54,7 @@
           this.holder1 = this.holder2;
           this.holder2 = null;
 
-          if (this.firstViewLoad) {
-            this.firstViewLoad = false;
-          } else {
-            history.pushState({viewName: viewName}, null, "?v=" + viewName);
-          }
-
+          history.pushState({viewName: viewName}, null, "?v=" + viewName);
           successCb();
         }.bind(this), 0);
       }.bind(this);
