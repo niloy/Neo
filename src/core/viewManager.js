@@ -36,12 +36,17 @@
   };
 
   Neo.Classes.ViewManager.prototype = {
-    loadView: function(viewName, success) {
+    loadView: function(viewName, success, reload) {
       var successCb = success || function() {};
       var self = this;
 
       if (this.currentViewName === viewName) {
         successCb();
+        return;
+      }
+
+      if (reload) {
+        window.location = "?v=" + viewName;
         return;
       }
 

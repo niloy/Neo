@@ -26,7 +26,7 @@
             text: list[viewName],
             listeners: {
               click: function() {
-                Neo.ViewManager.loadView(viewName);
+                Neo.ViewManager.loadView(viewName, null, true);
               }
             }
           }
