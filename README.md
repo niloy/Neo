@@ -8,6 +8,7 @@
 The most beautiful *Hello World* you will ever see!
 
 Open `src/user/helloWorld.js`, edit, save and refresh browser.
+Open `http://localhost:8888/index.html` for a list of components.
 
 ### Building Website
 
