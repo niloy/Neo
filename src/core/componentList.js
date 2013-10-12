@@ -16,7 +16,7 @@
         textfieldTest: "Textfield",
         checkboxTest: "Checkbox",
         calculator: "Calculator",
-        tab: "Tab",
+        tabTest: "Tab",
       };
 
       var layoutItems = Object.keys(list).map(function(viewName) {
