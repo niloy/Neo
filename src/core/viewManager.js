@@ -8,6 +8,8 @@
     this.viewContainer = document.getElementById("viewContainer");
     this.holder1 = null;
     this.holder2 = null;
+    this.firstViewLoad = true;
+    this.loadingFromPopState = false;
 
     var viewName = "index";   // Default view = index
 
@@ -29,9 +31,8 @@
     });
 
     window.addEventListener("popstate", function(e) {
-      if (e.state !== null) {
-        this.loadView(e.state.viewName);
-      }
+      this.loadingFromPopState = true;
+      this.loadView(e.state.viewName);
     }.bind(this));
   };
 
@@ -61,7 +62,19 @@
           this.holder1 = this.holder2;
           this.holder2 = null;
 
-          history.pushState({viewName: viewName}, null, "?v=" + viewName);
+          if (this.firstViewLoad) {
+            this.firstViewLoad = false;
+            history.replaceState({viewName: viewName});
+          } else {
+            // Dont modify history if we are loading this view due to 'back'
+            // or 'forward' button, thats what 'loadingFromPopState' indicates.
+            if (this.loadingFromPopState) {
+              this.loadingFromPopState = false;
+            } else {
+              history.pushState({viewName: viewName}, null, "?v=" + viewName);
+            }
+          }
+
           successCb();
         }.bind(this), 0);
       }.bind(this);
