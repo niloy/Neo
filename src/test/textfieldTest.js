@@ -14,7 +14,7 @@
         value: TEXT,
         validation: /[a-zA-Z]/,
         required: true,
-        autofocus: true,
+        // autofocus: true,
         multiline: true,
         fieldname: "abc",
         placeholder: "enter some text here",
