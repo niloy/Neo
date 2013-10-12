@@ -88,5 +88,13 @@
       "compLayout",
       "compLabel"
     ]
+  },
+  "compTab": {
+    "files": ["core/tab.js", "core/tab.css"],
+    "requires": ["UIComponent"]
+  },
+  "tabTest": {
+    "files": "test/tabTest.js",
+    "requires": ["testFramework", "compTab", "compLabel", "compButton"]
   }
 }

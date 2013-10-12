@@ -1,0 +1,29 @@
+.compTab {
+  width: 100%;
+}
+
+.compTab > .tabHeader {
+  border-bottom: 1px solid #A3A3A3;
+  background-color: #DFDFDF;
+  padding: 2px 5px 0 5px;
+}
+
+.compTab > .tabHeader > .tabTitle {
+  display: inline-block;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.compTab > .tabHeader > .tabTitle.active {
+  background-color: white;
+  border: 1px solid #A3A3A3;
+  border-bottom: none;
+}
+
+.compTab > .tabBody > .tabComponent {
+  display: none;
+}
+
+.compTab > .tabBody > .tabComponent.active {
+  display: block;
+}
