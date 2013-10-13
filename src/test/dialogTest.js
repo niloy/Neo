@@ -32,7 +32,9 @@ centuries, but also the leap into electronic typesetting, remaining essentially\
         }
       });
 
-      dialog.open();
+      setTimeout(function() {
+        dialog.open();
+      }, 500);
     },
 
     tests: function(Dialog) {

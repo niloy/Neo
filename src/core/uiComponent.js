@@ -189,6 +189,11 @@
       this.dom.classList.toggle(str);
     },
 
+    hasClass: function(str) {
+      Neo.typeCheck(str, "string");
+      return this.dom.classList.contains(str);
+    },
+
     remove: function() {
       this.children.forEach(function(child) {
         child.remove();
