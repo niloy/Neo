@@ -1,11 +1,11 @@
 {
   "calculator": {
     "files": ["user/calculator.js", "user/calculator.css"],
-    "requires": ["compLayout", "compButton", "compLabel"]
+    "requires": ["coreLayout", "coreButton", "coreLabel"]
   },
   "helloWorld": {
     "files": ["user/helloWorld.js", "user/helloWorld.css"],
-    "requires": ["compLabel"]
+    "requires": ["coreLabel"]
   },
   "index": {
     "files": "user/index.js",

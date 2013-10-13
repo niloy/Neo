@@ -25,84 +25,84 @@
     ],
     "requires": "UIComponent"
   },
-  "compLabel": {
+  "coreLabel": {
     "files": "core/label.js",
     "requires": "UIComponent"
   },
-  "compButton": {
+  "coreButton": {
     "files": ["core/button.js", "core/button.css"],
     "requires": "UIComponent"
   },
-  "compTextfield": {
+  "coreTextfield": {
     "files": ["core/textfield.js", "core/textfield.css"],
-    "requires": ["compInput"]
+    "requires": ["coreInput"]
   },
   "buttonTest": {
     "files": "test/buttonTest.js",
-    "requires": ["compButton", "testFramework"]
+    "requires": ["coreButton", "testFramework"]
   },
   "labelTest": {
     "files": "test/labelTest.js",
-    "requires": ["compLabel", "testFramework"]
+    "requires": ["coreLabel", "testFramework"]
   },
   "textfieldTest": {
     "files": "test/textfieldTest.js",
-    "requires": ["compTextfield", "testFramework"]
+    "requires": ["coreTextfield", "testFramework"]
   },
-  "compImage": {
+  "coreImage": {
     "files": ["core/image.js", "core/image.css"],
     "requires": "UIComponent"
   },
   "imageTest": {
     "files": "test/imageTest.js",
-    "requires": ["compImage", "testFramework"]
+    "requires": ["coreImage", "testFramework"]
   },
-  "compInput": {
+  "coreInput": {
     "files": "core/input.js",
     "requires": "UIComponent"
   },
   "eventsTest": {
     "files": "test/eventsTest.js",
-    "requires": "compTextfield"
+    "requires": "coreTextfield"
   },
-  "compLayout": {
+  "coreLayout": {
     "files": ["core/layout.js", "core/layout.css"],
     "requires": "UIComponent"
   },
   "layoutTest": {
     "files": "test/layoutTest.js",
-    "requires": ["compLayout", "testFramework", "compButton"]
+    "requires": ["coreLayout", "testFramework", "coreButton"]
   },
-  "compCheckbox": {
+  "coreCheckbox": {
     "files": "core/checkbox.js",
-    "requires": ["compInput"]
+    "requires": ["coreInput"]
   },
   "checkboxTest": {
     "files": "test/checkboxTest.js",
-    "requires": ["testFramework", "compCheckbox"]
+    "requires": ["testFramework", "coreCheckbox"]
   },
   "componentList": {
     "files": ["core/componentList.js", "core/componentList.css"],
     "requires": [
-      "compButton",
-      "compLayout",
-      "compLabel"
+      "coreButton",
+      "coreLayout",
+      "coreLabel"
     ]
   },
-  "compTab": {
+  "coreTab": {
     "files": ["core/tab.js", "core/tab.css"],
     "requires": ["UIComponent"]
   },
   "tabTest": {
     "files": "test/tabTest.js",
-    "requires": ["testFramework", "compTab", "compLabel", "compButton"]
+    "requires": ["testFramework", "coreTab", "coreLabel", "coreButton"]
   },
-  "compDialog": {
+  "coreDialog": {
     "files": ["core/dialog.js", "core/dialog.css"],
     "requires": "UIComponent"
   },
   "dialogTest": {
     "files": "test/dialogTest.js",
-    "requires": ["testFramework", "compDialog", "compLayout", "compLabel"]
+    "requires": ["testFramework", "coreDialog", "coreLayout", "coreLabel"]
   }
 }
