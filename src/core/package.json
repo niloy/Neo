@@ -96,5 +96,13 @@
   "tabTest": {
     "files": "test/tabTest.js",
     "requires": ["testFramework", "compTab", "compLabel", "compButton"]
+  },
+  "compDialog": {
+    "files": ["core/dialog.js", "core/dialog.css"],
+    "requires": "UIComponent"
+  },
+  "dialogTest": {
+    "files": "test/dialogTest.js",
+    "requires": ["testFramework", "compDialog", "compLayout", "compLabel"]
   }
 }

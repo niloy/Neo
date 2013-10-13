@@ -28,7 +28,7 @@
       return;
     }
 
-    this.dom = document.createElement("div");
+    this.dom = document.createElement("section");
     this.dom._neo = this;
 
     if (this.cls !== null) {
@@ -236,6 +236,12 @@
       config.root = this;
       var model = new Neo.Classes.Model(config);
       this.models.push(model);
+    },
+
+    trigger: function(eventName) {
+      // var args = [].slice.call(arguments, 1);
+      var event = new Event(eventName);
+      this.dom.dispatchEvent(event);
     }
   };
 
