@@ -17,6 +17,7 @@
         checkboxTest: "Checkbox",
         calculator: "Calculator",
         tabTest: "Tab",
+        dialogTest: "Dialog Box"
       };
 
       var layoutItems = Object.keys(list).map(function(viewName) {
