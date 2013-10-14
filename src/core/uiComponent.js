@@ -23,6 +23,8 @@
     this.subscribeRegistry = {};
     this.root = Neo.ifNull(config.root, null);
     this.models = [];
+    this._uiBlocked = false;
+    this._uiBlockMask = null;
 
     if (this.canRender === false) {
       return;
@@ -247,6 +249,35 @@
       // var args = [].slice.call(arguments, 1);
       var event = new Event(eventName);
       this.dom.dispatchEvent(event);
+    },
+
+    get blockUI() {
+      return this._uiBlocked;
+    },
+
+    set blockUI(value) {
+      Neo.typeCheck(value, "boolean");
+      var eventBlackList = ["click", "keyup", "keydown", "keypress", "mouseover"];
+
+      if (value === true && !this._uiBlocked) {
+        var mask = document.createElement("div");
+        mask.className = "uiBlockMask";
+        mask.tabIndex = "-1";
+        mask.focus();
+        eventBlackList.forEach(function(event) {
+          mask.addEventListener(event, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+        });
+        this.dom.appendChild(mask);
+        this._uiBlockMask = mask;
+        this._uiBlocked = true;
+      } else if (value === false && this._uiBlocked) {
+        this.dom.removeChild(this._uiBlockMask);
+        this._uiBlockMask = null;
+        this._uiBlocked = false;
+      }
     }
   };
 
