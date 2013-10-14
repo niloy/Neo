@@ -3,6 +3,7 @@
 
   Neo.Classes.Dialog = Neo.Classes.UIComponent.extend({
     DEFAULT_TITLE: "Application",
+    WIGGLE: "wiggle",
 
     init: function(config) {
       this._title = Neo.ifNull(config.title, this.DEFAULT_TITLE, "string");
@@ -10,7 +11,8 @@
       this._titleDom = null;
       this._bodyDom = null;
       this._mask = null;
-      this.onClose = Neo.ifNull(config.onClose, function() {}, "function");
+      this.beforeClose = Neo.ifNull(config.beforeClose, function() {}, "function");
+      this.afterClose = Neo.ifNull(config.afterClose, function() {}, "function");
       this._opened = false;
       config.parentDom = document.getElementById("dialogContainer");
 
@@ -51,11 +53,11 @@
 
       this.visible = false;
       this.addClass("closed");
-      this.dom.style.opacity = 1;
+      this.dom.style.opacity = null;
 
       this.dom.addEventListener("webkitAnimationEnd", function(e) {
         if (e.target === this.dom) {
-          this.removeClass("wiggle");
+          this.removeClass(this.WIGGLE);
         }
       }.bind(this));
     },
@@ -96,6 +98,7 @@
             this._opened = false;
             this._removeMask();
             this.dom.removeEventListener("transitionend", transitionend);
+            this.afterClose();
           }
         }.bind(this);
 
@@ -116,7 +119,7 @@
     },
 
     _closeButtonClicked: function() {
-      if (this.onClose() !== false) {
+      if (this.beforeClose() !== false) {
         this.close();
       }
     },
@@ -124,9 +127,55 @@
     _maskClicked: function(e) {
       e.stopPropagation();
 
-      if (!this.hasClass("wiggle")) {
-        this.addClass("wiggle");
+      if (!this.hasClass(this.WIGGLE)) {
+        this.addClass(this.WIGGLE);
       }
     }
   });
+
+  Neo.alert = function(config) {
+    Neo.typeCheck(config, "string,object");
+
+    var DEFAULT_TITLE = "Application";
+    var text, title, callback;
+
+    if (typeof config === "string") {
+      text = config;
+      title = DEFAULT_TITLE;
+    } else {
+      text = Neo.ifNull(config.text, new Error("Alert 'text' missing"), "string");
+      title = Neo.ifNull(config.title, DEFAULT_TITLE, "string");
+      callback = Neo.ifNull(config.callback, function() {}, "function");
+    }
+
+    var dialog = Neo.createComponent({
+      name: "Dialog",
+      cls: "neoAlert",
+      title: title,
+      body: {
+        name: "Layout",
+        items: [{
+          cls: "neoAlertText",
+          component: {
+            name: "Label",
+            text: text
+          }
+        }, {
+          cls: "neoAlertOk",
+          component: {
+            name: "Button",
+            text: "OK",
+            listeners: {
+              click: function() {
+                dialog.close();
+              }
+            }
+          }
+        }]
+      },
+      afterClose: callback
+    });
+
+    dialog.open();
+  };
 }());

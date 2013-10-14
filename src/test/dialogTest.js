@@ -26,15 +26,17 @@ centuries, but also the leap into electronic typesetting, remaining essentially\
             }
           }]
         },
-        onClose: function() {
-          console.log('close requested');
+        beforeClose: function() {
+          console.log('beforeClose called');
           // return false to prevent dialog close
+        },
+        afterClose: function() {
+          console.log('afterClose called');
+          // executed after dialog has completed closing animation
         }
       });
 
-      setTimeout(function() {
-        dialog.open();
-      }, 500);
+      dialog.open();
     },
 
     tests: function(Dialog) {

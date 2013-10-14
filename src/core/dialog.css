@@ -9,7 +9,8 @@
   z-index: 1;
   background-color: white;
   border-radius: 10px;
-  transition: all .5s;
+  transition: opacity .5s, -webkit-transform .5s;
+  transition: opacity .5s, transform .5s;
 }
 
 .compDialog > .dialogTitleContainer {
@@ -106,4 +107,13 @@
   100% {
     -webkit-transform: rotate(0);
   }
+}
+
+.neoAlert .neoAlertOk {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.neoAlert .neoAlertText {
+  text-align: center;
 }

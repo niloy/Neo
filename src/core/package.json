@@ -99,10 +99,14 @@
   },
   "coreDialog": {
     "files": ["core/dialog.js", "core/dialog.css"],
-    "requires": "UIComponent"
+    "requires": ["coreLayout", "coreButton", "coreLayout", "coreLabel"]
   },
   "dialogTest": {
     "files": "test/dialogTest.js",
-    "requires": ["testFramework", "coreDialog", "coreLayout", "coreLabel"]
+    "requires": ["testFramework", "coreDialog"]
+  },
+  "alertTest": {
+    "files": "test/alertTest.js",
+    "requires": ["testFramework", "coreDialog"]
   }
 }
