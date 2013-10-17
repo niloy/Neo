@@ -25,6 +25,7 @@
     this.models = [];
     this._uiBlocked = false;
     this._uiBlockMask = null;
+    this._componentId = Neo.ifNull(config.componentId, null, "string");
 
     if (this.canRender === false) {
       return;
@@ -37,7 +38,10 @@
       this.dom.className = this.cls;
     }
 
-    this.addClass("compUIComponent");
+    if (this._componentId) {
+      this.dom.dataset.cid = this._componentId;
+    }
+
     this.addClass("comp" + this.cname);
 
     if (this.parent == null && this.parentDom == null) {

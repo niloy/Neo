@@ -25,7 +25,21 @@
       throw new Error("Unable to find component -> " + componentName);
     }
 
-    return new Neo.Classes[componentName](config);
+    Neo.Metrics.addComponent(config);
+    var componentId = "c" + Neo.getUniqueNumber();
+    var createdAt = Date.now();
+    var renderStartTime = Date.now();
+    config.componentId = componentId;
+    var component = new Neo.Classes[componentName](config);
+    var renderEndTime = Date.now();
+    Neo.Metrics.addLog({
+      name: config.name,
+      createdAt: createdAt,
+      renderingTime: renderEndTime - renderStartTime,
+      cid: componentId
+    });
+
+    return component;
   };
 
   Neo.ifNull = function(value, defaultValue, typeCheck) {

@@ -3,6 +3,7 @@
     "files": [
       "core/viewManager.js",
       "core/utils.js",
+      "core/metric.js",
       "core/neo.css",
       "core/normalize.css"
     ]
