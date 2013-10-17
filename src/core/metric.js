@@ -4,6 +4,7 @@
   Neo.Classes.Metric = function() {
     this.componentHistogram = {};
     this.creationLog = [];
+    this.eventLog = [];
   };
 
   Neo.Classes.Metric.prototype = {
@@ -27,6 +28,10 @@
 
     print: function() {
       return JSON.stringify(this, null, "  ");
+    },
+
+    addEventLog: function(args) {
+      this.eventLog.push(args);
     }
   };
 

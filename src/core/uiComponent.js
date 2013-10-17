@@ -210,6 +210,13 @@
     publish: function(eventName) {
       var args = [].slice.call(arguments, 1);
 
+      Neo.Metrics.addEventLog({
+        source: this._componentId,
+        timestamp: Date.now(),
+        event: eventName,
+        args: JSON.stringify(args)
+      });
+
       if (eventName in this.root.subscribeRegistry) {
         this.root.subscribeRegistry[eventName].forEach(function(eObj) {
           eObj.raise(eventName, args);
