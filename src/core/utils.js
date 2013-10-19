@@ -30,6 +30,11 @@
     var createdAt = Date.now();
     var renderStartTime = Date.now();
     config.componentId = componentId;
+
+    if (config.debugger === true) {
+      debugger;
+    }
+
     var component = new Neo.Classes[componentName](config);
     var renderEndTime = Date.now();
     Neo.Metrics.addLog({
