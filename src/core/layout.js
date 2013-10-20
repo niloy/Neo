@@ -83,7 +83,6 @@
 
         if (component !== null) {
           component.parent = this;
-          component.root = this.root;
           component.parentDom = div;
           children.push(Neo.createComponent(component));
         }

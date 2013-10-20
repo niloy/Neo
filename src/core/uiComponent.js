@@ -3,6 +3,7 @@
 
   Neo.Classes.UIComponent = function(config) {
     Neo.ifNull(config, new Error("'config' parameter missing"), "object");
+    Neo.ifNull(config.parent, new Error("'parent' missing'"), "object,string");
 
     this.dom = null;
     this.listenTo = Neo.ifNull(config.listenTo, {}, "object");
@@ -20,8 +21,8 @@
     this.children = [];
     this.isHighlighting = false;
     this.subscribe = Neo.ifNull(config.subscribe, {}, "object");
-    this.subscribeRegistry = {};
-    this.root = Neo.ifNull(config.root, null);
+    this.eventStore = new Neo.Classes.Events(this);
+    this.eventRoot = Neo.ifNull(config.eventRoot, this.parent.eventRoot);
     this.models = [];
     this._uiBlocked = false;
     this._uiBlockMask = null;
@@ -44,12 +45,8 @@
 
     this.addClass("comp" + this.cname);
 
-    if (this.parent == null && this.parentDom == null) {
-      throw new Error("both 'parent' and 'parentDom' are missing");
-    }
-
-    if (this.parent == null) {
-      this.root = this;
+    if (this.parent === "APPLICATION_ROOT" && this.parentDom == null) {
+      throw new Error("'parentDom' is missing");
     }
 
     if (this.parentDom !== null) {
@@ -61,7 +58,7 @@
     if (returnValueFromBuildDOM != null) {
       if (returnValueFromBuildDOM.toString() === "[object Object]") {
         returnValueFromBuildDOM.parent = this;
-        returnValueFromBuildDOM.root = this;
+        returnValueFromBuildDOM.eventRoot = this.eventStore;
         var child = Neo.createComponent(returnValueFromBuildDOM);
         this.dom.appendChild(child.dom);
         this.children.push(child);
@@ -217,41 +214,19 @@
         args: JSON.stringify(args)
       });
 
-      if (eventName in this.root.subscribeRegistry) {
-        this.root.subscribeRegistry[eventName].forEach(function(eObj) {
-          eObj.raise(eventName, args);
-        }.bind(this));
-      }
+      this.eventRoot.publish(eventName, args);
     },
 
     _setupSubscribers: function() {
       var self = this;
 
       for (var s in this.subscribe) {
-        var eventPro = new Neo.Classes.EventProcessor({
-          eventString: s,
-          eventHandler: this.subscribe[s],
-          context: this,
-          deleteCallback: function() {
-            eventPro.eventNames.forEach(function(event) {
-              var index = self.root.subscribeRegistry[event].indexOf(eventPro);
-              delete self.root.subscribeRegistry[event][index];
-            });
-          }
-        });
-
-        eventPro.eventNames.forEach(function(event) {
-          if (!(event in self.root.subscribeRegistry)) {
-            self.root.subscribeRegistry[event] = [];
-          }
-
-          self.root.subscribeRegistry[event].push(eventPro);
-        });
+        this.eventRoot.subscribe(s, this.subscribe[s], this);
       }
     },
 
     registerModel: function(config) {
-      config.root = this;
+      config.eventStore = this.eventStore;
       var model = new Neo.Classes.Model(config);
       this.models.push(model);
     },

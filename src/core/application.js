@@ -5,7 +5,9 @@
     init: function() {
       Neo.Classes.UIComponent.call(this, {
         name: "Application",
-        parentDom: document.body
+        parentDom: document.body,
+        parent: "APPLICATION_ROOT",
+        eventRoot: "APPLICATION_ROOT"
       });
 
       this.views = {};
@@ -123,7 +125,8 @@
       return Neo.createComponent({
         name: className,
         parentDom: attachTo,
-        parent: this
+        parent: this,
+        eventRoot: this.eventStore
       });
     },
 

@@ -6,7 +6,8 @@
     this._listeners = Neo.ifNull(config.listeners, {}, "object");
     this._subscribe = Neo.ifNull(config.subscribe, {}, "object");
     this._validation = Neo.ifNull(config.validation, this.VALIDATION, "function");
-    this._root = Neo.ifNull(config.root, new Error("'root' missing for model"));
+    this._eventStore = Neo.ifNull(config.eventStore,
+                                  new Error("'eventStore' missing for model"));
 
     Object.seal(this._attributes);
     this._defineGettersAndSetters();
@@ -69,30 +70,14 @@
       var self = this;
 
       for (var s in this._subscribe) {
-        var eventPro = new Neo.Classes.EventProcessor({
-          eventString: s,
-          eventHandler: this._subscribe[s],
-          context: this,
-          deleteCallback: function() {
-            eventPro.eventNames.forEach(function(event) {
-              var index = self._root.subscribeRegistry[event].indexOf(eventPro);
-              delete self._root.subscribeRegistry[event][index];
-            });
-          }
-        });
-
-        eventPro.eventNames.forEach(function(event) {
-          if (!(event in self._root.subscribeRegistry)) {
-            self._root.subscribeRegistry[event] = [];
-          }
-
-          self._root.subscribeRegistry[event].push(eventPro);
-        });
+        this._eventStore.subscribe(s, this._subscribe[s], this);
       }
     },
 
-    publish: function() {
-      this._root.publish.apply(this._root, arguments);
+    publish: function(eventName) {
+      var args = [].slice.call(arguments, 1);
+
+      this._eventStore.publish(eventName, args);
     }
   };
 }());

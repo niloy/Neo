@@ -18,7 +18,8 @@
       "core/uiComponent.js",
       "core/uiComponent.css",
       "core/eventProcessor.js",
-      "core/model.js"
+      "core/model.js",
+      "core/events.js"
     ],
     "requires": "frameworkBasics"
   },
