@@ -173,10 +173,12 @@
            files = files.concat(resolveNode(requiredNode));
         });
 
-        if (Array.isArray(node.files)) {
-          files = files.concat(node.files);
-        } else {
-          files.push(node.files);
+        if (node.files) {
+          if (Array.isArray(node.files)) {
+            files = files.concat(node.files);
+          } else {
+            files.push(node.files);
+          }
         }
 
         return files;
@@ -228,7 +230,7 @@
       Neo.Loader = this;
 
       this.loadPackage("common", function() {
-        Neo.ViewManager = new Neo.Classes.ViewManager();
+        Neo.appStart();
       });
     }
   });

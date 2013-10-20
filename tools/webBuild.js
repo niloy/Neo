@@ -56,9 +56,7 @@ function createHTMLPage(viewName) {
   <script src="files/' + viewName + MINJS + '"></script>\n\
   <script>\n\
     Neo.CURRENT_VIEW_NAME = "' + viewName + '";\n\
-    window.onload = function() {\n\
-      Neo.ViewManager = new Neo.Classes.ViewManager();\n\
-    };\n\
+    window.onload = Neo.appStart;\n\
   </script>\n\
   ';
 

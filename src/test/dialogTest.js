@@ -7,8 +7,7 @@
     },
 
     buildComponent: function() {
-      window.dialog = Neo.createComponent({
-        name: "Dialog",
+      window.dialog = Neo.App.createDialog({
         title: "What is Lorem Ipsum?",
         body: {
           name: "Layout",

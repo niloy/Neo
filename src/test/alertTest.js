@@ -7,7 +7,7 @@
     },
 
     buildComponent: function() {
-      Neo.alert({
+      Neo.App.alert({
         text: "This is an example of Alert Box",
         title: "Alert box",
         callback: function() {

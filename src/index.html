@@ -7,11 +7,12 @@
         var Neo = {};
         Neo.Classes = {};
         Neo.ENV = "dev";
+        Neo.appStart = function() {
+          Neo.App = new Neo.Classes.Application();
+        };
       </script>
       <script src="core/loader.js"></script>
   </head>
   <body>
-      <div id="viewContainer"></div>
-      <div id="dialogContainer"></div>
   </body>
 </html>

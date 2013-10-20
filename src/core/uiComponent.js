@@ -61,7 +61,7 @@
     if (returnValueFromBuildDOM != null) {
       if (returnValueFromBuildDOM.toString() === "[object Object]") {
         returnValueFromBuildDOM.parent = this;
-        returnValueFromBuildDOM.root = this.root;
+        returnValueFromBuildDOM.root = this;
         var child = Neo.createComponent(returnValueFromBuildDOM);
         this.dom.appendChild(child.dom);
         this.children.push(child);
@@ -289,6 +289,60 @@
         this._uiBlockMask = null;
         this._uiBlocked = false;
       }
+    },
+
+    createDialog: function(config) {
+      config.name = "Dialog";
+      config.parentDom = this.dom;
+      config.parent = this;
+      config.root = this;
+      return Neo.createComponent(config);
+    },
+
+    alert: function(config) {
+      Neo.typeCheck(config, "string,object");
+
+      var DEFAULT_TITLE = "Application";
+      var text, title, callback;
+
+      if (typeof config === "string") {
+        text = config;
+        title = DEFAULT_TITLE;
+      } else {
+        text = Neo.ifNull(config.text, new Error("Alert 'text' missing"), "string");
+        title = Neo.ifNull(config.title, DEFAULT_TITLE, "string");
+        callback = Neo.ifNull(config.callback, function() {}, "function");
+      }
+
+      var dialog = this.createDialog({
+        name: "Dialog",
+        cls: "neoAlert",
+        title: title,
+        body: {
+          name: "Layout",
+          items: [{
+            cls: "neoAlertText",
+            component: {
+              name: "Label",
+              text: text
+            }
+          }, {
+            cls: "neoAlertOk",
+            component: {
+              name: "Button",
+              text: "OK",
+              listeners: {
+                click: function() {
+                  dialog.close();
+                }
+              }
+            }
+          }]
+        },
+        afterClose: callback
+      });
+
+      dialog.open();
     }
   };
 

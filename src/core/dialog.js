@@ -14,7 +14,6 @@
       this.beforeClose = Neo.ifNull(config.beforeClose, function() {}, "function");
       this.afterClose = Neo.ifNull(config.afterClose, function() {}, "function");
       this._opened = false;
-      config.parentDom = document.getElementById("dialogContainer");
 
       Neo.Classes.UIComponent.call(this, config);
     },
@@ -110,12 +109,12 @@
       var mask = document.createElement("div");
       mask.className = "dialogMask";
       mask.addEventListener("click", this._maskClicked.bind(this));
-      document.body.appendChild(mask);
+      this.parentDom.appendChild(mask);
       this._mask = mask;
     },
 
     _removeMask: function() {
-      document.body.removeChild(this._mask);
+      this.parentDom.removeChild(this._mask);
     },
 
     _closeButtonClicked: function() {
@@ -132,50 +131,4 @@
       }
     }
   });
-
-  Neo.alert = function(config) {
-    Neo.typeCheck(config, "string,object");
-
-    var DEFAULT_TITLE = "Application";
-    var text, title, callback;
-
-    if (typeof config === "string") {
-      text = config;
-      title = DEFAULT_TITLE;
-    } else {
-      text = Neo.ifNull(config.text, new Error("Alert 'text' missing"), "string");
-      title = Neo.ifNull(config.title, DEFAULT_TITLE, "string");
-      callback = Neo.ifNull(config.callback, function() {}, "function");
-    }
-
-    var dialog = Neo.createComponent({
-      name: "Dialog",
-      cls: "neoAlert",
-      title: title,
-      body: {
-        name: "Layout",
-        items: [{
-          cls: "neoAlertText",
-          component: {
-            name: "Label",
-            text: text
-          }
-        }, {
-          cls: "neoAlertOk",
-          component: {
-            name: "Button",
-            text: "OK",
-            listeners: {
-              click: function() {
-                dialog.close();
-              }
-            }
-          }
-        }]
-      },
-      afterClose: callback
-    });
-
-    dialog.open();
-  };
 }());

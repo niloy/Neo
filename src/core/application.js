@@ -1,42 +1,51 @@
 (function() {
   "use strict";
 
-  Neo.Classes.ViewManager = function() {
-    this.views = {};
-    this.currentView = null;
-    this.currentViewName = null;
-    this.viewContainer = document.getElementById("viewContainer");
-    this.holder1 = null;
-    this.holder2 = null;
-    this.firstViewLoad = true;
-    this.loadingFromPopState = false;
+  Neo.Classes.Application = Neo.Classes.UIComponent.extend({
+    init: function() {
+      Neo.Classes.UIComponent.call(this, {
+        name: "Application",
+        parentDom: document.body
+      });
 
-    var viewName = "index";   // Default view = index
+      this.views = {};
+      this.currentView = null;
+      this.currentViewName = null;
+      this.viewContainer = this.dom;
+      this.holder1 = null;
+      this.holder2 = null;
+      this.firstViewLoad = true;
+      this.loadingFromPopState = false;
 
-    if (Neo.ENV === "dev") {
-      var qs = Neo.parseQueryString();
+      var viewName = "index";   // Default view = index
 
-      if ("v" in qs) {
-        viewName = qs.v;
+      if (Neo.ENV === "dev") {
+        var qs = Neo.parseQueryString();
+
+        if ("v" in qs) {
+          viewName = qs.v;
+        }
+      } else {
+        viewName = Neo.CURRENT_VIEW_NAME;
       }
-    } else {
-      viewName = Neo.CURRENT_VIEW_NAME;
-    }
 
-    this.holder1 = this._createHolder(0, 0);
-    this.loadView(viewName, function() {
-      if (typeof window.callPhantom === 'function') {
-        callPhantom({msg: "PAGE_READY"});
-      }
-    });
+      this.holder1 = this._createHolder(0, 0);
+      this.loadView(viewName, function() {
+        if (typeof window.callPhantom === 'function') {
+          callPhantom({msg: "PAGE_READY"});
+        }
+      });
 
-    window.addEventListener("popstate", function(e) {
-      this.loadingFromPopState = true;
-      this.loadView(e.state.viewName);
-    }.bind(this));
-  };
+      window.addEventListener("popstate", function(e) {
+        this.loadingFromPopState = true;
+        this.loadView(e.state.viewName);
+      }.bind(this));
+    },
 
-  Neo.Classes.ViewManager.prototype = {
+    buildDOM: function() {
+
+    },
+
     loadView: function(viewName, success, reload) {
       var successCb = success || function() {};
       var self = this;
@@ -113,7 +122,8 @@
 
       return Neo.createComponent({
         name: className,
-        parentDom: attachTo
+        parentDom: attachTo,
+        parent: this
       });
     },
 
@@ -127,5 +137,5 @@
 
       return holder;
     }
-  };
+  });
 }());

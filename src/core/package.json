@@ -1,10 +1,15 @@
 {
   "common": {
+    "requires": "application"
+  },
+  "application": {
+    "files": ["core/application.js", "core/application.css"],
+    "requires": "UIComponent"
+  },
+  "frameworkBasics": {
     "files": [
-      "core/viewManager.js",
       "core/utils.js",
       "core/metric.js",
-      "core/neo.css",
       "core/normalize.css"
     ]
   },
@@ -14,7 +19,8 @@
       "core/uiComponent.css",
       "core/eventProcessor.js",
       "core/model.js"
-    ]
+    ],
+    "requires": "frameworkBasics"
   },
   "testFramework": {
     "files": [

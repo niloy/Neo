@@ -1,4 +1,4 @@
-html, body, #viewContainer {
+html, body, .compApplication {
   height: 100%;
 }
 
@@ -6,12 +6,12 @@ body {
   overflow: hidden;
 }
 
-#viewContainer {
+.compApplication {
   position: relative;
   width: calc(100% * 2);
 }
 
-.viewHolder {
+.compApplication > .viewHolder {
   overflow: auto;
   position: absolute;
   width: calc(100% / 2);

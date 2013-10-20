@@ -29,7 +29,7 @@
             text: list[viewName],
             listeners: {
               click: function() {
-                Neo.ViewManager.loadView(viewName, null, true);
+                Neo.App.loadView(viewName, null, true);
               }
             }
           }
