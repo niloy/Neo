@@ -116,5 +116,13 @@
   "alertTest": {
     "files": "test/alertTest.js",
     "requires": ["testFramework", "coreDialog"]
+  },
+  "coreAnimatedCheckbox": {
+    "files": ["core/animatedCheckbox.js", "core/animatedCheckbox.css"],
+    "requires": "coreInput"
+  },
+  "animatedCheckboxTest": {
+    "files": "test/animatedCheckboxTest.js",
+    "requires": ["testFramework", "coreAnimatedCheckbox"]
   }
 }
