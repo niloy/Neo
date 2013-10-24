@@ -89,6 +89,9 @@
       },
       "UIComponent": function(value) {
         return value instanceof Neo.Classes.UIComponent;
+      },
+      "null": function(value) {
+        return value === null;
       }
     };
 

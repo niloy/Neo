@@ -148,16 +148,20 @@
     },
 
     set notification(value) {
-      Neo.typeCheck(value, "string");
+      Neo.typeCheck(value, "string,number,null");
 
-      if (this._notification === null) {
-        var span = document.createElement("span");
-        span.textContent = value;
-        span.className = "neoNotification";
-        this._notification = span;
-        this.dom.appendChild(span);
+      if (value === null) {
+        this._removeNotification();
       } else {
-        this._notification.textContent = value;
+        if (this._notification === null) {
+          var span = document.createElement("span");
+          span.textContent = value;
+          span.className = "neoNotification";
+          this._notification = span;
+          this.dom.appendChild(span);
+        } else {
+          this._notification.textContent = value;
+        }
       }
     },
 
@@ -169,7 +173,7 @@
       }
     },
 
-    removeNotification: function() {
+    _removeNotification: function() {
       if (this._notification !== null) {
         this.dom.removeChild(this._notification);
         this._notification = null;
