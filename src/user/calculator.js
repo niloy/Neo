@@ -236,6 +236,7 @@
               component: {
                 name: "Button",
                 text: "C",
+                tooltip: "Clears current calculation",
                 listeners: {
                   click: function() {
                     this.publish("clear clicked");

@@ -19,7 +19,9 @@
       "core/uiComponent.css",
       "core/eventProcessor.js",
       "core/model.js",
-      "core/events.js"
+      "core/events.js",
+      "core/tooltip.js",
+      "core/tooltip.css"
     ],
     "requires": "frameworkBasics"
   },
@@ -125,12 +127,8 @@
     "files": "test/animatedCheckboxTest.js",
     "requires": ["testFramework", "coreAnimatedCheckbox"]
   },
-  "coreTooltip": {
-    "files": ["core/tooltip.js", "core/tooltip.css"],
-    "requires": ["coreLabel"]
-  },
   "tooltipTest": {
     "files": "test/tooltipTest.js",
-    "requires": ["testFramework", "coreTooltip", "coreButton"]
+    "requires": ["testFramework", "coreButton"]
   }
 }

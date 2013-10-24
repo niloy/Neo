@@ -2,7 +2,7 @@
   border: 2px solid red;
   padding: 5px;
   position: absolute;
-  min-width: 400px;
+  min-width: 200px;
   text-align: center;
   background-image: linear-gradient(yellow, gold);
 }
