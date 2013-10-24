@@ -27,6 +27,8 @@
     this._uiBlocked = false;
     this._uiBlockMask = null;
     this._componentId = Neo.ifNull(config.componentId, null, "string");
+    this._tooltip = Neo.ifNull(config.tooltip, null, "object,string");
+    this.tooltip = null;
 
     if (this.canRender === false) {
       return;
@@ -78,6 +80,14 @@
 
     if (this._visible === false) {
       this.visible = false;
+    }
+
+    if (this._tooltip !== null) {
+      this.tooltip = Neo.createComponent({
+        name: "Tooltip",
+        component: this._tooltip,
+        parent: this
+      });
     }
 
     for (var eventName in this.listeners) {
@@ -318,6 +328,14 @@
       });
 
       dialog.open();
+    },
+
+    showTooltip: function(callback) {
+      this.tooltip.show(callback);
+    },
+
+    hideTooltip: function(callback) {
+      this.tooltip.hide(callback);
     }
   };
 

@@ -124,5 +124,13 @@
   "animatedCheckboxTest": {
     "files": "test/animatedCheckboxTest.js",
     "requires": ["testFramework", "coreAnimatedCheckbox"]
+  },
+  "coreTooltip": {
+    "files": ["core/tooltip.js", "core/tooltip.css"],
+    "requires": ["coreLabel"]
+  },
+  "tooltipTest": {
+    "files": "test/tooltipTest.js",
+    "requires": ["testFramework", "coreTooltip", "coreButton"]
   }
 }
