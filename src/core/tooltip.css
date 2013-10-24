@@ -4,42 +4,91 @@
   position: absolute;
   min-width: 400px;
   text-align: center;
-  left: 50%;
   background-image: linear-gradient(yellow, gold);
 }
 
-.compTooltip.orientTop {
+.compTooltip.left {
+  right: 50%;
+}
+
+.compTooltip.right {
+  left: 50%;
+}
+
+.compTooltip.top.left {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.compTooltip.orientBottom {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 0;
 }
 
-.compTooltip.orientTop > .tooltipArrow {
+.compTooltip.top.right {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 5px;
+}
+
+.compTooltip.bottom.left {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.compTooltip.bottom.right {
+  border-top-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.tooltipArrow {
   width: 0;
   height: 0;
   position: absolute;
-  bottom: -12px;
+}
+
+.compTooltip.left > .tooltipArrow {
+  right: -2px;
+}
+
+.compTooltip.right > .tooltipArrow {
   left: -2px;
+}
+
+.compTooltip.top > .tooltipArrow {
+  bottom: -12px;
+}
+
+.compTooltip.bottom > .tooltipArrow {
+  top: -12px;
+}
+
+.compTooltip.top.left > .tooltipArrow {
+  border-top: 6px solid red;
+  border-right: 6px solid red;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
+
+.compTooltip.top.right > .tooltipArrow {
+  border-top: 6px solid red;
+  border-right: 6px solid transparent;
   border-bottom: 6px solid transparent;
   border-left: 6px solid red;
-  border-right: 6px solid transparent;
-  border-top: 6px solid red;
 }
 
-.compTooltip.orientBottom > .tooltipArrow {
-  width: 0;
-  height: 0;
-  position: absolute;
-  top: -12px;
-  left: -2px;
+.compTooltip.bottom.left > .tooltipArrow {
+  border-top: 6px solid transparent;
+  border-right: 6px solid red;
+  border-bottom: 6px solid red;
+  border-left: 6px solid transparent;
+}
+
+.compTooltip.bottom.right > .tooltipArrow {
+  border-top: 6px solid transparent;
+  border-right: 6px solid transparent;
   border-bottom: 6px solid red;
   border-left: 6px solid red;
-  border-right: 6px solid transparent;
-  border-top: 6px solid transparent;
 }

@@ -3,8 +3,10 @@
 
   Neo.Classes.Tooltip = Neo.Classes.UIComponent.extend({
     HIDE_TIMEOUT: 250,
-    ORIENT_TOP: "orientTop",
-    ORIENT_BOTTOM: "orientBottom",
+    ORIENT_TOP: "top",
+    ORIENT_BOTTOM: "bottom",
+    ORIENT_LEFT: "left",
+    ORIENT_RIGHT: "right",
 
     init: function(config) {
       var e = new Error("'component' missing from tooltip");
@@ -61,6 +63,12 @@
         } else {
           this.dom.style.bottom = y;
           this.addClass(this.ORIENT_BOTTOM);
+        }
+
+        if (compRect.right > tooltipRect.width) {
+          this.addClass(this.ORIENT_LEFT);
+        } else {
+          this.addClass(this.ORIENT_RIGHT);
         }
       }
     },
