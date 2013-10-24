@@ -29,6 +29,7 @@
     this._componentId = Neo.ifNull(config.componentId, null, "string");
     this._tooltip = Neo.ifNull(config.tooltip, null, "object,string");
     this.tooltip = null;
+    this.style = Neo.ifNull(config.style, {}, "object");
 
     if (this.canRender === false) {
       return;
@@ -88,6 +89,10 @@
         component: this._tooltip,
         parent: this
       });
+    }
+
+    for (var s in this.style) {
+      this.dom.style.setProperty(s, this.style[s]);
     }
 
     for (var eventName in this.listeners) {
