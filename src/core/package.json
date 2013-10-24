@@ -129,6 +129,6 @@
   },
   "tooltipTest": {
     "files": "test/tooltipTest.js",
-    "requires": ["testFramework", "coreButton"]
+    "requires": ["testFramework", "coreLabel", "coreButton"]
   }
 }
