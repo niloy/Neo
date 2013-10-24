@@ -79,7 +79,7 @@
         return Array.isArray(value);
       },
       "object": function(value) {
-        return value.toString() === "[object Object]";
+        return value != null && value.toString() === "[object Object]";
       },
       "boolean": function(value) {
         return (value === true || value === false);

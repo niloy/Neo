@@ -30,6 +30,7 @@
     this._tooltip = Neo.ifNull(config.tooltip, null, "object,string");
     this.tooltip = null;
     this.style = Neo.ifNull(config.style, {}, "object");
+    this._hint = null;
 
     if (this.canRender === false) {
       return;
@@ -345,6 +346,30 @@
 
     hideTooltip: function(callback) {
       this.tooltip.hide(callback);
+    },
+
+    set hint(value) {
+      Neo.typeCheck(value, "string,object,null");
+
+      var removeHint = function() {
+        if (this._hint !== null) {
+          this._hint.remove();
+          this._hint = null;
+        }
+      }.bind(this);
+
+      if (value === null) {
+        removeHint();
+      } else {
+        removeHint();
+        this._hint = Neo.createComponent({
+          name: "Tooltip",
+          component: value,
+          parent: this,
+          autoShowHide: false
+        });
+        this._hint.show();
+      }
     }
   };
 

@@ -1,7 +1,7 @@
 {
   "calculator": {
     "files": ["user/calculator.js", "user/calculator.css"],
-    "requires": ["coreLayout", "coreButton", "coreLabel"]
+    "requires": ["coreLayout", "coreButton", "coreLabel", "coreDialog"]
   },
   "helloWorld": {
     "files": ["user/helloWorld.js", "user/helloWorld.css"],

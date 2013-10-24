@@ -11,6 +11,56 @@
 
       this.registerModel({
         attributes: {
+          tutorialInProgress: false
+        },
+        subscribe: {
+          "run tutorial": function() {
+            var self = this;
+            self.tutorialInProgress = true;
+
+            this.publish("clear clicked");
+            Neo.App.alert({
+              text: "Welcome to the tutorial mode of the calculator, lets say \
+we want to calculate 2 + 3 = ?",
+              title: "Calculator",
+              callback: function() {
+                self.publish("show tutorial step 1");
+              }
+            });
+          },
+
+          "number clicked": function(num) {
+            if (this.tutorialInProgress) {
+              if (num === 2) {
+                this.publish("hide tutorial step 1");
+                this.publish("show number displayed");
+              } else if (num === 3) {
+                this.publish("hide step 4");
+                this.publish("show step 5");
+              }
+            }
+          },
+
+          "operator clicked": function(operator) {
+            if (this.tutorialInProgress) {
+              if (operator === "+") {
+                this.publish("hide step 3");
+                this.publish("show step 4");
+              } else if (operator === "=") {
+                this.publish("hide step 5");
+                this.publish("show step 6");
+              }
+            }
+          },
+
+          "tutorial end": function() {
+            this.tutorialInProgress = false;
+          }
+        }
+      });
+
+      this.registerModel({
+        attributes: {
           result: 0,
           num: 0,
           operator: null
@@ -74,6 +124,43 @@
             subscribe: {
               "update display": function(num) {
                 this.text = num;
+              },
+
+              "show number displayed": function() {
+                this.hint = {
+                  name: "Layout",
+                  items: [{
+                    component: {
+                      name: "Label",
+                      text: "As you can see, the number you pressed is displayed here."
+                    }
+                  }, {
+                    component: {
+                      name: "Button",
+                      text: "Ok",
+                      listeners: {
+                        click: function() {
+                          this.publish("hide step 2");
+                          this.publish("show step 3");
+                        }
+                      }
+                    }
+                  }]
+                };
+                this.highlight = true;
+              },
+
+              "hide step 2": function() {
+                this.hint = null;
+                this.highlight = false;
+              },
+
+              "show step 6": function() {
+                this.hint = "Taadaa! You can see the answer here";
+                setTimeout(function() {
+                  this.hint = null;
+                  this.publish("tutorial end");
+                }.bind(this), 5000);
               }
             }
           }
@@ -122,6 +209,15 @@
                 listeners: {
                   click: function() {
                     this.publish("operator clicked", "+");
+                  }
+                },
+                subscribe: {
+                  "show step 3": function() {
+                    this.hint = "Now press this button since we want to perform addition";
+                  },
+
+                  "hide step 3": function() {
+                    this.hint = null;
                   }
                 }
               }
@@ -201,6 +297,15 @@
                   click: function() {
                     this.publish("number clicked", 2);
                   }
+                },
+                subscribe: {
+                  "show tutorial step 1": function() {
+                    this.hint = "Step 1: Press this button";
+                  },
+
+                  "hide tutorial step 1": function() {
+                    this.hint = null;
+                  }
                 }
               }
             }, {
@@ -211,6 +316,15 @@
                 listeners: {
                   click: function() {
                     this.publish("number clicked", 3);
+                  }
+                },
+                subscribe: {
+                  "show step 4": function() {
+                    this.hint = "Now press this button";
+                  },
+
+                  "hide step 4": function() {
+                    this.hint = null;
                   }
                 }
               }
@@ -263,6 +377,15 @@
                   click: function() {
                     this.publish("operator clicked", "=");
                   }
+                },
+                subscribe: {
+                  "show step 5": function() {
+                    this.hint = "Now press this to view the result!";
+                  },
+
+                  "hide step 5": function() {
+                    this.hint = null;
+                  }
                 }
               }
             }, {
@@ -273,6 +396,21 @@
                 listeners: {
                   click: function() {
                     this.publish("operator clicked", "/");
+                  }
+                }
+              }
+            }]
+          }
+        }, {
+          component: {
+            name: "Layout",
+            items: [{
+              component: {
+                name: "Button",
+                text: "How to use calculator?",
+                listeners: {
+                  click: function() {
+                    this.publish("run tutorial");
                   }
                 }
               }

@@ -11,22 +11,25 @@
     init: function(config) {
       var e = new Error("'component' missing from tooltip");
       this.component = Neo.ifNull(config.component || config.text, e, "object,string");
+      this.autoShowHide = Neo.ifNull(config.autoShowHide, true, "boolean");
       this.hideTimer = null;
       config.parentDom = config.parent.dom;
       config.visible = false;
 
       Neo.Classes.UIComponent.call(this, config);
 
-      this.parent.dom.addEventListener("mouseover", function() {
-        clearInterval(this.hideTimer);
-        this.show();
-      }.bind(this));
+      if (this.autoShowHide) {
+        this.parent.dom.addEventListener("mouseover", function() {
+          clearInterval(this.hideTimer);
+          this.show();
+        }.bind(this));
 
-      this.parent.dom.addEventListener("mouseout", function() {
-        this.hideTimer = setTimeout(function() {
-          this.hide();
-        }.bind(this), this.HIDE_TIMEOUT);
-      }.bind(this));
+        this.parent.dom.addEventListener("mouseout", function() {
+          this.hideTimer = setTimeout(function() {
+            this.hide();
+          }.bind(this), this.HIDE_TIMEOUT);
+        }.bind(this));
+      }
     },
 
     buildDOM: function() {
