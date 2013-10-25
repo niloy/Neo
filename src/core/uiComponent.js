@@ -20,6 +20,7 @@
     this._notification = null;
     this.children = [];
     this.isHighlighting = false;
+    this.hightlightDom = null;
     this.subscribe = Neo.ifNull(config.subscribe, {}, "object");
     this.eventStore = new Neo.Classes.Events(this);
     this.eventRoot = Neo.ifNull(config.eventRoot, this.parent.eventRoot);
@@ -189,12 +190,43 @@
       Neo.typeCheck(value, "boolean");
 
       if (value === true && this.isHighlighting === false) {
-        this.addClass(this.HIGHLIGHT_CLASS);
+        this._hightlight();
         this.isHighlighting = true;
       } else if (value === false && this.isHighlighting === true) {
-        this.removeClass(this.HIGHLIGHT_CLASS);
+        this._removeHightlight();
         this.isHighlighting = false;
       }
+    },
+
+    _hightlight: function() {
+      var SVG_WIDTH = 70;
+      var SVG_HEIGHT = 70;
+      var SVG = "http://www.w3.org/2000/svg";
+      var svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("viewBox", "0 0 100 100");
+      svg.setAttribute("class", "neoHighlight");
+      this.hightlightDom = svg;
+
+      var xfactor = (parseInt(this.width, 10) / SVG_WIDTH) * 1.1;
+      var yfactor = (parseInt(this.height, 10) / SVG_HEIGHT) * 1.1;
+      var styleStr = "scaleX(" + xfactor + ") scaleY(" + yfactor + ")";
+      svg.style.webkitTransform = styleStr;
+
+      var circlePath = "M34.745,7.183C25.078,12.703,13.516,26.359,8.797,37.13 c\
+-13.652,31.134,9.219,54.785,34.77,55.99c15.826,0.742,31.804-2.607,42.207-17.52c\
+6.641-9.52,12.918-27.789,7.396-39.713 C85.873,20.155,69.828-5.347,41.802,13.379";
+      var path = document.createElementNS(SVG, "path");
+      path.setAttribute("d", circlePath);
+      path.setAttribute("class", "path");
+
+      svg.appendChild(path);
+      this.dom.appendChild(svg);
+      path.getBoundingClientRect();
+      path.style.strokeDashoffset = "0";
+    },
+
+    _removeHightlight: function() {
+      this.dom.removeChild(this.hightlightDom);
     },
 
     addClass: function(str) {

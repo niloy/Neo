@@ -17,28 +17,24 @@ section {
 }
 
 .neoHighlight {
-  -webkit-animation: glowing 1s infinite alternate;
-  animation: glowing 1s infinite alternate;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform-origin: 0 0;
+  width: 70px;
+  height: 70px;
+  pointer-events: none;
 }
 
-@-webkit-keyframes glowing {
-  from {
-    box-shadow: 0 0 10px 1px blue;
-  }
-
-  to {
-    box-shadow: 0 0 20px 1px blue;
-  }
-}
-
-@keyframes glowing {
-  from {
-    box-shadow: 0 0 10px 1px blue;
-  }
-
-  to {
-    box-shadow: 0 0 20px 1px blue;
-  }
+.neoHighlight > .path {
+  stroke-width: 5px;
+  stroke: black;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 275.00433349609375px, 275.00433349609375px;
+  stroke-dashoffset: 275.00433349609375px;
+  transition: stroke-dashoffset 0.3s ease-in-out 0s;
 }
 
 section .uiBlockMask {
