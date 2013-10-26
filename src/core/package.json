@@ -130,5 +130,13 @@
   "tooltipTest": {
     "files": "test/tooltipTest.js",
     "requires": ["testFramework", "coreLabel", "coreButton"]
+  },
+  "coreProgressbar": {
+    "files": ["core/progressbar.js", "core/progressbar.css"],
+    "requires": "UIComponent"
+  },
+  "progressbarTest": {
+    "files": "test/progressbarTest.js",
+    "requires": ["testFramework", "coreProgressbar"]
   }
 }
