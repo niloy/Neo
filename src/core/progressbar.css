@@ -7,6 +7,7 @@
   height: 30px;
   border-radius: 30px;
   position: relative;
+  overflow: hidden;
 }
 
 .compProgressbar > .container > .textContainer {
@@ -27,4 +28,30 @@
   top: 0;
   left: 0;
   transition: width .25s;
+}
+
+.compProgressbar > .container > .progressElement.indeterminate {
+  width: 25%;
+  -webkit-animation: compProgressBarIndeterminate 5s linear infinite;
+  animation: compProgressBarIndeterminate 5s linear infinite;
+}
+
+@-webkit-keyframes compProgressBarIndeterminate {
+  from {
+    left: -25%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes compProgressBarIndeterminate {
+  from {
+    left: -25%;
+  }
+
+  to {
+    left: 100%;
+  }
 }

@@ -2,14 +2,19 @@
   "use strict";
 
   Neo.Classes.Progressbar = Neo.Classes.UIComponent.extend({
+    LOADING_TEXT: "Loading...",
+
     init: function(config) {
       this._minValue = Neo.ifNull(config.minValue, 0, "number");
       this._maxValue = Neo.ifNull(config.maxValue, 100, "number");
       this._value = Neo.ifNull(config.value, null, "number");
+      this.determinate = (this._value !== null);
       this.progressEl = null;
       this.textContainer = null;
 
-      this._validateValues(this._minValue, this._value, this._maxValue);
+      if (this.determinate) {
+        this._validateValues(this._minValue, this._value, this._maxValue);
+      }
 
       Neo.Classes.UIComponent.call(this, config);
     },
@@ -20,13 +25,11 @@
 
       var progressEl = document.createElement("div");
       progressEl.className = "progressElement";
-      progressEl.style.width = "0%";
       container.appendChild(progressEl);
       this.progressEl = progressEl;
 
       var textContainer = document.createElement("div");
       textContainer.className = "textContainer";
-      textContainer.textContent = "0%";
       this.textContainer = textContainer;
       container.appendChild(textContainer);
 
@@ -47,12 +50,17 @@
     },
 
     _renderProgressBar: function() {
-      var value = this._value - this._minValue;
-      var max = this._maxValue - this._minValue;
-      var percent = Math.round(value / max * 100);
+      if (this.determinate) {
+        var value = this._value - this._minValue;
+        var max = this._maxValue - this._minValue;
+        var percent = Math.round(value / max * 100);
 
-      this.progressEl.style.width = percent + "%";
-      this.textContainer.textContent = percent + "%";
+        this.progressEl.style.width = percent + "%";
+        this.textContainer.textContent = percent + "%";
+      } else {
+        this.progressEl.classList.add("indeterminate");
+        this.textContainer.textContent = this.LOADING_TEXT;
+      }
     },
 
     get minValue() {

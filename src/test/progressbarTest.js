@@ -9,7 +9,9 @@
     buildComponent: function() {
       return {
         name: "Progressbar",
-        value: 50
+        minValue: 200,
+        value: 250,
+        maxValue: 300
       };
     },
 
