@@ -18,9 +18,10 @@ section {
 
 .neoHighlight {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -3%;
+  left: -3%;
   -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
   width: 70px;
   height: 70px;
   pointer-events: none;

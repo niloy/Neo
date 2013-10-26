@@ -211,6 +211,7 @@
       var yfactor = (parseInt(this.height, 10) / SVG_HEIGHT) * 1.1;
       var styleStr = "scaleX(" + xfactor + ") scaleY(" + yfactor + ")";
       svg.style.webkitTransform = styleStr;
+      svg.style.transform = styleStr;
 
       var circlePath = "M34.745,7.183C25.078,12.703,13.516,26.359,8.797,37.13 c\
 -13.652,31.134,9.219,54.785,34.77,55.99c15.826,0.742,31.804-2.607,42.207-17.52c\
