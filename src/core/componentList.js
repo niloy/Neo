@@ -20,7 +20,8 @@
         dialogTest: "Dialog Box",
         alertTest: "Alert Box",
         tooltipTest: "Tooltip",
-        animatedCheckboxTest: "Animated Checkbox"
+        animatedCheckboxTest: "Animated Checkbox",
+        progressbarTest: "Progressbar",
       };
 
       var layoutItems = Object.keys(list).map(function(viewName) {
