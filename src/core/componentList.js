@@ -22,6 +22,7 @@
         tooltipTest: "Tooltip",
         animatedCheckboxTest: "Animated Checkbox",
         progressbarTest: "Progressbar",
+        knobTest: "Knob",
       };
 
       var layoutItems = Object.keys(list).map(function(viewName) {

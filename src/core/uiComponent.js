@@ -284,9 +284,10 @@
       this.models.push(model);
     },
 
-    trigger: function(eventName) {
-      // var args = [].slice.call(arguments, 1);
-      var event = new Event(eventName);
+    trigger: function(eventName, args) {
+      var event = document.createEvent('Event');
+      event.initEvent(eventName, true, true);
+      event.detail = args;
       this.dom.dispatchEvent(event);
     },
 

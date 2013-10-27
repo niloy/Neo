@@ -1,0 +1,38 @@
+.compKnob > .container {
+  width: 287px;
+  height: 239px;
+  background-image: url(../assets/plastic-knob-realistic.png);
+  position: relative;
+}
+
+.compKnob .arrow {
+  position: absolute;
+  left: 156px;
+  top: 77px;
+  border-top: 10px solid transparent;
+  border-right: none;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid black;
+  width: 0;
+  height: 0;
+  cursor: move;
+}
+
+.compKnob .arrowContainer {
+  pointer-event: none;
+  width: 176px;
+  height: 176px;
+  position: absolute;
+  top: 31px;
+  left: 45px;
+  transition: -webkit-transform 0.3s;
+}
+
+.compKnob .inputContainer {
+  width: 176px;
+  height: 176px;
+  position: absolute;
+  top: 31px;
+  left: 45px;
+  cursor: move;
+}

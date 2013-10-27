@@ -138,5 +138,13 @@
   "progressbarTest": {
     "files": "test/progressbarTest.js",
     "requires": ["testFramework", "coreProgressbar"]
+  },
+  "coreKnob": {
+    "files": ["core/knob.js", "core/knob.css"],
+    "requires": "UIComponent"
+  },
+  "knobTest": {
+    "files": "test/knobTest.js",
+    "requires": ["testFramework", "coreKnob"]
   }
 }
