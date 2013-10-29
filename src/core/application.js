@@ -63,31 +63,30 @@
       }
 
       var slideIn = function() {
-        setTimeout(function() {
-          this.holder2.style.left = 0; // slide in the next view
-          this.holder2.addEventListener("transitionend", function(holderToRemove, e) {
-            if (e.target === holderToRemove) {
-              this.viewContainer.removeChild(holderToRemove);
-            }
-          }.bind(this, this.holder1));
-          this.holder1 = this.holder2;
-          this.holder2 = null;
-
-          if (this.firstViewLoad) {
-            this.firstViewLoad = false;
-            history.replaceState({viewName: viewName});
-          } else {
-            // Dont modify history if we are loading this view due to 'back'
-            // or 'forward' button, thats what 'loadingFromPopState' indicates.
-            if (this.loadingFromPopState) {
-              this.loadingFromPopState = false;
-            } else {
-              history.pushState({viewName: viewName}, null, this._resolveURL(viewName));
-            }
+        this.holder2.getBoundingClientRect();
+        this.holder2.style.left = 0; // slide in the next view
+        this.holder2.addEventListener("transitionend", function(holderToRemove, e) {
+          if (e.target === holderToRemove) {
+            this.viewContainer.removeChild(holderToRemove);
           }
+        }.bind(this, this.holder1));
+        this.holder1 = this.holder2;
+        this.holder2 = null;
 
-          successCb();
-        }.bind(this), 0);
+        if (this.firstViewLoad) {
+          this.firstViewLoad = false;
+          history.replaceState({viewName: viewName});
+        } else {
+          // Dont modify history if we are loading this view due to 'back'
+          // or 'forward' button, thats what 'loadingFromPopState' indicates.
+          if (this.loadingFromPopState) {
+            this.loadingFromPopState = false;
+          } else {
+            history.pushState({viewName: viewName}, null, this._resolveURL(viewName));
+          }
+        }
+
+        successCb();
       }.bind(this);
 
       var packageLoaded = function() {

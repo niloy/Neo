@@ -76,12 +76,11 @@
         this.visible = true;
         this._createMask();
 
-        setTimeout(function() {
-          this._mask.style.opacity = 0.7;
-          this.removeClass("closed");
-          this.addClass("opened");
-          this._opened = true;
-        }.bind(this), 0);
+        this.dom.getBoundingClientRect();
+        this._mask.style.opacity = 0.7;
+        this.removeClass("closed");
+        this.addClass("opened");
+        this._opened = true;
       }
     },
 
