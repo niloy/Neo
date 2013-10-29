@@ -58,7 +58,7 @@
       }
 
       if (reload) {
-        window.location = "?v=" + viewName;
+        window.location = this._resolveURL(viewName);
         return;
       }
 
@@ -82,7 +82,7 @@
             if (this.loadingFromPopState) {
               this.loadingFromPopState = false;
             } else {
-              history.pushState({viewName: viewName}, null, "?v=" + viewName);
+              history.pushState({viewName: viewName}, null, this._resolveURL(viewName));
             }
           }
 
@@ -139,6 +139,14 @@
       this.viewContainer.appendChild(holder);
 
       return holder;
+    },
+
+    _resolveURL: function(viewName) {
+      if (Neo.ENV === "dev" || Neo.ENV === "webApp") {
+        return "?v=" + viewName;
+      } else if (Neo.ENV === "web") {
+        return viewName + ".html";
+      }
     }
   });
 }());
