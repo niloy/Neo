@@ -40,7 +40,7 @@
       }.bind(this));
       inputContainer.addEventListener("mousemove", function(e) {
         if (this.mousedown) {
-          this._mousemove(e.offsetX, e.offsetY);
+          this._mousemove(e.layerX, e.layerY);
         }
       }.bind(this));
       inputContainer.addEventListener("mousewheel", this._mousewheel.bind(this));
@@ -52,6 +52,7 @@
     _renderArrow: function() {
       var deg = this.value * this.MAX_KNOB_ANGLE;
 
+      this.arrowContainer.style.transform = "rotate(" + deg + "deg)";
       this.arrowContainer.style.webkitTransform = "rotate(" + deg + "deg)";
     },
 

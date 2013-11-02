@@ -37,7 +37,10 @@
         this.input.id = f;
       }
 
-      this.input.type = this.type;
+      if (!this.multiline) {
+        this.input.type = this.type;
+      }
+
       this.input.value = this.initialValue;
 
       if (this.autofocus) {

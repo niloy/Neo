@@ -25,7 +25,7 @@
       throw new Error("please implement 'value' getter");
     },
 
-    set value() {
+    set value(value) {
       throw new Error("please implement 'value' setter");
     },
 
@@ -74,10 +74,6 @@
           return true;
         }
       }
-    },
-
-    set valid() {
-      throw new Error("setter is not avaliable");
     },
 
     get errorText() {

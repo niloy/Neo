@@ -14,7 +14,7 @@
     },
 
     buildDOM: function() {
-      this.img = document.createElement("image");
+      this.img = document.createElement("img");
 
       this.img.src = this._src;
 

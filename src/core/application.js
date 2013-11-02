@@ -75,7 +75,7 @@
 
         if (this.firstViewLoad) {
           this.firstViewLoad = false;
-          history.replaceState({viewName: viewName});
+          history.replaceState({viewName: viewName}, null, this._resolveURL(viewName));
         } else {
           // Dont modify history if we are loading this view due to 'back'
           // or 'forward' button, thats what 'loadingFromPopState' indicates.
