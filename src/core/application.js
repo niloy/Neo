@@ -44,10 +44,6 @@
       }.bind(this));
     },
 
-    buildDOM: function() {
-
-    },
-
     loadView: function(viewName, success, reload) {
       var successCb = success || function() {};
       var self = this;

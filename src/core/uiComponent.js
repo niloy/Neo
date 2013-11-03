@@ -107,9 +107,7 @@
   Neo.Classes.UIComponent.prototype = {
     HIGHLIGHT_CLASS: "neoHighlight",
 
-    buildDOM: function() {
-      throw new Error("'_buildDOM' must be overridden in the sub class");
-    },
+    buildDOM: function() {},
 
     get visible() {
       return this._visible;
