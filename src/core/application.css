@@ -12,12 +12,11 @@ body {
 }
 
 .compApplication > .viewHolder {
-  background-image: linear-gradient(rgb(211, 224, 255),rgb(115, 171, 255));
+  background-image: linear-gradient(#EDEEEE, #C5CCCC);
   overflow: auto;
   position: absolute;
   width: calc(100% / 2);
   height: 100%;
   transition: left 0.5s;
-  background-color: white;
 }
 
