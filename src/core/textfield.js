@@ -56,7 +56,7 @@
       }.bind(this));
 
       this.input.addEventListener("focus", function() {
-        this.removeNotification();
+        this.notification = null;
       }.bind(this));
 
       this.dom.appendChild(this.input);
