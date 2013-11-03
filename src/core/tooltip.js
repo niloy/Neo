@@ -3,6 +3,7 @@
 
   Neo.Classes.Tooltip = Neo.Classes.UIComponent.extend({
     HIDE_TIMEOUT: 250,
+    HOVER_TIMEOUT: 250,
     ORIENT_TOP: "top",
     ORIENT_BOTTOM: "bottom",
     ORIENT_LEFT: "left",
@@ -13,6 +14,7 @@
       this.component = Neo.ifNull(config.component || config.text, e, "object,string");
       this.autoShowHide = Neo.ifNull(config.autoShowHide, true, "boolean");
       this.hideTimer = null;
+      this.hoverTimer = null;
       config.parentDom = config.parent.dom;
       config.visible = false;
 
@@ -20,14 +22,13 @@
 
       if (this.autoShowHide) {
         this.parent.dom.addEventListener("mouseover", function() {
-          clearInterval(this.hideTimer);
-          this.show();
+          clearTimeout(this.hideTimer);
+          this.hoverTimer = setTimeout(this.show.bind(this), this.HOVER_TIMEOUT);
         }.bind(this));
 
         this.parent.dom.addEventListener("mouseout", function() {
-          this.hideTimer = setTimeout(function() {
-            this.hide();
-          }.bind(this), this.HIDE_TIMEOUT);
+          clearTimeout(this.hoverTimer);
+          this.hideTimer = setTimeout(this.hide.bind(this), this.HIDE_TIMEOUT);
         }.bind(this));
       }
     },
