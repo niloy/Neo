@@ -159,6 +159,10 @@
       var oThis = this;
 
       function resolveNode(nodeName) {
+        if (!(nodeName in oThis.packages)) {
+          throw new Error("unable to find the package, check spelling -> " + nodeName);
+        }
+
         var node = oThis.packages[nodeName];
         var files = [];
         var requires;

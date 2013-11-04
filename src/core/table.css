@@ -1,0 +1,32 @@
+.compTable {
+  border: 1px solid black;
+  width: 100%;
+  overflow: hidden;
+}
+
+.compTable > .tableHeading {
+  width: 100%;
+  background-image: linear-gradient(#6388BE, #4C72AE);
+  color: white;
+}
+
+.compTable > .tableHeading > .headerItem {
+  padding: 5px;
+}
+
+.compTable > .tableRows {
+  width: 100%;
+  overflow: auto;
+}
+
+.compTable  .colItem {
+  padding: 5px;
+}
+
+.compTable .rowItem:nth-child(even) > * {
+  background-color: #F0F0F0;
+}
+
+.compTable .rowItem:nth-child(odd) > * {
+  background-color: #DFDFDF;
+}

@@ -21,7 +21,8 @@
       "core/model.js",
       "core/events.js",
       "core/tooltip.js",
-      "core/tooltip.css"
+      "core/tooltip.css",
+      "core/label.js"
     ],
     "requires": "frameworkBasics"
   },
@@ -146,5 +147,13 @@
   "knobTest": {
     "files": "test/knobTest.js",
     "requires": ["testFramework", "coreKnob"]
+  },
+  "coreTable": {
+    "files": ["core/table.js", "core/table.css"],
+    "requires": "coreLayout"
+  },
+  "tableTest": {
+    "files": "test/tableTest.js",
+    "requires": ["testFramework", "coreTable"]
   }
 }

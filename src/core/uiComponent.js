@@ -15,7 +15,7 @@
     this._width = Neo.ifNull(config.width, null, "string,number");
     this._height = Neo.ifNull(config.height, null, "string,number");
     this.cls = Neo.ifNull(config.cls, null, "string");
-    this.data = Neo.ifNull(config.data, {});
+    this.custom = Neo.ifNull(config.custom, {});
     this._visible = Neo.ifNull(config.visible, true, "boolean");
     this._notification = null;
     this.children = [];
@@ -131,7 +131,7 @@
 
     set width(value) {
       Neo.typeCheck(value, "string");
-      this.dom.childNodes[0].style.width = value;
+      this.dom.style.width = value;
     },
 
     get height() {
@@ -140,7 +140,7 @@
 
     set height(value) {
       Neo.typeCheck(value, "string");
-      this.dom.childNodes[0].style.height = value;
+      this.dom.style.height = value;
     },
 
     scrollIntoView: function() {
@@ -402,6 +402,12 @@
         });
         this._hint.show();
       }
+    },
+
+    appendComponent: function(obj) {
+      obj.parentDom = Neo.ifNull(obj.parentDom, this.dom);
+      obj.parent = this;
+      return Neo.createComponent(obj);
     }
   };
 
