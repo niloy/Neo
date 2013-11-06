@@ -3,11 +3,13 @@ section {
   display: inline-block;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  vertical-align: top;
 }
 
 div {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  vertical-align: top;
 }
 
 .neoNotification {

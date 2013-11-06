@@ -154,6 +154,6 @@
   },
   "tableTest": {
     "files": "test/tableTest.js",
-    "requires": ["testFramework", "coreTable"]
+    "requires": ["testFramework", "coreTable", "coreButton"]
   }
 }

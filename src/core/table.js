@@ -12,8 +12,8 @@
       var he = new Error("'headers' missing");
 
       this._data = null;
-      this.header = Neo.ifNull(config.header, he, "object");
-      this.headerKeys = Object.keys(this.header);
+      this.columns = Neo.ifNull(config.columns, he, "object");
+      this.headerKeys = Object.keys(this.columns);
       this.headerLayout = null;
       this.rowsLayout = null;
       this.fixedWidth = false;
@@ -44,10 +44,10 @@
       var headerItems = this.headerKeys.map(function(key) {
         return {
           cls: this.HEADING_ITEM_CLASS,
-          size: this.header[key].width,
+          size: this.columns[key].width,
           component: {
             name: "Label",
-            text: this.header[key].title || key
+            text: this.columns[key].title || key
           }
         };
       }.bind(this));
@@ -73,13 +73,19 @@
 
       var layoutItems = value.map(function(row, index) {
         var rowItems = this.headerKeys.map(function(col) {
+          var formatter = Neo.ifNull(this.columns[col].formatter,
+                            this._defaultFormatter, "function");
+
+          var returnFromFormatter = formatter({
+            column: col,
+            row: row,
+            value: row[col]
+          });
+
           return {
             cls: this.COLUMN_ITEM_CLASS,
-            size: this.header[col].width,
-            component: {
-              name: "Label",
-              text: row[col]
-            }
+            size: this.columns[col].width,
+            component: returnFromFormatter
           };
         }.bind(this));
 
@@ -97,11 +103,18 @@
       this.rowsLayout.insertItems(layoutItems);
     },
 
+    _defaultFormatter: function(args) {
+      return {
+        name: "Label",
+        text: args.value
+      };
+    },
+
     _determineWidth: function() {
       var totalWidth = 0;
 
-      for (var i in this.header) {
-        var width = this.header[i].width;
+      for (var i in this.columns) {
+        var width = this.columns[i].width;
 
         if (width && width.substr(-2) === "px") {
           totalWidth += parseInt(width, 10);
@@ -112,6 +125,23 @@
 
       this.fixedWidth = true;
       this.rowWidth = totalWidth + "px";
+    },
+
+    set body(value) {
+      Neo.typeCheck(value, "string,object");
+
+      var component;
+
+      if (typeof value === "string") {
+        component = {name: "Label", text: value};
+      } else {
+        component = value;
+      }
+
+      this.rowsLayout.empty();
+      this.rowsLayout.insertItems({
+        component: component
+      });
     }
   });
 }());

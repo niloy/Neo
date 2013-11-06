@@ -9,7 +9,14 @@
     buildComponent: function() {
       return {
         name: "Table",
-        header: {
+        columns: {
+          edit: {title: "Edit", width: "75px", formatter: function(args) {
+            return {
+                name: "Button",
+                text: "Edit",
+                custom: args.row.id
+            };
+          }},
           date: {title: "Date", width: "100px"},
           voucherNo: {title: "Voucher No", width: "50px"},
           category: {title: "Category", width: "200px"},
