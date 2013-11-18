@@ -32,3 +32,17 @@
 .compPagerInner .pagesContainerInner {
   transition: margin .5s;
 }
+
+.compPagerInner .leftIndicator,
+.compPagerInner .rightIndicator {
+  width: 1px;
+  height: 29px;
+  display: inline-block;
+  position: absolute;
+}
+
+.compPagerInner .leftIndicator.active,
+.compPagerInner .rightIndicator.active {
+  background-color: green;
+  box-shadow: 0 0 5px 2px green;
+}

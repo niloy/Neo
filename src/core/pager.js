@@ -9,6 +9,7 @@
     ACTIVE_PAGE: "activePage",
     PAGE_WIDTH: 48,
     MAX_DISPLAY_PAGES: 10,
+    ACTIVE_INDICATOR: "active",
 
     init: function(config) {
       this._totalPages = Neo.ifNull(config.totalPages, null, "number");
@@ -55,6 +56,10 @@
       }.bind(this));
       this.pager.appendChild(this.previousButton);
 
+      this.leftIndicator = document.createElement("div");
+      this.leftIndicator.className = "leftIndicator";
+      this.pager.appendChild(this.leftIndicator);
+
       var pagesContainer = document.createElement("div");
       pagesContainer.className = "pagesContainer";
       pagesContainer.style.width = (this.PAGE_WIDTH * this.MAX_DISPLAY_PAGES) + "px";
@@ -64,8 +69,6 @@
       this.pagesContainerInner.className = "pagesContainerInner";
       this.pagesContainerInner.style.width = (this.PAGE_WIDTH * this._totalPages) + "px";
       pagesContainer.appendChild(this.pagesContainerInner);
-
-      this.leftIndicator = document.createElement("div");
 
       for (var i = 0; i < this._totalPages; i++) {
         var page = document.createElement("div");
@@ -77,6 +80,10 @@
         this.pages.push(page);
         page.addEventListener("click", this._pageClicked.bind(this, pageNo));
       }
+
+      this.rightIndicator = document.createElement("div");
+      this.rightIndicator.className = "rightIndicator";
+      this.pager.appendChild(this.rightIndicator);
 
       this.nextButton = document.createElement("div");
       this.nextButton.className = "next pageButton";
@@ -130,6 +137,7 @@
       startIndex = Math.min(startIndex, MAX);
       var margin = (startIndex - 1) * this.PAGE_WIDTH;
       this.pagesContainerInner.style.marginLeft = "-" + margin + "px";
+      this._adjustIndicators(startIndex, MIN, MAX);
     },
 
     next: function() {
@@ -154,6 +162,19 @@
 
     _pageClicked: function(pageNo) {
       this.currentPage = pageNo;
+    },
+
+    _adjustIndicators: function(startIndex, min, max) {
+      this.leftIndicator.classList.remove(this.ACTIVE_INDICATOR);
+      this.rightIndicator.classList.remove(this.ACTIVE_INDICATOR);
+
+      if (startIndex > min) {
+        this.leftIndicator.classList.add(this.ACTIVE_INDICATOR);
+      }
+
+      if (startIndex < max) {
+        this.rightIndicator.classList.add(this.ACTIVE_INDICATOR);
+      }
     }
   });
 }());
