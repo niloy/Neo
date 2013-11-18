@@ -23,6 +23,8 @@
         animatedCheckboxTest: "Animated Checkbox",
         progressbarTest: "Progressbar",
         knobTest: "Knob",
+        tableTest: "Table",
+        pagerTest: "Pager",
       };
 
       var layoutItems = Object.keys(list).map(function(viewName) {
