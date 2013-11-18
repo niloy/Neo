@@ -155,5 +155,13 @@
   "tableTest": {
     "files": "test/tableTest.js",
     "requires": ["testFramework", "coreTable", "coreButton"]
+  },
+  "corePager": {
+    "files": ["core/pager.js", "core/pager.css"],
+    "requires": "UIComponent"
+  },
+  "pagerTest": {
+    "files": "test/pagerTest.js",
+    "requires": ["testFramework", "corePager"]
   }
 }
