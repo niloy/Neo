@@ -408,6 +408,31 @@
       obj.parentDom = Neo.ifNull(obj.parentDom, this.dom);
       obj.parent = this;
       return Neo.createComponent(obj);
+    },
+
+    getKeyValuePairs: function() {
+      if (this instanceof Neo.Classes.Input) {
+        return [{key: this.fieldname, value: this.value}];
+      } else {
+        var values = [];
+
+        this.children.forEach(function(child) {
+          values = values.concat(child.getKeyValuePairs());
+        }.bind(this));
+
+        return values;
+      }
+    },
+
+    get values() {
+      var values = this.getKeyValuePairs();
+      var map = {};
+
+      values.forEach(function(value) {
+        map[value.key] = value.value;
+      }.bind(this));
+
+      return map;
     }
   };
 

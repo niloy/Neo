@@ -163,5 +163,20 @@
   "pagerTest": {
     "files": "test/pagerTest.js",
     "requires": ["testFramework", "corePager"]
+  },
+  "coreForm": {
+    "files": "core/form.js",
+    "requires": ["UIComponent"]
+  },
+  "formTest": {
+    "files": "test/formTest.js",
+    "requires": [
+      "testFramework",
+      "coreForm",
+      "coreTextfield",
+      "coreLayout",
+      "coreButton",
+      "coreDialog"
+    ]
   }
 }

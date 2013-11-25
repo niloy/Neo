@@ -25,6 +25,7 @@
         knobTest: "Knob",
         tableTest: "Table",
         pagerTest: "Pager",
+        formTest: "Form",
       };
 
       var layoutItems = Object.keys(list).map(function(viewName) {
