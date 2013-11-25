@@ -1,0 +1,58 @@
+.compDropdown {
+  width: 300px;
+}
+
+.compDropdown .display {
+  background-color: white;
+  border: 1px solid #C1C1C1;
+  width: calc(100% - 40px);
+  height: 26px;
+  display: inline-block;
+  line-height: 26px;
+  padding-left: 5px;
+}
+
+.compDropdown .placeholder {
+  line-height: 26px;
+  font-size: 12px;
+  color: #CCCCCC;
+  font-style: italic;
+}
+
+.compDropdown .arrow {
+  border: 1px solid #1F5383;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  height: 26px;
+  width: 40px;
+  display: inline-block;
+  background-image: linear-gradient(to bottom, #2D79C0, #27639F);
+}
+
+.compDropdown .arrow::after {
+  content: "";
+  right: 10px;
+  position: absolute;
+  top: 8px;
+  border-top: 10px solid white;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: none;
+}
+
+.compDropdown .optionList {
+  border: 1px solid #C1C1C1;
+  overflow: auto;
+}
+
+.compDropdown .option {
+  height: 26px;
+  padding: 5px;
+  background-color: #FAFAFA;
+  color: #777780;
+}
+
+.compDropdown .option:hover {
+  background-color: #2685C2;
+  color: white;
+}

@@ -178,5 +178,13 @@
       "coreButton",
       "coreDialog"
     ]
+  },
+  "coreDropdown": {
+    "files": ["core/dropdown.js", "core/dropdown.css"],
+    "requires": "coreInput"
+  },
+  "dropdownTest": {
+    "files": "test/dropdownTest.js",
+    "requires": ["testFramework", "coreDropdown"]
   }
 }

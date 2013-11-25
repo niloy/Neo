@@ -32,6 +32,7 @@
     this.tooltip = null;
     this.style = Neo.ifNull(config.style, {}, "object");
     this._hint = null;
+    this._externalListeners = [];
 
     if (this.canRender === false) {
       return;
@@ -249,6 +250,9 @@
     },
 
     remove: function() {
+      this._bodyListeners.forEach(function(item) {
+        document.body.removeListener(item.eventName, item.listener);
+      }.bind(this));
       this.children.forEach(function(child) {
         child.remove();
       });
@@ -433,6 +437,16 @@
       }.bind(this));
 
       return map;
+    },
+
+    attachExternalListener: function(element, eventName, listener) {
+      this._externalListeners.push({
+        element: element,
+        eventName: eventName,
+        listener: listener
+      });
+
+      element.addEventListener(eventName, listener);
     }
   };
 
