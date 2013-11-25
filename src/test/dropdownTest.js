@@ -17,6 +17,7 @@
         name: "Dropdown",
         placeholder: "Select an option",
         items: items,
+        fieldname: "foo",
         listeners: {
           change: function() {
             console.log('dropdown value changed ' + this.value);

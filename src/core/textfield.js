@@ -75,16 +75,6 @@
       this.input.value = "";
     },
 
-    get fieldname() {
-      return this.input.name;
-    },
-
-    set fieldname(value) {
-      Neo.typeCheck(value, "string");
-
-      this.input.name = value;
-    },
-
     get placeholder() {
       return this.input.placeholder;
     },

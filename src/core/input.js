@@ -15,10 +15,6 @@
       this._errorTextToDisplay = null;
 
       Neo.Classes.UIComponent.call(this, config);
-
-      if (this._fieldname !== null) {
-        this.fieldname = this._fieldname;
-      }
     },
 
     get value() {
@@ -30,11 +26,12 @@
     },
 
     get fieldname() {
-      throw new Error("please implement 'fieldname' getter");
+      return this._fieldname;
     },
 
     set fieldname(value) {
-      throw new Error("please implement 'fieldname' setter");
+      Neo.typeCheck(value, "string");
+      this._fieldname = value;
     },
 
     get valid() {

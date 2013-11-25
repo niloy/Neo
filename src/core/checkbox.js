@@ -45,15 +45,6 @@
     set checked(value) {
       Neo.typeCheck(value, "boolean");
       this.input.checked = value;
-    },
-
-    get fieldname() {
-      return this.input.name;
-    },
-
-    set fieldname(value) {
-      Neo.typeCheck(value, "string,number");
-      this.input.name = value;
     }
   });
 }());
