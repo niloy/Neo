@@ -7,10 +7,12 @@ server:
 test:
 	tools/runTest.sh
 
-build: buildWeb buildWebApp
+build: web webapp
 
-buildWeb:
+web:
 	tools/webBuild.sh
 
-buildWebApp:
+webapp:
 	tools/webAppBuild.sh
+
+.PHONY: default server test build web webapp
