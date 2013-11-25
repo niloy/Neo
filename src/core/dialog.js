@@ -19,6 +19,7 @@
     },
 
     buildDOM: function() {
+      this.dom.tabIndex = "-1";
       this.dom.style.opacity = 0;
 
       var titleContainer = document.createElement("div");
@@ -80,6 +81,7 @@
         this._mask.style.opacity = 0.7;
         this.removeClass("closed");
         this.addClass("opened");
+        this.dom.focus();
         this._opened = true;
       }
     },
