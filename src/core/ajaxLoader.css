@@ -1,0 +1,4 @@
+.compAjaxLoader .loader {
+  height: 52px;
+  background: url(../assets/loader.gif) center center no-repeat;
+}

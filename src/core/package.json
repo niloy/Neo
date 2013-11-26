@@ -186,5 +186,13 @@
   "dropdownTest": {
     "files": "test/dropdownTest.js",
     "requires": ["testFramework", "coreDropdown"]
+  },
+  "coreAjaxLoader": {
+    "files": ["core/ajaxLoader.js", "core/ajaxLoader.css"],
+    "requires": "UIComponent"
+  },
+  "ajaxLoaderTest": {
+    "files": "test/ajaxLoaderTest.js",
+    "requires": ["testFramework", "coreAjaxLoader"]
   }
 }
