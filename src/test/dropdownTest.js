@@ -17,10 +17,15 @@
         name: "Dropdown",
         placeholder: "Select an option",
         items: items,
+        cls: "small",
         fieldname: "foo",
         listeners: {
           change: function() {
             console.log('dropdown value changed ' + this.value);
+          },
+
+          selected: function() {
+            console.log('selected', this.value);
           }
         }
       };

@@ -107,6 +107,8 @@
         this.display.textContent = label;
         this.trigger("change");
       }
+
+      this.trigger("selected");
     }
   });
 }());
