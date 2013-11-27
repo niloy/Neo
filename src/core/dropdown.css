@@ -43,6 +43,8 @@
 .compDropdown .optionList {
   border: 1px solid #C1C1C1;
   overflow: auto;
+  position: absolute;
+  width: 100%;
 }
 
 .compDropdown .option {
@@ -55,4 +57,34 @@
 .compDropdown .option:hover {
   background-color: #2685C2;
   color: white;
+}
+
+.compDropdown.small {
+  width: auto;
+}
+
+.compDropdown.small .optionList {
+  min-width: 100px;
+  text-align: center;
+}
+
+.compDropdown.small .display {
+  display: none;
+}
+
+.compDropdown.small .arrow {
+  width: 10px;
+  height: 10px;
+  vertical-align: middle;
+  border-radius: 0;
+  border-top: 5px solid #2873BB;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: none;
+  background: none;
+  cursor: pointer;
+}
+
+.compDropdown.small .arrow::after {
+  display: none;
 }
