@@ -26,6 +26,8 @@
         tableTest: "Table",
         pagerTest: "Pager",
         formTest: "Form",
+        dropdownTest: "Dropdown",
+        ajaxloaderTest: "Ajax Loader",
       };
 
       var layoutItems = Object.keys(list).map(function(viewName) {
