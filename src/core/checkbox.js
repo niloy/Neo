@@ -18,6 +18,9 @@
       this.input.type = "checkbox";
       this.input.className = "checkbox";
       this.input.checked = this._checked;
+      this.input.addEventListener("change", function() {
+        this.checked ? this.trigger("check") : this.trigger("uncheck");
+      }.bind(this));
       label.appendChild(this.input);
 
       if (this._label !== null) {

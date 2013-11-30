@@ -10,7 +10,16 @@
       return {
         name: "Checkbox",
         label: "Remember me?",
-        checked: true
+        checked: true,
+        listeners: {
+          check: function() {
+            console.log('checked');
+          },
+
+          uncheck: function() {
+            console.log('unchecked');
+          }
+        }
       };
     },
 
