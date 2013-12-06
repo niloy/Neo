@@ -44,6 +44,7 @@
   border: 1px solid #C1C1C1;
   overflow: auto;
   position: absolute;
+  z-index: 1000;
   width: 100%;
 }
 
@@ -87,4 +88,8 @@
 
 .compDropdown.small .arrow::after {
   display: none;
+}
+
+.compDropdown.small .optionList {
+  right: 0;
 }

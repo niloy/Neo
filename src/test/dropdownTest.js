@@ -17,7 +17,6 @@
         name: "Dropdown",
         placeholder: "Select an option",
         items: items,
-        cls: "small",
         fieldname: "foo",
         listeners: {
           change: function() {
