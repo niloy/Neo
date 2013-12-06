@@ -15,4 +15,7 @@ web:
 webapp:
 	tools/webAppBuild.sh
 
+clean:
+	rm -rf build/
+
 .PHONY: default server test build web webapp
