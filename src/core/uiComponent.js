@@ -38,6 +38,10 @@
       return;
     }
 
+    if (this.eventRoot === "APPLICATION_ROOT") {
+      this.eventRoot = this.eventStore;
+    }
+
     this.dom = document.createElement("section");
     this.dom._neo = this;
 
@@ -250,12 +254,14 @@
     },
 
     remove: function() {
-      this._bodyListeners.forEach(function(item) {
-        document.body.removeListener(item.eventName, item.listener);
+      this._externalListeners.forEach(function(item) {
+        item.element.removeEventListener(item.eventName, item.listener);
       }.bind(this));
+
       this.children.forEach(function(child) {
         child.remove();
       });
+
       this.dom.parentNode.removeChild(this.dom);
     },
 
@@ -270,6 +276,19 @@
       });
 
       this.eventRoot.publish(eventName, args);
+    },
+
+    publishWithin: function(eventName) {
+      var args = [].slice.call(arguments, 1);
+
+      Neo.Metrics.addEventLog({
+        source: this._componentId,
+        timestamp: Date.now(),
+        event: eventName,
+        args: JSON.stringify(args)
+      });
+
+      this.eventStore.publish(eventName, args);
     },
 
     _setupSubscribers: function() {
