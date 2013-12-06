@@ -6,13 +6,15 @@
 
     init: function(config) {
       this._text = Neo.ifNull(config.text, this.NO_TEXT);
+      this._type = Neo.ifNull(config.type, "button", "string");
       Neo.Classes.UIComponent.call(this, config);
     },
 
     buildDOM: function() {
-      var dom = document.createElement("button");
+      var dom = document.createElement("input");
 
-      dom.textContent = this._text;
+      dom.type = this._type;
+      dom.value = this._text;
 
       return dom;
     },

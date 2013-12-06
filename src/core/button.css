@@ -48,3 +48,16 @@
   background-image: -ms-linear-gradient(top, #3e779d 0%, #65a9d7 100%);
   color: #fff;
 }
+
+.compButton.link > .compButtonInner {
+  background: none;
+  border: none;
+  color: #2378BB;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-weight: normal;
+  display: inline;
+  padding: 0;
+  vertical-align: top;
+  height: auto;
+}
