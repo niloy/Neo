@@ -162,6 +162,7 @@
 
     _pageClicked: function(pageNo) {
       this.currentPage = pageNo;
+      this.trigger("pageChangeRequest");
     },
 
     _adjustIndicators: function(startIndex, min, max) {
