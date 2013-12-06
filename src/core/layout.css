@@ -5,3 +5,7 @@
 .compLayout.horizontal > .layoutItem {
   display: inline-block;
 }
+
+.compLayout.vertical {
+  display: block;
+}
