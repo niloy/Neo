@@ -2,14 +2,20 @@
   "use strict";
 
   Neo.Classes.Model = function(config) {
+    var storeMissing = new Error("'eventStore' missing for model");
+
     this._attributes = Neo.ifNull(config.attributes, {}, "object");;
     this._listeners = Neo.ifNull(config.listeners, {}, "object");
     this._subscribe = Neo.ifNull(config.subscribe, {}, "object");
     this._validation = Neo.ifNull(config.validation, this.VALIDATION, "function");
-    this._eventStore = Neo.ifNull(config.eventStore,
-                                  new Error("'eventStore' missing for model"));
+    this._eventStore = Neo.ifNull(config.eventStore, storeMissing);
 
     Object.seal(this._attributes);
+
+    for (var i in config) {
+      this[i] = config[i];
+    }
+
     this._defineGettersAndSetters();
     this._setupSubscribers();
   };
@@ -37,24 +43,26 @@
 
         this.trigger("change", value);
       } else {
-        throw new Error("validation error");
+        this.trigger("validation error");
       }
     },
 
     _defineGettersAndSetters: function() {
       Object.keys(this._attributes).forEach(function(key) {
-        Object.defineProperty(this, key, {
-          get: function() {
-            return this._attributes[key];
-          },
+        if (!(key in this)) {
+          Object.defineProperty(this, key, {
+            get: function() {
+              return this._attributes[key];
+            },
 
-          set: function(value) {
-            var obj = {};
+            set: function(value) {
+              var obj = {};
 
-            obj[key] = value;
-            this.attributes = obj;
-          }
-        });
+              obj[key] = value;
+              this.attributes = obj;
+            }
+          });
+        }
       }.bind(this));
     },
 

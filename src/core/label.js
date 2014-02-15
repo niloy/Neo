@@ -5,7 +5,7 @@
     NO_TEXT: "NO TEXT",
 
     init: function(config) {
-      this._text = Neo.ifNull(config.text, this.NO_TEXT, "string");
+      this._text = Neo.ifNull(config.text, this.NO_TEXT, "string,number");
 
       Neo.Classes.UIComponent.call(this, config);
     },

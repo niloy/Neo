@@ -2,6 +2,7 @@
   "use strict";
 
   Neo.KeyCodes = {
+    ESCAPE: 27,
     ENTER: 13,
     BACKSPACE: 8,
     UP: 38,
@@ -31,7 +32,7 @@
     var renderStartTime = Date.now();
     config.componentId = componentId;
 
-    if (config.debugger === true) {
+    if (config.debug === true) {
       debugger;
     }
 
@@ -230,5 +231,13 @@
       }
     }
     return target;
+  };
+
+  Neo.emptyNode = function(e) {
+    while (e.childNodes.length > 0) e.removeChild(e.firstChild);
+  };
+
+  Neo.registerClass = function(className, parentClassName, properties) {
+    Neo.Classes[className] = Neo.Classes[parentClassName].extend(properties);
   };
 }());

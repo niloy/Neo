@@ -35,7 +35,7 @@
       }
 
       var r = this._buildDocumentFragment(items);
-      this.dom.insertBefore(r.documentFragment, this.dom.childNodes[insertAt]);
+      this.dom.insertBefore(r.documentFragment, this.dom.childNodes[insertAt] || null);
       [].splice.apply(this.children, [insertAt, 0].concat(r.children));
     },
 
@@ -43,9 +43,9 @@
       var div = document.createElement("div");
       div.className = "layoutItem";
 
-      var cls = Neo.ifNull(item.cls, null, "string,number");
-      var size = Neo.ifNull(item.size, null, "string");
-      var canRender = Neo.ifNull(item.canRender, true, "boolean");
+      var cls = Neo.ifNull(item.layoutCls, null, "string,number");
+      var size = Neo.ifNull(item.layoutSize, null, "string");
+      var canRender = Neo.ifNull(item.layoutCanRender, true, "boolean");
 
       if (canRender === false) {
         return null;
@@ -73,7 +73,7 @@
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
         var div = this._createLayoutItemWrapper(item);
-        var component = Neo.ifNull(item.component, null, "object");
+        var component = Neo.ifNull(item, null, "object");
 
         if (div === null) {
           continue;

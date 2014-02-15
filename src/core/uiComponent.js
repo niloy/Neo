@@ -22,7 +22,7 @@
     this.isHighlighting = false;
     this.hightlightDom = null;
     this.subscribe = Neo.ifNull(config.subscribe, {}, "object");
-    this.eventStore = new Neo.Classes.Events(this);
+    this.eventStore = new Neo.Classes.EventStore(this);
     this.eventRoot = Neo.ifNull(config.eventRoot, this.parent.eventRoot);
     this.models = [];
     this._uiBlocked = false;
@@ -33,8 +33,10 @@
     this.style = Neo.ifNull(config.style, {}, "object");
     this._hint = null;
     this._externalListeners = [];
+    this._disabled = Neo.ifNull(config.disabled, false, "boolean");
+    this.embedded = Neo.ifNull(config.embedded, true, "boolean");
 
-    if (this.canRender === false) {
+    if (this._canRender === false) {
       return;
     }
 
@@ -103,10 +105,18 @@
     }
 
     for (var eventName in this.listeners) {
-      this.dom.addEventListener(eventName, this.listeners[eventName].bind(this));
+      this.dom.addEventListener(eventName, function(eventName, e) {
+        if (!this._disabled) {
+          this.listeners[eventName].call(this, e);
+        }
+      }.bind(this, eventName));
     }
 
     this._setupSubscribers();
+
+    if (this._disabled === true) {
+      this.disabled = true;
+    }
   };
 
   Neo.Classes.UIComponent.prototype = {
@@ -122,7 +132,7 @@
       Neo.typeCheck(flag, "boolean");
 
       if (flag === true) {
-        this.dom.style.display = null;
+        this.dom.style.display = "";
         this._visible = true;
       } else {
         this.dom.style.display = "none";
@@ -257,11 +267,9 @@
       this._externalListeners.forEach(function(item) {
         item.element.removeEventListener(item.eventName, item.listener);
       }.bind(this));
-
       this.children.forEach(function(child) {
         child.remove();
       });
-
       this.dom.parentNode.removeChild(this.dom);
     },
 
@@ -452,7 +460,9 @@
       var map = {};
 
       values.forEach(function(value) {
-        map[value.key] = value.value;
+        if (value.key !== null) {
+          map[value.key] = value.value;
+        }
       }.bind(this));
 
       return map;
@@ -466,22 +476,47 @@
       });
 
       element.addEventListener(eventName, listener);
+    },
+
+    get disabled() {
+      return this._disabled;
+    },
+
+    set disabled(value) {
+      Neo.typeCheck(value, "boolean");
+
+      if (value) {
+        this.addClass("disabled");
+        this._disabled = true;
+      } else {
+        this.removeClass("disabled");
+        this._disabled = false;
+      }
+    },
+
+    get valid() {
+      for (var i = 0; i < this.children.length; i++) {
+        var v = this.children[i].valid;
+
+        if (v === false) {
+          return false;
+        }
+      }
+
+      return true;
+    },
+
+    set valid(value) {
+      throw new Error("'valid' cannot be used as a setter");
     }
   };
 
-  // http://ejohn.org/blog/javascript-getters-and-setters/
-  function copy(a,b) {
-    for ( var i in b ) {
-        var g = b.__lookupGetter__(i), s = b.__lookupSetter__(i);
-
-        if ( g || s ) {
-            if ( g )
-                a.__defineGetter__(i, g);
-            if ( s )
-                a.__defineSetter__(i, s);
-         } else
-             a[i] = b[i];
+  function copy(a, b) {
+    for (var i in b) {
+      var d = Object.getOwnPropertyDescriptor(b, i);
+      Object.defineProperty(a, i, d);
     }
+
     return a;
   }
 

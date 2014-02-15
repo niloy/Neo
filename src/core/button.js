@@ -26,7 +26,7 @@
     set text(value) {
       Neo.typeCheck(value, "string,number");
       this._text = value;
-      this.dom.childNodes[0].textContent = value;
+      this.dom.firstChild.value = value;
     }
   });
 }());

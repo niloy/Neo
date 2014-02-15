@@ -123,7 +123,7 @@
         throw new Error("page value is out of bounds");
       }
 
-      if (this._currentPage !== null) {
+      if (this._currentPage !== null && this.pages[this._currentPage]) {
         this.pages[this._currentPage].classList.remove(this.ACTIVE_PAGE);
       }
 

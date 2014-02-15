@@ -8,7 +8,7 @@
     init: function(config) {
       this.validation = Neo.ifNull(config.validation, null, "regex,function");
       this.required = Neo.ifNull(config.required, false, "boolean");
-      this.readonly = Neo.ifNull(config.readonly, false, "boolean");
+      this._readonly = Neo.ifNull(config.readonly, false, "boolean");
       this._disabled = Neo.ifNull(config.disabled, false, "boolean");
       this._errorText = Neo.ifNull(config.errorText, this.ERROR_TEXT, "string");
       this._fieldname = Neo.ifNull(config.fieldname, null, "string");
@@ -38,16 +38,20 @@
       var checkValue = function() {
         this._errorTextToDisplay = this.errorText;
 
-        if (typeof this.validation === "function") {
-          var returnValue = this.validation(this.value);
-
-          if (typeof returnValue !== "boolean") {
-            throw new Error("expecting boolean return value from validation function");
-          }
-
-          return returnValue;
+        if (this.validation === null) {
+          return true;
         } else {
-          return this.validation.test(this.value);
+          if (typeof this.validation === "function") {
+            var returnValue = this.validation(this.value);
+
+            if (typeof returnValue !== "boolean") {
+              throw new Error("expecting boolean return value from validation function");
+            }
+
+            return returnValue;
+          } else {
+            return this.validation.test(this.value);
+          }
         }
       }.bind(this);
 
@@ -63,7 +67,7 @@
 
         return checkValue();
       } else {
-        if (this.value.length === 0) {
+        if (this.isEmpty()) {
           return true;
         } else if (this.validation !== null) {
           return checkValue();
@@ -87,6 +91,10 @@
       if (!this.valid) {
         this.notification = this._errorTextToDisplay;
       }
+    },
+
+    isEmpty: function() {
+      return this.value.length === 0;
     }
   });
 }());

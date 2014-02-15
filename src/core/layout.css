@@ -6,6 +6,6 @@
   display: inline-block;
 }
 
-.compLayout.vertical {
+.compLayout.vertical, .compLayout.horizontal {
   display: block;
 }

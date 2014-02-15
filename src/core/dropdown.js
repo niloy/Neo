@@ -3,7 +3,7 @@
 
   Neo.Classes.Dropdown = Neo.Classes.Input.extend({
     init: function(config) {
-      this.items = Neo.ifNull(config.items, {}, "object");
+      this._items = Neo.ifNull(config.items, {}, "object");
       this.placeholder = Neo.ifNull(config.placeholder, null, "string");
       this.display = null;
       this.arrow = null;
@@ -24,23 +24,20 @@
       this.arrow = document.createElement("div");
       this.arrow.className = "arrow";
       this.dom.appendChild(this.arrow);
+
       this.dom.addEventListener("click", function(e) {
         e.stopPropagation();
         this.toggleOptionList();
       }.bind(this));
 
       if (this.placeholder !== null) {
-        this.placeholderEl = document.createElement("span");
-        this.placeholderEl.className = "placeholder";
-        this.placeholderEl.textContent = this.placeholder;
-        this.display.appendChild(this.placeholderEl);
-        this.isPlaceholderDisplayed = true;
+        this._showPlaceholder();
       }
 
       this.optionList = document.createElement("div");
       this.optionList.className = "optionList";
       this.closeOptionList();
-      this.optionList.style.maxHeight = (innerHeight - 125) + "px";
+      this._adjustOptionListHeight();
       this.dom.appendChild(this.optionList);
 
       this.attachExternalListener(document.body, "click", function() {
@@ -48,17 +45,31 @@
       }.bind(this));
 
       this.attachExternalListener(window, "resize", function() {
-        this.optionList.style.maxHeight = (innerHeight - 125) + "px";
+        this._adjustOptionListHeight();
       }.bind(this));
 
       this._populateOptions();
     },
 
+    _adjustOptionListHeight: function() {
+      this.optionList.style.maxHeight = (innerHeight - 300) + "px";
+    },
+
+    _showPlaceholder: function() {
+      this.placeholderEl = document.createElement("span");
+      this.placeholderEl.className = "placeholder";
+      this.placeholderEl.textContent = this.placeholder;
+      this.display.appendChild(this.placeholderEl);
+      this.isPlaceholderDisplayed = true;
+    },
+
     _populateOptions: function() {
-      for (var i in this.items) {
+      this._clearOptions();
+
+      for (var i in this._items) {
         var option = document.createElement("div");
         option.className = "option";
-        option.textContent = this.items[i];
+        option.textContent = this._items[i];
         option.addEventListener("click", function(key) {
           this.value = key;
         }.bind(this, i));
@@ -67,7 +78,7 @@
     },
 
     openOptionList: function() {
-      this.optionList.style.display = null;
+      this.optionList.style.display = "";
       this.isOptionListVisible = true;
     },
 
@@ -84,6 +95,21 @@
       }
     },
 
+    _clearOptions: function() {
+      var ol = this.optionList;
+      while (ol.childNodes.length > 0)  ol.removeChild(ol.firstChild);
+    },
+
+    clear: function() {
+      this._value = null;
+      this._clearOptions();
+      this.display.textContent = "";
+
+      if (this.placeholder !== null) {
+        this._showPlaceholder();
+      }
+    },
+
     get value() {
       return this._value;
     },
@@ -91,13 +117,13 @@
     set value(value) {
       Neo.typeCheck(value, "string,number");
 
-      if (!(value in this.items)) {
+      if (!(value in this._items)) {
         throw new Error("the value is not present in option list -> " + value);
       }
 
       if (value !== this._value) {
         this._value = value;
-        var label = this.items[value];
+        var label = this._items[value];
 
         if (this.isPlaceholderDisplayed) {
           this.display.removeChild(this.placeholderEl);
@@ -109,6 +135,16 @@
       }
 
       this.trigger("selected");
+    },
+
+    get items() {
+      return this._options;
+    },
+
+    set items(value) {
+      Neo.typeCheck(value, "object");
+      this._items = value;
+      this._populateOptions();
     }
   });
 }());

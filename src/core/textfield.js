@@ -47,6 +47,10 @@
         this.input.autofocus = "autofocus";
       }
 
+      if (this._readonly) {
+        this.input.setAttribute("readonly", "readonly");
+      }
+
       if (this._placeholder) {
         this.placeholder = this._placeholder;
       }
@@ -63,7 +67,7 @@
     },
 
     get value() {
-      return this.input.value;
+      return this.input.value.trim();
     },
 
     set value(text) {
@@ -92,6 +96,24 @@
       Neo.typeCheck(value, "string,number");
       this._label = value;
       this.labelDom.textContent = value;
+    },
+
+    focus: function() {
+      this.input.focus();
+    },
+
+    get readonly() {
+      return this.readOnly;
+    },
+
+    set readonly(value) {
+      Neo.typeCheck(value, "boolean");
+
+      if (value === true) {
+        this.input.setAttribute("readonly", "readonly");
+      } else {
+        this.input.removeAttribute("readonly");
+      }
     }
   });
 }());
