@@ -9,10 +9,12 @@ The Label component is intended to be used anywhere simple text is required.
 `text` - The text to be displayed. If you want blank text, pass empty string `""`.
 
 Example:
-  {
-    name: "Label",
-    text: "Hello World"
-  }
+```js
+{
+  name: "Label",
+  text: "Hello World"
+}
+```
 
 ## Methods
 
