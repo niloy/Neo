@@ -1,5 +1,3 @@
-**Not production ready**
-
 **Developed and tested in Chrome only, raise issue if broken in Firefox**
 
 ### Getting Started
