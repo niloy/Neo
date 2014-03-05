@@ -1,0 +1,32 @@
+# Checkbox
+
+Inherits from _Input_.
+
+The Checkbox creates a simple checkbox with an optional label on its right.
+
+## Constructor arguments
+
+`checked` - Default = **false**. If this is set to _true_, then the checkbox
+will be checked.
+
+`label` - _Optional_ If any text is provided, it would appear on the right side
+of the checkbox. Clicking the text would have the same effect as clicking the
+checkbox.
+
+```js
+{
+  name: "Checkbox",
+  label: "Do you love bunnies?",
+  checked: true
+}
+```
+
+## Methods
+
+`value` - _Getter_ Returns true if checked, false otherwise.
+
+`value` - _Setter_ Sets the checked state of the checkbox.
+
+`checked` - _Getter_ Returns true if checked, false otherwise.
+
+`checked` - _Setter_ Sets the checked state of the checkbox.
