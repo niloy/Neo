@@ -3,7 +3,7 @@
 Inherits from _UIComponent_.
 
 The Button component is intended to used anywhere a generic simple button is
-required.
+required. This component internally generates the `<input type="button">` tag.
 
 ## Constructor arguments
 
@@ -18,7 +18,12 @@ submitted.
 ```js
 {
   name: "Button",
-  text: "Hello World"
+  text: "Hello World",
+  listeners: {
+    click: function() {
+      alert("woohoooo!!!");
+    }
+  }
 }
 ```
 
@@ -27,3 +32,7 @@ submitted.
 `text` - _Getter_ Gets the current text.
 
 `text` - _Setter_ Sets the current text.
+
+## Events
+
+Any event triggered by `<input type="button">`.

@@ -41,5 +41,5 @@ No Methods
 
 ## Events
 
-Any events triggered by `<form>`. Most notably the `submit` event which is
+Any event triggered by `<form>`. Most notably the `submit` event which is
 triggered when the form is submitted.
