@@ -1,16 +1,14 @@
-.zlemma section {
-  position: relative;
-  display: inline-block;
+* {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   vertical-align: top;
-  cursor: inherit;
 }
 
-.zlemma div {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
+section {
+  position: relative;
+  display: inline-block;
   vertical-align: top;
+  cursor: inherit;
 }
 
 .neoNotification {
@@ -42,7 +40,7 @@
   transition: stroke-dashoffset 0.3s ease-in-out 0s;
 }
 
-.zlemma section .uiBlockMask {
+section .uiBlockMask {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
@@ -51,7 +49,7 @@
   top: 0;
 }
 
-.zlemma section.disabled {
+section.disabled {
   opacity: 0.5;
   pointer-events: none;
   cursor: not-allowed;
