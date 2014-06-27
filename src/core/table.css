@@ -1,32 +1,25 @@
-.compTable {
+.neoTable {
   border: 1px solid black;
   width: 100%;
   overflow: hidden;
 }
-
-.compTable > .tableHeading {
+.neoTable > .tableHeading {
   width: 100%;
-  background-image: linear-gradient(#6388BE, #4C72AE);
-  color: white;
 }
-
-.compTable > .tableHeading > .headerItem {
+.neoTable > .tableHeading > .headerItem {
   padding: 5px;
+  font-weight: bold;
 }
-
-.compTable > .tableRows {
+.neoTable > .tableRows {
   width: 100%;
   overflow: auto;
 }
-
-.compTable  .colItem {
+.neoTable .colItem {
   padding: 5px;
 }
-
-.compTable .rowItem:nth-child(even) > * {
+.neoTable .rowItem:nth-child(even) {
   background-color: #F0F0F0;
 }
-
-.compTable .rowItem:nth-child(odd) > * {
+.neoTable .rowItem:nth-child(odd) {
   background-color: #DFDFDF;
 }

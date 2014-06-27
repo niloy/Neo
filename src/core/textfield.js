@@ -10,6 +10,8 @@
       this.multiline = Neo.ifNull(config.multiline, false, "boolean");
       this._placeholder = Neo.ifNull(config.placeholder, null, "string,number");
       this._label = Neo.ifNull(config.label, null, "string,number");
+      this.min = Neo.ifNull(config.min, null, "string,number");
+      this.max = Neo.ifNull(config.max, null, "string,number");
       this.labelDom = null;
 
       Neo.Classes.Input.call(this, config);
@@ -31,6 +33,14 @@
         this.input = document.createElement("textarea");
       } else {
         this.input = document.createElement("input");
+      }
+
+      if (this.min !== null) {
+        this.input.min = this.min;
+      }
+
+      if (this.max !== null) {
+        this.input.max = this.max;
       }
 
       if (hasLabel) {
@@ -113,6 +123,16 @@
         this.input.setAttribute("readonly", "readonly");
       } else {
         this.input.removeAttribute("readonly");
+      }
+    },
+
+    _setupListeners: function() {
+      for (var eventName in this.listeners) {
+        this.input.addEventListener(eventName, function(eventName, e) {
+          if (!this._disabled) {
+            this.listeners[eventName].call(this, e);
+          }
+        }.bind(this, eventName));
       }
     }
   });

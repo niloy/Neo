@@ -1,0 +1,58 @@
+.neoSlider {
+  width: 100%;
+  height: 40px;
+
+  .ruler {
+    width: 100%;
+    height: 8px;
+    position: absolute;
+    border: 1px solid #b6b6b6;
+    background: #fff;
+    color: #4f4f4f;
+    border-radius: 4px;
+    box-shadow: inset 0 2px 3px rgb(158, 158, 158);
+    top: 5px;
+  }
+
+  .dragger {
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background-color: white;
+    display: inline-block;
+    position: absolute;
+    margin-left: -9px;
+    border: 1px solid gray;
+    background-image: radial-gradient(rgb(204, 204, 204),rgb(141, 138, 138));
+    transition: left .2s;
+  }
+
+  .rulerStep {
+    width: 1px;
+    height: 10px;
+    background-color: gray;
+    display: inline-block;
+    position: absolute;
+    top: -10px;
+    pointer-events: none;
+
+    &.first {
+      display: none;
+    }
+
+    &.last {
+      display: none;
+    }
+  }
+
+  .rulerStepLabel {
+    position: absolute;
+    top: 10px;
+    color: gray;
+    width: 100px;
+    margin-left: -50px;
+    text-align: center;
+    cursor: pointer;
+    pointer-events: none;
+  }
+}

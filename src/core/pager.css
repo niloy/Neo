@@ -1,4 +1,4 @@
-.compPagerInner {
+.neoPager .neoPagerInner {
   margin-bottom: 0;
   margin-left: 0;
   border-radius: 4px;
@@ -6,43 +6,48 @@
   background-color: white;
   padding: 0;
   border: 1px solid #DDD;
+  height: 31px;
+  text-align: center;
 }
-
-.compPagerInner .pageButton {
+.neoPager .neoPagerInner .pageButton {
   display: inline-block;
   padding: 5px 10px;
   cursor: pointer;
   border-right: 1px solid #DDD;
   text-align: center;
 }
-
-.compPagerInner  .pageButton:hover {
+.neoPager .neoPagerInner .page.loading {
+  background: url(../assets/pagerLoader.gif) no-repeat center center;
+  color: transparent;
+}
+.neoPager .neoPagerInner .pageButton:hover {
   background-color: #EEE;
 }
-
-.compPagerInner .pagesContainer {
+.neoPager .neoPagerInner .pagesContainer {
   display: inline-block;
   overflow: hidden;
 }
-
-.compPagerInner .activePage {
+.neoPager .neoPagerInner .activePage {
   box-shadow: inset 0 0 5px 2px #AAA;
 }
-
-.compPagerInner .pagesContainerInner {
+.neoPager .neoPagerInner .pagesContainerInner {
   transition: margin .5s;
 }
-
-.compPagerInner .leftIndicator,
-.compPagerInner .rightIndicator {
+.neoPager .neoPagerInner .leftIndicator,
+.neoPager .neoPagerInner .rightIndicator {
   width: 1px;
   height: 29px;
   display: inline-block;
   position: absolute;
 }
-
-.compPagerInner .leftIndicator.active,
-.compPagerInner .rightIndicator.active {
+.neoPager .neoPagerInner .leftIndicator.active,
+.neoPager .neoPagerInner .rightIndicator.active {
   background-color: green;
   box-shadow: 0 0 5px 2px green;
+}
+.neoPager .neoPagerInner .first,
+.neoPager .neoPagerInner .previous,
+.neoPager .neoPagerInner .next,
+.neoPager .neoPagerInner .last {
+  display: none;
 }

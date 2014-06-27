@@ -1,0 +1,15 @@
+.neoNotification {
+  position: absolute;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-left: 6px;
+  font-size: 12px;
+  color: red;
+}
+.neoNotification::before {
+  content: "\25C0";
+  position: absolute;
+  left: -9px;
+  color: black;
+}

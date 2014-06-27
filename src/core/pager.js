@@ -10,6 +10,7 @@
     PAGE_WIDTH: 48,
     MAX_DISPLAY_PAGES: 10,
     ACTIVE_INDICATOR: "active",
+    LOADING: "loading",
 
     init: function(config) {
       this._totalPages = Neo.ifNull(config.totalPages, null, "number");
@@ -23,14 +24,15 @@
       this.pagesContainerInner = null;
       this.leftIndicator = null;
       this.rightIndicator = null;
+      this.loading = null;
 
       Neo.Classes.UIComponent.call(this, config);
     },
 
     buildDOM: function() {
-      var ul = document.createElement("ul");
-      this.pager = ul;
-      return ul;
+      var div = document.createElement("div");
+      this.pager = div;
+      return div;
     },
 
     _renderPager: function() {
@@ -161,8 +163,23 @@
     },
 
     _pageClicked: function(pageNo) {
-      this.currentPage = pageNo;
-      this.trigger("pageChangeRequest");
+      this.trigger("pageChangeRequest", pageNo);
+    },
+
+    markLoading: function(pageNo) {
+      var page = this.pages[pageNo];
+
+      if (!page.classList.contains(this.LOADING)) {
+        this.loading = page;
+        page.classList.add(this.LOADING);
+      }
+    },
+
+    unmarkLoading: function() {
+      if (this.loading !== null) {
+        this.loading.classList.remove(this.LOADING);
+        this.loading = null;
+      }
     },
 
     _adjustIndicators: function(startIndex, min, max) {

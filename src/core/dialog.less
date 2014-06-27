@@ -1,0 +1,56 @@
+.neoDialog {
+  padding: 20px;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  position: fixed !important;
+  display: block;
+  z-index: 10001;
+  background-color: rgba(75, 75, 75, 0.7);
+
+  .dialogBodyContainer {
+    padding: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  &.neoAlert {
+    .neoAlertOk {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .neoAlertText {
+      text-align: center;
+    }
+
+    /*&.opened {
+      .centerVertically;
+    }*/
+  }
+
+  &.neoConfirm {
+    .buttonHolder{
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .neoConfirmText{
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .neoConfirmCancel{
+      margin-left: 10px;
+    }
+
+    /*&.opened {
+      .centerVertically;
+    }*/
+  }
+}

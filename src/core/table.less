@@ -1,0 +1,31 @@
+.neoTable {
+  border: 1px solid black;
+  width: 100%;
+  overflow: hidden;
+
+  & > .tableHeading {
+    width: 100%;
+
+    & > .headerItem {
+      padding: 5px;
+      font-weight: bold;
+    }
+  }
+
+  & > .tableRows {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .colItem {
+    padding: 5px;
+  }
+
+  .rowItem:nth-child(even) {
+    background-color: #F0F0F0;
+  }
+
+  .rowItem:nth-child(odd) {
+    background-color: #DFDFDF;
+  }
+}

@@ -1,11 +1,14 @@
-.compUIComponent .compLayout {
+.neoLayout {
+  cursor: inherit;
+}
+.neoLayout.vertical,
+.neoLayout.horizontal {
   display: block;
 }
-
-.compLayout.horizontal > .layoutItem {
+.neoLayout .layoutItem {
+  cursor: inherit;
+}
+.neoLayout.horizontal > .layoutItem {
   display: inline-block;
-}
-
-.compLayout.vertical, .compLayout.horizontal {
-  display: block;
+  cursor: inherit;
 }

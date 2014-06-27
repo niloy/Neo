@@ -1,29 +1,25 @@
-.compTab {
+.neoTab {
   width: 100%;
 }
-
-.compTab > .tabHeader {
-  border-bottom: 1px solid #A3A3A3;
-  background-color: #DFDFDF;
-  padding: 2px 5px 0 5px;
+.neoTab .tabHeader {
+  border: 1px solid green;
+  border-radius: 3px;
 }
-
-.compTab > .tabHeader > .tabTitle {
+.neoTab .tabHeader .tabTitle {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 5px 20px;
   cursor: pointer;
+  color: green;
 }
-
-.compTab > .tabHeader > .tabTitle.active {
-  background-color: white;
-  border: 1px solid #A3A3A3;
-  border-bottom: none;
+.neoTab .tabHeader .tabTitle.active {
+  background-color: green;
+  color: #ffffff;
+  border-right: 1px solid green;
 }
-
-.compTab > .tabBody > .tabComponent {
+.neoTab .tabBody .tabComponent {
   display: none;
+  padding-top: 5px;
 }
-
-.compTab > .tabBody > .tabComponent.active {
+.neoTab .tabBody .tabComponent.active {
   display: block;
 }

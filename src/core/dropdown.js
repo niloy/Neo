@@ -3,8 +3,9 @@
 
   Neo.Classes.Dropdown = Neo.Classes.Input.extend({
     init: function(config) {
-      this._items = Neo.ifNull(config.items, {}, "object");
+      this._options = Neo.ifNull(config.options, {}, "object");
       this.placeholder = Neo.ifNull(config.placeholder, null, "string");
+      this.hideSelectedOption = Neo.ifNull(config.hideSelectedOption, false, "boolean");
       this.display = null;
       this.arrow = null;
       this.optionList = null;
@@ -12,23 +13,25 @@
       this.isOptionListVisible = false;
       this._value = null;
       this.isPlaceholderDisplayed = false;
+      this.optionsMap = {};
+      this.currentHiddenOption = null;
+
+      if ("displayFormatter" in config) {
+        this.displayFormatter = config.displayFormatter;
+      }
 
       Neo.Classes.Input.call(this, config);
     },
 
     buildDOM: function() {
+      var self = this;
       this.display = document.createElement("div");
       this.display.className = "display";
       this.dom.appendChild(this.display);
 
       this.arrow = document.createElement("div");
-      this.arrow.className = "arrow";
+      this.arrow.className = "zarrow";
       this.dom.appendChild(this.arrow);
-
-      this.dom.addEventListener("click", function(e) {
-        e.stopPropagation();
-        this.toggleOptionList();
-      }.bind(this));
 
       if (this.placeholder !== null) {
         this._showPlaceholder();
@@ -40,8 +43,12 @@
       this._adjustOptionListHeight();
       this.dom.appendChild(this.optionList);
 
-      this.attachExternalListener(document.body, "click", function() {
-        this.closeOptionList();
+      this.attachExternalListener(document.body, "click", function(e) {
+        if (Neo.isDescendant(this.dom, e.target)) {
+          this.toggleOptionList();
+        } else {
+          this.closeOptionList();
+        }
       }.bind(this));
 
       this.attachExternalListener(window, "resize", function() {
@@ -66,19 +73,29 @@
     _populateOptions: function() {
       this._clearOptions();
 
-      for (var i in this._items) {
+      for (var i in this._options) {
         var option = document.createElement("div");
         option.className = "option";
-        option.textContent = this._items[i];
+
+        if (typeof this._options[i] === "string") {
+          option.textContent = this._options[i];
+        } else {
+          this._options[i].parentDom = option;
+          this.appendComponent(this._options[i]);
+        }
+
         option.addEventListener("click", function(key) {
           this.value = key;
         }.bind(this, i));
+
+        this.optionsMap[i] = option;
         this.optionList.appendChild(option);
       }
     },
 
     openOptionList: function() {
       this.optionList.style.display = "";
+      this.optionList.scrollTop = 0;
       this.isOptionListVisible = true;
     },
 
@@ -96,10 +113,18 @@
     },
 
     _clearOptions: function() {
-      var ol = this.optionList;
-      while (ol.childNodes.length > 0)  ol.removeChild(ol.firstChild);
+      Neo.emptyNode(this.optionList);
+      this.optionsMap = {};
+      this.currentHiddenOption = null;
     },
 
+    clearSelected: function(argument) {
+      this._value = null;
+      this.display.textContent = "";
+      if (this.placeholder !== null) {
+        this._showPlaceholder();
+      }
+    },
     clear: function() {
       this._value = null;
       this._clearOptions();
@@ -117,34 +142,62 @@
     set value(value) {
       Neo.typeCheck(value, "string,number");
 
-      if (!(value in this._items)) {
+      if (!(value in this._options)) {
         throw new Error("the value is not present in option list -> " + value);
       }
 
       if (value !== this._value) {
         this._value = value;
-        var label = this._items[value];
+        var label = this._options[value];
 
-        if (this.isPlaceholderDisplayed) {
-          this.display.removeChild(this.placeholderEl);
-          this.isPlaceholderDisplayed = false;
+        Neo.emptyNode(this.display);
+        this.isPlaceholderDisplayed = false;
+
+        var v = this.displayFormatter(label);
+
+        if (typeof v === "object") {
+          v.parentDom = this.display;
+          this.appendComponent(v);
+        } else {
+          this.display.textContent = v;
         }
 
-        this.display.textContent = label;
+        if (this.hideSelectedOption) {
+          if (this.currentHiddenOption !== null) {
+            this.showOption(this.currentHiddenOption);
+          }
+
+          this.hideOption(value);
+          this.currentHiddenOption = value;
+        }
+
         this.trigger("change");
       }
 
       this.trigger("selected");
     },
 
-    get items() {
+    get options() {
       return this._options;
     },
 
-    set items(value) {
+    set options(value) {
       Neo.typeCheck(value, "object");
-      this._items = value;
+      this.clear();
+      this._options = value;
       this._populateOptions();
+    },
+
+    displayFormatter: function(value) {
+      return value;
+    },
+
+    hideOption: function(key) {
+      this.optionsMap[key].style.display = "none";
+    },
+
+    showOption: function(key) {
+      this.optionsMap[key].style.display = "";
     }
   });
 }());

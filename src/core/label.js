@@ -6,7 +6,7 @@
 
     init: function(config) {
       this._text = Neo.ifNull(config.text, this.NO_TEXT, "string,number");
-
+      this._title = Neo.ifNull(config.title, this._text, "string,number");
       Neo.Classes.UIComponent.call(this, config);
     },
 
@@ -14,6 +14,7 @@
       var dom = document.createElement("label");
 
       dom.textContent = this._text;
+      dom.title = this._title;
 
       return dom;
     },

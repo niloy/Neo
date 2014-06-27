@@ -23,6 +23,7 @@
 
       var waitText = document.createElement("div");
       waitText.textContent = "Please wait...";
+      waitText.className = "waitText";
       this.dom.appendChild(waitText);
     },
 

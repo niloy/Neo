@@ -1,120 +1,48 @@
-.compDialog {
+.neoDialog {
+  padding: 20px;
   outline: none;
-  min-width: 200px;
-  max-width: 600px;
-  position: fixed !important;
-  top: 50%;
-  left: 50%;
-  border: 5px solid rgb(78, 78, 78);
-  display: block;
-  z-index: 1;
-  background-color: white;
-  border-radius: 10px;
-  transition: opacity .5s, -webkit-transform .5s;
-  transition: opacity .5s, transform .5s;
-}
-
-.compDialog > .dialogTitleContainer {
-  color: white;
-  background-image: linear-gradient(to bottom, rgb(165, 158, 158), rgb(78, 78, 78));
-  padding: 5px 10px;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-}
-
-.compDialog > .dialogTitleContainer > .dialogTitle {
-  width: 90%;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-.compDialog > .dialogTitleContainer > .dialogCloseButton {
-  width: 10%;
-  display: inline-block;
-  text-align: right;
-  cursor: pointer;
-}
-
-.compDialog > .dialogBodyContainer {
-  padding: 10px;
-}
-
-.dialogMask {
-  position: fixed;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(white, #555555);
-  opacity: 0;
   top: 0;
   left: 0;
-  z-index: 0;
-  transition: opacity 0.5s;
+  overflow: auto;
+  position: fixed !important;
+  display: block;
+  z-index: 10001;
+  background-color: rgba(75, 75, 75, 0.7);
 }
-
-.compDialog.closed {
-  -webkit-transform: scale(0);
-  transform: scale(0);
-  opacity: 0;
+.neoDialog .dialogBodyContainer {
+  padding: 10px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 5px;
 }
-
-.compDialog.opened {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  opacity: 1;
+.neoDialog.neoAlert {
+  /*&.opened {
+      .centerVertically;
+    }*/
 }
-
-.compDialog.wiggle {
-  -webkit-animation: wiggle 0.5s;
-  animation: wiggle 5s;
-}
-
-@-webkit-keyframes wiggle {
-  0% {
-    -webkit-transform: rotate(0);
-  }
-  20% {
-    -webkit-transform: rotate(15deg);
-  }
-  40% {
-    -webkit-transform: rotate(-15deg);
-  }
-  60% {
-    -webkit-transform: rotate(15deg);
-  }
-  80% {
-    -webkit-transform: rotate(-15deg);
-  }
-  100% {
-    -webkit-transform: rotate(0);
-  }
-}
-
-@keyframes wiggle {
-  0% {
-    -webkit-transform: rotate(0);
-  }
-  20% {
-    -webkit-transform: rotate(15deg);
-  }
-  40% {
-    -webkit-transform: rotate(-15deg);
-  }
-  60% {
-    -webkit-transform: rotate(15deg);
-  }
-  80% {
-    -webkit-transform: rotate(-15deg);
-  }
-  100% {
-    -webkit-transform: rotate(0);
-  }
-}
-
-.neoAlert .neoAlertOk {
+.neoDialog.neoAlert .neoAlertOk {
   text-align: center;
   margin-top: 10px;
 }
-
-.neoAlert .neoAlertText {
+.neoDialog.neoAlert .neoAlertText {
   text-align: center;
+}
+.neoDialog.neoConfirm {
+  /*&.opened {
+      .centerVertically;
+    }*/
+}
+.neoDialog.neoConfirm .buttonHolder {
+  margin-top: 10px;
+  text-align: center;
+}
+.neoDialog.neoConfirm .neoConfirmText {
+  text-align: center;
+  margin-top: 10px;
+}
+.neoDialog.neoConfirm .neoConfirmCancel {
+  margin-left: 10px;
 }

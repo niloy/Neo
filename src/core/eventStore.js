@@ -8,11 +8,21 @@
 
   Neo.Classes.EventStore.prototype = {
     publish: function(eventName, args) {
+      var returnValues = [];
+
       if (eventName in this.registry) {
         this.registry[eventName].forEach(function(e) {
-          e.callback.apply(e.context, args);
+          var r = e.callback.apply(e.context, args);
+
+          if (r !== undefined) {
+            // Only JSON stringifyable return values are allowed
+            JSON.stringify(r);
+            returnValues.push(r);
+          }
         }.bind(this));
       }
+
+      return returnValues;
     },
 
     subscribe: function(event, callback, context) {

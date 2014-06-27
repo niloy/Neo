@@ -2,13 +2,24 @@
   "use strict";
 
   Neo.KeyCodes = {
-    ESCAPE: 27,
-    ENTER: 13,
-    BACKSPACE: 8,
-    UP: 38,
-    DOWN: 40,
-    LEFT: 37,
-    RIGHT: 39
+    BACKSPACE:  8,
+    TAB:        9,
+    ENTER:      13,
+    SHIFT:      16,
+    CONTROL:    17,
+    ALT:        18,
+    CAPS:       20,
+    ESCAPE:     27,
+    SPACE:      32,
+    PAGEUP:     33,
+    PAGEDOWN:   34,
+    END:        35,
+    HOME:       36,
+    LEFT:       37,
+    UP:         38,
+    RIGHT:      39,
+    DOWN:       40,
+    DELETE:     46
   };
 
   Neo.getUniqueNumber = (function() {
@@ -139,6 +150,30 @@
     return obj;
   }
 
+
+  Neo.getPropByString = function(obj, propString) {
+    if(!obj) {
+      return undefined;
+    }
+    if (!propString)
+        return obj;
+
+    var prop, props = propString.split('.');
+
+    for (var i = 0, iLen = props.length - 1; i < iLen; i++) {
+        prop = props[i];
+
+        var candidate = obj[prop];
+        if (candidate !== undefined) {
+            obj = candidate;
+        } else {
+            break;
+        }
+    }
+    return obj[props[i]];
+  }
+
+
   // http://stackoverflow.com/questions/9399365/deep-extend-like-jquerys-for-nodejs
   Neo.extend = function() {
     var options, name, src, copy, copyIsArray, clone, target = arguments[0] || {},
@@ -239,5 +274,43 @@
 
   Neo.registerClass = function(className, parentClassName, properties) {
     Neo.Classes[className] = Neo.Classes[parentClassName].extend(properties);
+  };
+
+  Array.from = function(arrayish) {
+    return [].slice.call(arrayish);
+  };
+
+  Neo.a2o = function(array, fn) {
+    fn = fn || function(e) {
+      return {left: e, right: e};
+    };
+    var o = {};
+
+    array.forEach(function(a) {
+      var b = fn(a);
+      o[b.left] = b.right;
+    });
+
+    return o;
+  };
+
+  Neo.decodeHtml = function(html) {
+    var d = document.createElement("div");
+    d.innerHTML = html;
+    return d.textContent;
+  };
+
+  //http://stackoverflow.com/questions/2234979/
+  Neo.isDescendant = function(parent, child) {
+    var node = child.parentNode;
+
+    while (node != null) {
+      if (node == parent) {
+         return true;
+      }
+      node = node.parentNode;
+    }
+
+    return false;
   };
 }());

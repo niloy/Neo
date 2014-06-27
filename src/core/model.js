@@ -85,7 +85,14 @@
     publish: function(eventName) {
       var args = [].slice.call(arguments, 1);
 
-      this._eventStore.publish(eventName, args);
+      Neo.Metrics.addEventLog({
+        source: "model",
+        timestamp: Date.now(),
+        event: eventName,
+        args: JSON.stringify(args)
+      });
+
+      return this._eventStore.publish(eventName, args);
     }
   };
 }());

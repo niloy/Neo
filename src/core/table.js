@@ -21,6 +21,10 @@
 
       Neo.Classes.UIComponent.call(this, config);
 
+      this.data = Neo.ifNull(config.data, [], "array");
+    },
+
+    buildDOM: function() {
       this._determineWidth();
       this.headerLayout = this._createHeader();
       this.rowsLayout = this.appendComponent({
@@ -36,20 +40,16 @@
           }.bind(this)
         }
       });
-
-      this.data = Neo.ifNull(config.data, [], "array");
     },
 
     _createHeader: function() {
       var headerItems = this.headerKeys.map(function(key) {
         return {
-          cls: this.HEADING_ITEM_CLASS,
-          size: this.columns[key].width,
-          component: {
-            name: "Label",
-            text: this.columns[key].title || key
-          }
-        };
+          layoutCls: this.HEADING_ITEM_CLASS,
+          layoutSize: this.columns[key].width,
+          name: "Label",
+          text: this.columns[key].title || key
+        }
       }.bind(this));
 
       return this.appendComponent({
@@ -74,7 +74,7 @@
       var layoutItems = value.map(function(row, index) {
         var rowItems = this.headerKeys.map(function(col) {
           var formatter = Neo.ifNull(this.columns[col].formatter,
-                            this._defaultFormatter, "function");
+            this._defaultFormatter, "function");
 
           var returnFromFormatter = formatter({
             column: col,
@@ -82,21 +82,20 @@
             value: row[col]
           });
 
-          return {
-            cls: this.COLUMN_ITEM_CLASS,
-            size: this.columns[col].width,
-            component: returnFromFormatter
-          };
+          return Neo.extend({
+            layoutCls: this.COLUMN_ITEM_CLASS,
+            layoutSize: this.columns[col].width,
+          }, returnFromFormatter);
+
         }.bind(this));
 
         return {
-          cls: this.ROW_ITEM_CLASS,
-          component: {
-            name: "Layout",
-            width: this.fixedWidth ? this.rowWidth : null,
-            orient: "horizontal",
-            items: rowItems
-          }
+          layoutCls: this.ROW_ITEM_CLASS,
+          name: "Layout",
+          width: this.fixedWidth ? this.rowWidth : null,
+          orient: "horizontal",
+          items: rowItems
+
         };
       }.bind(this));
 
@@ -133,15 +132,16 @@
       var component;
 
       if (typeof value === "string") {
-        component = {name: "Label", text: value};
+        component = {
+          name: "Label",
+          text: value
+        };
       } else {
         component = value;
       }
 
       this.rowsLayout.empty();
-      this.rowsLayout.insertItems({
-        component: component
-      });
+      this.rowsLayout.insertItems(component);
     }
   });
 }());

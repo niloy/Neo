@@ -1,6 +1,8 @@
 (function() {
   "use strict";
 
+  var CLASS_PREFIX = "neo";
+
   Neo.Classes.UIComponent = function(config) {
     Neo.ifNull(config, new Error("'config' parameter missing"), "object");
     Neo.ifNull(config.parent, new Error("'parent' missing'"), "object,string");
@@ -35,6 +37,7 @@
     this._externalListeners = [];
     this._disabled = Neo.ifNull(config.disabled, false, "boolean");
     this.embedded = Neo.ifNull(config.embedded, true, "boolean");
+    this.tid = Neo.ifNull(config.tid, null, "string,number");
 
     if (this._canRender === false) {
       return;
@@ -47,6 +50,10 @@
     this.dom = document.createElement("section");
     this.dom._neo = this;
 
+    if (this.tid !== null) {
+      this.dom.dataset.tid = "t" + this.tid;
+    }
+
     if (this.cls !== null) {
       this.dom.className = this.cls;
     }
@@ -55,7 +62,7 @@
       this.dom.dataset.cid = this._componentId;
     }
 
-    this.addClass("comp" + this.cname);
+    this.addClass(CLASS_PREFIX + this.cname);
 
     if (this.parent === "APPLICATION_ROOT" && this.parentDom == null) {
       throw new Error("'parentDom' is missing");
@@ -76,7 +83,7 @@
         this.children.push(child);
       } else {
         this.dom.appendChild(returnValueFromBuildDOM);
-        returnValueFromBuildDOM.classList.add("comp" + this.cname + "Inner");
+        returnValueFromBuildDOM.classList.add(CLASS_PREFIX + this.cname + "Inner");
       }
     }
 
@@ -104,13 +111,7 @@
       this.dom.style.setProperty(s, this.style[s]);
     }
 
-    for (var eventName in this.listeners) {
-      this.dom.addEventListener(eventName, function(eventName, e) {
-        if (!this._disabled) {
-          this.listeners[eventName].call(this, e);
-        }
-      }.bind(this, eventName));
-    }
+    this._setupListeners();
 
     this._setupSubscribers();
 
@@ -158,8 +159,8 @@
       this.dom.style.height = value;
     },
 
-    scrollIntoView: function() {
-      this.dom.scrollIntoView();
+    scrollIntoView: function(alignWithTop) {
+      this.dom.scrollIntoView(alignWithTop);
     },
 
     set notification(value) {
@@ -283,7 +284,7 @@
         args: JSON.stringify(args)
       });
 
-      this.eventRoot.publish(eventName, args);
+      return this.eventRoot.publish(eventName, args);
     },
 
     publishWithin: function(eventName) {
@@ -296,7 +297,7 @@
         args: JSON.stringify(args)
       });
 
-      this.eventStore.publish(eventName, args);
+      return this.eventStore.publish(eventName, args);
     },
 
     _setupSubscribers: function() {
@@ -354,6 +355,7 @@
       config.parentDom = this.dom;
       config.parent = this;
       config.root = this;
+      config.eventRoot = this.eventStore;
       return Neo.createComponent(config);
     },
 
@@ -379,20 +381,17 @@
         body: {
           name: "Layout",
           items: [{
-            cls: "neoAlertText",
-            component: {
-              name: "Label",
-              text: text
-            }
+            layoutCls: "neoAlertText",
+            name: "Label",
+            text: text
           }, {
-            cls: "neoAlertOk",
-            component: {
-              name: "Button",
-              text: "OK",
-              listeners: {
-                click: function() {
-                  dialog.close();
-                }
+            layoutCls: "neoAlertOk",
+            name: "Button",
+            text: "OK",
+            listeners: {
+              click: function() {
+                dialog.close();
+                dialog.remove();
               }
             }
           }]
@@ -400,6 +399,66 @@
         afterClose: callback
       });
 
+      dialog.open();
+    },
+
+    confirm: function(config) {
+      Neo.typeCheck(config, "string,object");
+
+      var DEFAULT_TITLE = "Application";
+      var text, title, callback, afterCloseCb;
+
+      if (typeof config === "string") {
+        text = config;
+        title = DEFAULT_TITLE;
+      } else {
+        text = Neo.ifNull(config.text, new Error("Confirm 'text' missing"), "string");
+        title = Neo.ifNull(config.title, DEFAULT_TITLE, "string");
+        afterCloseCb = Neo.ifNull(config.afterCloseCb, function() {}, "function");
+        callback = Neo.ifNull(config.callback, function() {}, "function");
+      }
+
+      var dialog = this.createDialog({
+        name: "Dialog",
+        cls: "neoConfirm",
+        title: title,
+        body: {
+          name: "Layout",
+          items: [{
+            layoutCls: "neoConfirmText",
+            name: "Label",
+            text: text
+          }, {
+            name: "Layout",
+            cls: "buttonHolder",
+            orient: "horizontal",
+            items: [{
+              layoutCls: "neoConfirmOk",
+              name: "Button",
+              text: "OK",
+              listeners: {
+                click: function() {
+                  callback(true);
+                  dialog.close();
+                  dialog.remove();
+                }
+              }
+            }, {
+              layoutCls: "neoConfirmCancel",
+              name: "Button",
+              text: "Cancel",
+              listeners: {
+                click: function() {
+                  callback(false);
+                  dialog.close();
+                  dialog.remove();
+                }
+              }
+            }]
+          }]
+        },
+        afterClose: afterCloseCb
+      });
       dialog.open();
     },
 
@@ -443,7 +502,10 @@
 
     getKeyValuePairs: function() {
       if (this instanceof Neo.Classes.Input) {
-        return [{key: this.fieldname, value: this.value}];
+        return [{
+          key: this.fieldname,
+          value: this.value
+        }];
       } else {
         var values = [];
 
@@ -508,6 +570,16 @@
 
     set valid(value) {
       throw new Error("'valid' cannot be used as a setter");
+    },
+
+    _setupListeners: function() {
+      for (var eventName in this.listeners) {
+        this.dom.addEventListener(eventName, function(eventName, e) {
+          if (!this._disabled) {
+            this.listeners[eventName].call(this, e);
+          }
+        }.bind(this, eventName));
+      }
     }
   };
 
@@ -528,10 +600,13 @@
     function childClass() {
       if ("init" in properties) {
         properties.init.apply(this, arguments);
+      } else {
+        parentClass.apply(this, arguments);
       }
     };
 
     childClass.prototype = Object.create(parentClass.prototype);
+    childClass.prototype.Super = parentClass;
 
     copy(childClass.prototype, properties);
 

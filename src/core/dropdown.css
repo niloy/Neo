@@ -1,95 +1,67 @@
-.compDropdown {
-  width: 300px;
-}
-
-.compDropdown .display {
-  background-color: white;
-  border: 1px solid #C1C1C1;
-  width: calc(100% - 40px);
-  height: 26px;
+.neoDropdown .display {
+  overflow: hidden;
+  width: calc(100% - 35px);
   display: inline-block;
-  line-height: 26px;
   padding-left: 5px;
+  color: #777780;
+  cursor: pointer;
+  font-size: 11px;
 }
-
-.compDropdown .placeholder {
-  line-height: 26px;
+.neoDropdown .display * {
+  cursor: inherit;
+}
+.neoDropdown .placeholder {
+  line-height: 15px;
   font-size: 12px;
-  color: #CCCCCC;
+  color: green;
   font-style: italic;
 }
-
-.compDropdown .arrow {
-  border: 1px solid #1F5383;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+.neoDropdown .zarrow {
   height: 26px;
-  width: 40px;
+  width: 20px;
   display: inline-block;
-  background-image: linear-gradient(to bottom, #2D79C0, #27639F);
+  background: url(../assets/chevron-green-sm.png) 0px 6px no-repeat;
+  cursor: pointer;
 }
-
-.compDropdown .arrow::after {
-  content: "";
-  right: 10px;
-  position: absolute;
-  top: 8px;
-  border-top: 10px solid white;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: none;
-}
-
-.compDropdown .optionList {
+.neoDropdown .optionList {
   border: 1px solid #C1C1C1;
   overflow: auto;
   position: absolute;
   z-index: 1000;
   width: 100%;
 }
-
-.compDropdown .option {
-  height: 26px;
+.neoDropdown .option {
   padding: 5px;
   background-color: #FAFAFA;
   color: #777780;
-}
-
-.compDropdown .option:hover {
-  background-color: #2685C2;
-  color: white;
-}
-
-.compDropdown.small {
-  width: auto;
-}
-
-.compDropdown.small .optionList {
-  min-width: 100px;
-  text-align: center;
-}
-
-.compDropdown.small .display {
-  display: none;
-}
-
-.compDropdown.small .arrow {
-  width: 10px;
-  height: 10px;
-  vertical-align: middle;
-  border-radius: 0;
-  border-top: 5px solid #2873BB;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: none;
-  background: none;
+  font-size: 12px;
   cursor: pointer;
 }
-
-.compDropdown.small .arrow::after {
+.neoDropdown .option:hover {
+  background-color: darkGray;
+  color: white;
+}
+.neoDropdown.small {
+  width: auto;
+}
+.neoDropdown.small .optionList {
+  min-width: 100px;
+  text-align: left;
+}
+.neoDropdown.small .display {
   display: none;
 }
-
-.compDropdown.small .optionList {
+.neoDropdown.small .zarrow {
+  height: 26px;
+  width: 20px;
+  display: inline-block;
+  background: url(../assets/chevron-green-sm.png) 0px 5px no-repeat;
+  cursor: pointer;
+  margin-left: 8px;
+}
+.neoDropdown.small .zarrow::after {
+  display: none;
+}
+.neoDropdown.small .optionList {
   right: 0;
 }

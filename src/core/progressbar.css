@@ -1,56 +1,46 @@
-.compProgressbar {
+.neoProgressbar {
   width: 100%;
 }
-
-.compProgressbar > .container {
-  background-color: #1D2025;
-  height: 30px;
-  border-radius: 30px;
+.neoProgressbar .container {
+  background-color: mediumGray;
+  height: 25px;
+  border-radius: 5px;
   position: relative;
   overflow: hidden;
 }
-
-.compProgressbar > .container > .textContainer {
+.neoProgressbar .container .textContainer {
   text-align: center;
-  color: white;
-  line-height: 30px;
+  color: lightGray;
+  line-height: 25px;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
-
-.compProgressbar > .container > .progressElement {
-  background-image: linear-gradient(to bottom, #FFD738, #FFA300);
-  height: 30px;
-  border-radius: 30px;
+.neoProgressbar .container .progressElement {
+  background-color: green;
+  height: 25px;
   position: absolute;
   top: 0;
   left: 0;
   transition: width .25s;
 }
-
-.compProgressbar > .container > .progressElement.indeterminate {
+.neoProgressbar .container .progressElement.indeterminate {
   width: 25%;
-  -webkit-animation: compProgressBarIndeterminate 5s linear infinite;
-  animation: compProgressBarIndeterminate 5s linear infinite;
+  /*.animation(compProgressBarIndeterminate 5s linear infinite);*/
 }
-
-@-webkit-keyframes compProgressBarIndeterminate {
+@-webkit-keyframes neoProgressBarIndeterminate {
   from {
     left: -25%;
   }
-
   to {
     left: 100%;
   }
 }
-
-@keyframes compProgressBarIndeterminate {
+@keyframes neoProgressBarIndeterminate {
   from {
     left: -25%;
   }
-
   to {
     left: 100%;
   }

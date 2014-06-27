@@ -3,10 +3,10 @@
 
   Neo.Classes.Input = Neo.Classes.UIComponent.extend({
     ERROR_TEXT: "This input field is not valid",
-    REQUIRED_TEXT: "This is a required field",
+    REQUIRED_TEXT: "Required field",
 
     init: function(config) {
-      this.validation = Neo.ifNull(config.validation, null, "regex,function");
+      this.validations = Neo.ifNull(config.validations, [], "array");
       this.required = Neo.ifNull(config.required, false, "boolean");
       this._readonly = Neo.ifNull(config.readonly, false, "boolean");
       this._disabled = Neo.ifNull(config.disabled, false, "boolean");
@@ -36,22 +36,19 @@
 
     get valid() {
       var checkValue = function() {
-        this._errorTextToDisplay = this.errorText;
-
-        if (this.validation === null) {
+        if (this.validations.length === 0) {
           return true;
         } else {
-          if (typeof this.validation === "function") {
-            var returnValue = this.validation(this.value);
+          for (var i = 0; i < this.validations.length; i++) {
+            var r = this.validations[i](this.value);
 
-            if (typeof returnValue !== "boolean") {
-              throw new Error("expecting boolean return value from validation function");
+            if (r && r.success === false) {
+              this._errorTextToDisplay = r.message;
+              return false;
             }
-
-            return returnValue;
-          } else {
-            return this.validation.test(this.value);
           }
+
+          return true;
         }
       }.bind(this);
 
@@ -59,21 +56,13 @@
         return true;
       }
 
-      if (this.required) {
-        if (this.value.length === 0) {
-          this._errorTextToDisplay = this.REQUIRED_TEXT;
-          return false;
-        }
-
-        return checkValue();
+      if (this.required && this.isEmpty()) {
+        this._errorTextToDisplay = this.REQUIRED_TEXT;
+        return false;
+      } else if (!this.required && this.isEmpty()) {
+        return true;
       } else {
-        if (this.isEmpty()) {
-          return true;
-        } else if (this.validation !== null) {
-          return checkValue();
-        } else {
-          return true;
-        }
+        return checkValue();
       }
     },
 
@@ -95,6 +84,10 @@
 
     isEmpty: function() {
       return this.value.length === 0;
+    },
+
+    removeErrorMarker: function() {
+      this.notification = null;
     }
   });
 }());

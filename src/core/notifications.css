@@ -1,0 +1,41 @@
+.notificationHolder {
+  font-family: "Open sans";
+  outline: none;
+  position: relative;
+  z-index: 1;
+  background-color: #F8F5E0;
+}
+.notificationHolder .logoutNotification * {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  color: darkGray;
+}
+.notificationHolder .logoutNotification {
+  background-color: gold;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.notificationHolder .logoutNotification .actionLink label {
+  cursor: pointer;
+  color: #82A078;
+}
+.notificationHolder .logoutNotification .actionLink::before {
+  content: "\00A0";
+}
+.notificationHolder .logoutNotification .actionLink::after {
+  content: "\00A0";
+}
+.notificationHolder .notification .layoutItem {
+  display: inline-block;
+}
+.notificationHolder .notification .layoutItem.textContent {
+  width: calc(100% - 100px);
+  text-align: center;
+}
+.notificationHolder .notification .layoutItem.textContent label {
+  line-height: 30px;
+}

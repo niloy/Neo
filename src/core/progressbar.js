@@ -8,6 +8,7 @@
       this._minValue = Neo.ifNull(config.minValue, 0, "number");
       this._maxValue = Neo.ifNull(config.maxValue, 100, "number");
       this._value = Neo.ifNull(config.value, null, "number");
+      this.autoUpdateText = Neo.ifNull(config.autoUpdateText, true, "boolean");
       this.determinate = (this._value !== null);
       this.progressEl = null;
       this.textContainer = null;
@@ -50,16 +51,22 @@
     },
 
     _renderProgressBar: function() {
+      var text;
+
       if (this.determinate) {
         var value = this._value - this._minValue;
         var max = this._maxValue - this._minValue;
         var percent = Math.round(value / max * 100);
 
         this.progressEl.style.width = percent + "%";
-        this.textContainer.textContent = percent + "%";
+        text = percent + "%";
       } else {
         this.progressEl.classList.add("indeterminate");
-        this.textContainer.textContent = this.LOADING_TEXT;
+        text = this.LOADING_TEXT;
+      }
+
+      if (this.autoUpdateText) {
+        this.text = text;
       }
     },
 
@@ -89,6 +96,11 @@
       if ((min > max) || (value < min) || (value > max)) {
         throw new Error("invalid values passed to progress bar");
       }
+    },
+
+    set text(value) {
+      Neo.typeCheck(value, "string");
+      this.textContainer.textContent = value;
     }
   });
 }());

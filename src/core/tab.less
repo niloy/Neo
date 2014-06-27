@@ -1,0 +1,34 @@
+.neoTab {
+  width: 100%;
+
+  .tabHeader {
+    border: 1px solid green;
+    border-radius: 3px;
+
+
+    .tabTitle {
+      display: inline-block;
+      padding: 5px 20px;
+      cursor: pointer;
+      color: green;
+
+      &.active {
+        background-color: green;
+        color: #ffffff;
+        border-right: 1px solid green;
+
+      }
+    }
+  }
+
+  .tabBody {
+    .tabComponent {
+      display: none;
+      padding-top: 5px;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}

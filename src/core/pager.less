@@ -1,0 +1,63 @@
+.neoPager {
+  .neoPagerInner {
+    margin-bottom: 0;
+    margin-left: 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    padding: 0;
+    border: 1px solid #DDD;
+    height: 31px;
+    text-align: center;
+
+    .pageButton {
+      display: inline-block;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-right: 1px solid #DDD;
+      text-align: center;
+    }
+
+    .page {
+      &.loading {
+        background: url(../assets/pagerLoader.gif) no-repeat center center;
+        color: transparent;
+      }
+    }
+
+    .pageButton:hover {
+      background-color: #EEE;
+    }
+
+    .pagesContainer {
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    .activePage {
+      box-shadow: inset 0 0 5px 2px #AAA;
+    }
+
+    .pagesContainerInner {
+      transition: margin .5s;
+    }
+
+    .leftIndicator,
+    .rightIndicator {
+      width: 1px;
+      height: 29px;
+      display: inline-block;
+      position: absolute;
+    }
+
+    .leftIndicator.active,
+    .rightIndicator.active {
+      background-color: green;
+      box-shadow: 0 0 5px 2px green;
+    }
+
+    .first, .previous, .next, .last {
+      display: none;
+    }
+  }
+}
