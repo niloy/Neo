@@ -1,37 +1,48 @@
-(function() {
-  "use strict";
+"use strict";
 
-  Neo.Classes.Label = Neo.Classes.UIComponent.extend({
-    NO_TEXT: "NO TEXT",
+var utils = require("./utils.js");
+var UIComponent = require("./uiComponent.js");
 
-    init: function(config) {
-      this._text = Neo.ifNull(config.text, this.NO_TEXT, "string,number");
-      this._title = Neo.ifNull(config.title, this._text, "string,number");
-      Neo.Classes.UIComponent.call(this, config);
-    },
+//CSS: label.less
 
-    buildDOM: function() {
-      var dom = document.createElement("label");
+function Label(config) {
+  this._text = utils.ifNull(config.text, this.NO_TEXT, "string,number");
+  this._title = utils.ifNull(config.title, this._text, "string,number");
+  UIComponent.call(this, config);
+}
 
-      dom.textContent = this._text;
-      dom.title = this._title;
+Label.prototype = Object.create(UIComponent.prototype);
 
-      return dom;
-    },
+Object.assign(Label.prototype, {
+  NO_TEXT: "NO TEXT",
 
-    get text() {
-      return this._text;
-    },
+  init: function(config) {
+  },
 
-    set text(value) {
-      Neo.typeCheck(value, "string,number");
+  buildDOM: function() {
+    var dom = document.createElement("label");
 
-      this._text = value;
-      this.dom.childNodes[0].textContent = this._text;
-    },
+    dom.textContent = this._text;
+    dom.title = this._title;
 
-    clear: function() {
-      this.text = "";
-    }
-  });
-}());
+    return dom;
+  },
+
+  get text() {
+    return this._text;
+  },
+
+  set text(value) {
+    utils.typeCheck(value, "string,number");
+
+    this._text = value;
+    this.dom.childNodes[0].textContent = this._text;
+  },
+
+  clear: function() {
+    this.text = "";
+  }
+});
+
+utils.registerComponent("Label", Label);
+module.exports = Label;

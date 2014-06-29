@@ -1,40 +1,44 @@
-(function() {
-  "use strict";
+"use strict";
 
-  Neo.Classes.TestView = Neo.Classes.UIComponent.extend({
-    init: function(config) {
-      Neo.Classes.UIComponent.call(this, config);
+require("./mocha.js");
+require("./expect.js");
+var UIComponent = require("./uiComponent.js");
 
-      mocha.setup("bdd");
-      this.tests(this.children[0]);
-      window.testComponent = this.children[0];
-      var results = mocha.run(function() {
-        results && console.log("Failed: " + results.failures);
-      });
-    },
+var TestView = UIComponent.extend({
+  init: function(config) {
+    UIComponent.call(this, config);
 
-    buildDOM: function() {
-      this.addClass("compTestView");
+    mocha.setup("bdd");
+    this.tests(this.firstChild);
+    window.testComponent = this.firstChild;
+    var results = mocha.run(function() {
+      results && console.log("Failed: " + results.failures);
+    });
+  },
 
-      var syntaxTip = document.createElement("a");
-      syntaxTip.href = "https://github.com/LearnBoost/expect.js/blob/master/README.md";
-      syntaxTip.innerHTML = "Click here to see syntax for writing tests";
-      syntaxTip.target = "_blank";
-      this.dom.appendChild(syntaxTip);
+  buildDOM: function() {
+    this.addClass("compTestView");
 
-      var mochaDiv = document.createElement("div");
-      mochaDiv.id = "mocha";
-      this.dom.appendChild(mochaDiv);
+    var syntaxTip = document.createElement("a");
+    syntaxTip.href = "https://github.com/LearnBoost/expect.js/blob/master/README.md";
+    syntaxTip.innerHTML = "Click here to see syntax for writing tests";
+    syntaxTip.target = "_blank";
+    this.dom.appendChild(syntaxTip);
 
-      return this.buildComponent();
-    },
+    var mochaDiv = document.createElement("div");
+    mochaDiv.id = "mocha";
+    this.dom.appendChild(mochaDiv);
 
-    tests: function() {
-      throw new Error("Write some tests!!!");
-    },
+    return this.buildComponent();
+  },
 
-    buildComponent: function() {
-      throw new Error("please override 'buildComponent'");
-    }
-  });
-}());
+  tests: function() {
+    throw new Error("Write some tests!!!");
+  },
+
+  buildComponent: function() {
+    throw new Error("please override 'buildComponent'");
+  }
+});
+
+module.exports = TestView;

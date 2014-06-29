@@ -1,39 +1,40 @@
-(function() {
-  "use strict";
+"use strict";
 
-  Neo.Classes.Metric = function() {
-    this.componentHistogram = {};
-    this.creationLog = [];
-    this.eventLog = [];
-  };
+var utils = require("./utils.js");
 
-  Neo.Classes.Metric.prototype = {
-    addComponent: function(component) {
-      Neo.typeCheck(component, "object");
+function Metric() {
+  this.componentHistogram = {};
+  this.creationLog = [];
+  this.eventLog = [];
+};
 
-      if (!(component.name in this.componentHistogram)) {
-        this.componentHistogram[component.name] = 0;
-      }
+Metric.prototype = {
+  addComponent: function(component) {
+    utils.typeCheck(component, "object");
 
-      this.componentHistogram[component.name]++;
-    },
-
-    addLog: function(args) {
-      this.creationLog.push(args);
-    },
-
-    reset: function() {
-      this.componentHistogram = {};
-    },
-
-    print: function() {
-      return JSON.stringify(this, null, "  ");
-    },
-
-    addEventLog: function(args) {
-      this.eventLog.push(args);
+    if (!(component.name in this.componentHistogram)) {
+      this.componentHistogram[component.name] = 0;
     }
-  };
 
-  Neo.Metrics = new Neo.Classes.Metric();
-}());
+    this.componentHistogram[component.name]++;
+  },
+
+  addLog: function(args) {
+    this.creationLog.push(args);
+  },
+
+  reset: function() {
+    this.componentHistogram = {};
+  },
+
+  print: function() {
+    return JSON.stringify(this, null, "  ");
+  },
+
+  addEventLog: function(args) {
+    this.eventLog.push(args);
+  }
+};
+
+var m = new Metric();
+module.exports = m;

@@ -88,6 +88,13 @@
 
     removeErrorMarker: function() {
       this.notification = null;
+    },
+
+    getKeyValuePairs: function() {
+      return [{
+        key: this.fieldname,
+        value: this.value
+      }];
     }
   });
 }());
